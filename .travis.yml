@@ -8,6 +8,7 @@ services:
 before_install:
   - docker pull openjdk:8-jdk-alpine
   - cd covid-modelizer-app
+  - chmod +x mvnw
   
 # Test & Build SpringBoot app
 script:
