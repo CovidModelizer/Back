@@ -1,0 +1,24 @@
+# .travis.yml
+language: java
+jdk:
+  - openjdk8
+services:
+  - docker
+    
+before_install:
+  - docker pull openjdk:8-jdk-alpine
+  - cd covid-modelizer-app
+  
+# Test & Build SpringBoot app
+script:
+  - mvn test
+  - mvn clean package
+  
+# Create Docker image for our app and push it to Dockerhub repository and send messages to the Teams channel after the `script` job is successfully executed
+after_success:
+  - export COMMIT=${TRAVIS_COMMIT::7}
+  - export TAG=`if [ ! -z "$TRAVIS_TAG" ]; then echo "$TRAVIS_TAG"; else echo "$TRAVIS_BRANCH--$COMMIT"; fi`
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - docker-compose build
+  - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
+  - docker push $IMAGE_NAME:$TAG
