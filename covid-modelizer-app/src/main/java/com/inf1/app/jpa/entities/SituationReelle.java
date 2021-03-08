@@ -1,4 +1,4 @@
-package com.inf1.jpa.entities;
+package com.inf1.app.jpa.entities;
 
 import java.time.LocalDateTime;
 
@@ -16,11 +16,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "indicateur")
+@Table(name="situation_reelle")
 @Getter
 @Setter
 @ToString
-public class Indicateur {
+public class SituationReelle {
 	
 	@Id
 	@Column
@@ -29,13 +29,7 @@ public class Indicateur {
 	@NotNull
 	@Column
 	private LocalDateTime date;
-	@NotNull
 	@Column
-	private String typeModele;
-	@Column
-	private int valeur;
-	@Column
-	// Trigramme donc = "CAS" ou "VAC"
-	private String typeIndicateur;
+	private int nbCas, nbHospitalisation, nbReanimation, nbDeces, nbVaccines;
 	
 }

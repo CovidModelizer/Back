@@ -1,4 +1,5 @@
-package com.inf1.jpa.entities;
+package com.inf1.app.jpa.entities;
+
 
 import java.time.LocalDateTime;
 
@@ -16,18 +17,25 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "coefficient")
 @Getter
 @Setter
 @ToString
-public abstract class Coefficient {
-
+public class Indicateur {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@NotNull
 	@Column
 	private LocalDateTime date;
+	@NotNull
+	@Column
+	private String typeModele;
+	@Column
+	private int valeur;
+	@Column
+	// Trigramme donc = "CAS" ou "VAC"
+	private String typeIndicateur;
 	
 }

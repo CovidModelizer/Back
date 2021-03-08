@@ -1,4 +1,4 @@
-package com.inf1.jpa.entities;
+package com.inf1.app.jpa.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,23 +14,20 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "coeff_lineaire")
+@Table(name="coeff_sir")
 @Getter
 @Setter
 @ToString
-public abstract class CoeffLineaire extends Coefficient {
-	
-	@Id
-	@Column
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+public class CoeffSIR extends Coefficient {
+
 	@NotNull
 	@Column
-	private double a, b;
-	@NotNull
+	private double alpha, beta;
 	@Column
-	// Trigramme donc = "CAS" ou "VAC"
-	private String typeCoeff;
+	private int nbSains, nbRetablis;
 	
+	public CoeffSIR() {
+		super();
+	}
 	
 }

@@ -5,9 +5,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 
 @AutoConfigureTestDatabase
 class MainApplicationTests {
-
-	
-
 	
 	@Test
 	void contextLoads() {

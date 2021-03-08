@@ -1,4 +1,4 @@
-package com.inf1.jpa.entities;
+package com.inf1.app.jpa.entities;
 
 import java.time.LocalDateTime;
 
@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
@@ -15,25 +17,18 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Table(name = "evenement")
+@MappedSuperclass
 @Getter
 @Setter
 @ToString
-public class Evenement {
+public abstract class Coefficient {
 
 	@Id
-	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column
 	private int id;
 	@NotNull
 	@Column
 	private LocalDateTime date;
-	@NotNull
-	@Column
-	private String typeModele;
-	@Column
-	// Trigramme donc = "CON" ou "IMM"
-	private String typeIndicateur;
 	
 }

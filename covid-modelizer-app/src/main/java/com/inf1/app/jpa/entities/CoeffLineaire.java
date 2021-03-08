@@ -1,10 +1,11 @@
-package com.inf1.jpa.entities;
+package com.inf1.app.jpa.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
@@ -14,20 +15,22 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "coeff_sir")
+@Table(name="coeff_lineaire")
 @Getter
 @Setter
 @ToString
-public class CoeffSIR extends Coefficient {
-
-	@Id
-	@Column
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+public abstract class CoeffLineaire extends Coefficient {
+	
 	@NotNull
 	@Column
-	private double alpha, beta;
+	private double a, b;
+	@NotNull
 	@Column
-	private int nbSains, nbRetablis;
+	// Trigramme donc = "CAS" ou "VAC"
+	private String typeCoeff;
+	
+	public CoeffLineaire() {
+		super();
+	}
 	
 }

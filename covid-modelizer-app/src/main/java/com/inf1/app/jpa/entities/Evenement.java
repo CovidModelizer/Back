@@ -1,4 +1,6 @@
-package com.inf1.jpa.entities;
+package com.inf1.app.jpa.entities;
+
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,18 +16,23 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "coeff_log")
 @Getter
 @Setter
 @ToString
-public class CoeffLOG {
-	
+public class Evenement {
+
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@NotNull
 	@Column
-	private double coeff;
+	private LocalDateTime date;
+	@NotNull
+	@Column
+	private String typeModele;
+	@Column
+	// Trigramme donc = "CON" ou "IMM"
+	private String typeIndicateur;
 	
 }

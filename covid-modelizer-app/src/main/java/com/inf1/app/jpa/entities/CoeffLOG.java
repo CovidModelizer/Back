@@ -1,6 +1,4 @@
-package com.inf1.jpa.entities;
-
-import java.time.LocalDateTime;
+package com.inf1.app.jpa.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,20 +14,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "situation_relle")
+@Table(name="coeff_log")
 @Getter
 @Setter
 @ToString
-public class SituationReelle {
+public class CoeffLOG extends Coefficient {
 	
-	@Id
-	@Column
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
 	@NotNull
 	@Column
-	private LocalDateTime date;
-	@Column
-	private int nbCas, nbHospitalisation, nbReanimation, nbDeces, nbVaccines;
+	private double coeff;
+	
+	public CoeffLOG() {
+		super();
+	}
 	
 }
