@@ -1,4 +1,4 @@
-package com.inf1.covidmodelizerapp;
+package com.inf1.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
