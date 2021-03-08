@@ -2,6 +2,7 @@ package com.inf1.jpa.entities;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,13 +23,18 @@ import lombok.ToString;
 public class Indicateur {
 	
 	@Id
+	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@NotNull
+	@Column
 	private LocalDateTime date;
 	@NotNull
+	@Column
 	private String typeModele;
+	@Column
 	private int valeur;
+	@Column
 	// Trigramme donc = "CAS" ou "VAC"
 	private String typeIndicateur;
 	

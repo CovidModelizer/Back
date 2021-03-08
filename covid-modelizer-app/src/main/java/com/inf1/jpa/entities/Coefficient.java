@@ -2,6 +2,7 @@ package com.inf1.jpa.entities;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,8 +24,10 @@ public abstract class Coefficient {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column
 	private int id;
 	@NotNull
+	@Column
 	private LocalDateTime date;
 	
 }
