@@ -1,11 +1,13 @@
 package com.inf1.app.jpa.repositories;
 
-import org.springframework.data.repository.CrudRepository;
-
+import java.time.LocalDateTime;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import com.inf1.app.jpa.entities.Coefficient;
 
-public interface CoefficientRepository extends CrudRepository<Coefficient, Integer>{
+@Repository
+public interface CoefficientRepository{
 
-	// TODO : extends CrudRepository ou JpaRepository ?
+	Coefficient findByDate(@Param("date") LocalDateTime date);
 	
 }
