@@ -30,6 +30,6 @@ public class SituationReelle {
 	@Column
 	private LocalDateTime date;
 	@Column
-	private int nbCas, nbHospitalisation, nbReanimation, nbDeces, nbVaccines;
+	private int nbCas, nbHospitalisations, nbReanimations, nbDeces, nbVaccines;
 	
 }

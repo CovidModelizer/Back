@@ -2,14 +2,8 @@ package com.inf1.app.jpa.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
-
 import com.sun.istack.NotNull;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,7 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public abstract class CoeffLineaire extends Coefficient {
+public class CoeffLineaire extends Coefficient {
 	
 	@NotNull
 	@Column
@@ -32,5 +26,13 @@ public abstract class CoeffLineaire extends Coefficient {
 	public CoeffLineaire() {
 		super();
 	}
+	
+	public CoeffLineaire(double a, double b, String typeCoeff) {
+		this.a = a;
+		this.b = b;
+		this.typeCoeff = typeCoeff;
+	}
+	
+	
 	
 }

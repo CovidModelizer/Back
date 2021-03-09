@@ -11,33 +11,29 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.inf1.app.jpa.entities.CoeffLineaire;
+import com.inf1.app.jpa.entities.CoeffSIR;
 import com.inf1.app.jpa.entities.Coefficient;
 
 @Repository
-public class CoeffLineraireRepository implements JpaRepository<Coefficient, Integer>, CoefficientRepository {
+public class CoeffSirRepository implements JpaRepository<Coefficient, Integer>, CoefficientRepository{
 
 	@Override
-	public CoeffLineaire findByDate(LocalDateTime date) {
+	public CoeffSIR findByDate(LocalDateTime date) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	public CoeffLineaire findByParamA(@Param("a") double a) {
+	public CoeffSIR findByParamAlpha(@Param("alpha") double alpha) {
 		// TODO
 		return null;
 	}
 	
-	public CoeffLineaire findByParamB(@Param("b") double b) {
+	public CoeffSIR findByParamBeta(@Param("beta") double beta) {
 		// TODO
 		return null;
 	}
 	
-	public CoeffLineaire findByParamTypeCoeff(@Param("typeCoeff") double typeCoeff) {
-		// TODO
-		return null;
-	}
-
+	
 	@Override
 	public Page<Coefficient> findAll(Pageable pageable) {
 		// TODO Auto-generated method stub
@@ -182,6 +178,4 @@ public class CoeffLineraireRepository implements JpaRepository<Coefficient, Inte
 		return null;
 	}
 
-	
-	
 }
