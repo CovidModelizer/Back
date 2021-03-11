@@ -1,6 +1,19 @@
 package com.inf1.app.batch;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.SSLContext;
 import javax.sql.DataSource;
+
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
+import org.apache.http.ssl.TrustStrategy;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -15,6 +28,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import com.inf1.app.batch.steps.RESTSituationReelleReader;
@@ -24,20 +38,41 @@ import com.inf1.app.dto.SituationReelleDTO;
 @EnableBatchProcessing
 public class BatchConfiguration {
 	
-    private static final String PROPERTY_REST_API_URL = "https://www.data.gouv.fr/fr/datasets/r/d2671c6c-c0eb-4e12-b69a-8e8f87fc224c";
-	
-
+    //private static final String PROPERTY_REST_API_URL = "https://www.data.gouv.fr/fr/datasets/r/d2671c6c-c0eb-4e12-b69a-8e8f87fc224c";
+    private static final String PROPERTY_REST_API_URL = "http://david-ekchajzer.fr/";
+    
+    // https://dev.to/mnpaa/disable-skip-ssl-validation-in-springboot-resttemplate-1ec2
 	@Bean
-	public RestTemplate restTemplate() {
-        return new RestTemplate();
+	public RestTemplate restTemplate() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+		/*
+		TrustStrategy acceptingTrustStrategy = new TrustStrategy() {
+			@Override
+			public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				return true;
+			}
+		}; 
+	    SSLContext sslContext = SSLContexts.custom()
+	                    .loadTrustMaterial(null, acceptingTrustStrategy)
+	                    .build();
+	    SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
+	    CloseableHttpClient httpClient = HttpClients.custom()
+	                    .setSSLSocketFactory(csf)
+	                    .build();
+	    HttpComponentsClientHttpRequestFactory requestFactory =
+	                    new HttpComponentsClientHttpRequestFactory();
+	    requestFactory.setHttpClient(httpClient);
+	    RestTemplate restTemplate = new RestTemplate(requestFactory);
+	    return restTemplate;
+	    */
+		return new RestTemplate();
     }
 	
 	@Bean
-    ItemReader<SituationReelleDTO> restItemReader(Environment environment,
-                                             RestTemplate restTemplate) {
+    ItemReader<SituationReelleDTO> restItemReader(Environment environment) 
+    		throws KeyManagementException, IllegalStateException, NoSuchAlgorithmException, KeyStoreException {
 		return new RESTSituationReelleReader(
 				environment.getRequiredProperty(PROPERTY_REST_API_URL), 
-				restTemplate
+				restTemplate()
 		);
     }
 	
