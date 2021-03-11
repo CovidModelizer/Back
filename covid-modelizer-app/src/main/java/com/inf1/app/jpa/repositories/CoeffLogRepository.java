@@ -1,176 +1,102 @@
 package com.inf1.app.jpa.repositories;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.inf1.app.jpa.entities.CoeffLOG;
-import com.inf1.app.jpa.entities.Coefficient;
 
 @Repository
-public class CoeffLogRepository implements JpaRepository<Coefficient, Integer>, CoefficientRepository{
+public class CoeffLogRepository implements CrudRepository<CoeffLOG, Integer> {
 
-	@Override
+	@PersistenceContext
+	private EntityManager entityManager;
+	
 	public CoeffLOG findByDate(LocalDateTime date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public CoeffLOG findByCoeff(@Param("coeff") double coeff) {
-		// TODO
-		return null;
+		Query q = entityManager.createQuery("select c from CoeffLOG c WHERE c.date = :date AND c.type = :typeCoeff", CoeffLOG.class);
+		q.setParameter("date", date);
+		return (CoeffLOG) q.getSingleResult();
 	}
 	
 	@Override
-	public Page<Coefficient> findAll(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+	public <S extends CoeffLOG> S save(S entity) {
+		entityManager.persist(entity);
+		return entity;
 	}
 
 	@Override
-	public <S extends Coefficient> S save(S entity) {
-		// TODO Auto-generated method stub
-		return null;
+	public <S extends CoeffLOG> Iterable<S> saveAll(Iterable<S> entities) {
+		for (S entity : entities) {
+			save(entity);
+		}
+		return entities;
 	}
 
 	@Override
-	public Optional<Coefficient> findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<CoeffLOG> findById(Integer id) {
+		Query q = entityManager.createQuery("select c from CoeffLOG c WHERE c.id = :id", CoeffLOG.class);
+		q.setParameter("id", id);
+		return Optional.of((CoeffLOG) q.getSingleResult());
 	}
 
-	@Override
+	@Override 
 	public boolean existsById(Integer id) {
-		// TODO Auto-generated method stub
+		if(findById(id).isPresent()) {
+			return true;
+		}
 		return false;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Iterable<CoeffLOG> findAll() {
+		Query q = entityManager.createQuery("select * from CoeffLOG", CoeffLOG.class);
+		return (Iterable<CoeffLOG>) q.getResultList().iterator();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Iterable<CoeffLOG> findAllById(Iterable<Integer> ids) {
+		Query q = entityManager.createQuery("select c from CoeffLOG c WHERE c.id = :ids", CoeffLOG.class);
+		q.setParameter("id", ids);
+		return (Iterable<CoeffLOG>) q.getResultList().iterator();
 	}
 
 	@Override
 	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+		Query q = entityManager.createQuery("select * from CoeffLOG", CoeffLOG.class);
+		return q.getResultList().size();
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
-		
+		Query q = entityManager.createQuery("delete from CoeffLOG c WHERE id=:id", CoeffLOG.class);
+		q.setParameter("id", id);
+		q.executeUpdate();
 	}
 
 	@Override
-	public void delete(Coefficient entity) {
-		// TODO Auto-generated method stub
-		
+	public void delete(CoeffLOG entity) {
+		deleteById(entity.getId());
 	}
 
 	@Override
-	public void deleteAll(Iterable<? extends Coefficient> entities) {
-		// TODO Auto-generated method stub
-		
+	public void deleteAll(Iterable<? extends CoeffLOG> entities) {
+		for(CoeffLOG c : entities) {
+			delete(c);
+		}
 	}
 
 	@Override
 	public void deleteAll() {
-		// TODO Auto-generated method stub
-		
+		for (CoeffLOG c : findAll()) {
+			delete(c);
+		}
 	}
-
-	@Override
-	public <S extends Coefficient> Optional<S> findOne(Example<S> example) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Coefficient> Page<S> findAll(Example<S> example, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Coefficient> long count(Example<S> example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public <S extends Coefficient> boolean exists(Example<S> example) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<Coefficient> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Coefficient> findAll(Sort sort) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Coefficient> findAllById(Iterable<Integer> ids) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Coefficient> List<S> saveAll(Iterable<S> entities) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void flush() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public <S extends Coefficient> S saveAndFlush(S entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteInBatch(Iterable<Coefficient> entities) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteAllInBatch() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Coefficient getOne(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Coefficient> List<S> findAll(Example<S> example) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Coefficient> List<S> findAll(Example<S> example, Sort sort) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
