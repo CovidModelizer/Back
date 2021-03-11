@@ -1,20 +1,20 @@
 package com.inf1.app.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class SituationReelleDTO {
 	
-	private LocalDateTime date;
-	private int casConfirmes, deces, decesEhpad, reanimation, hospitalises, gueries, 
-	nouvellesHospitalisations, nouvellesReanimations, nouvellesPremieresInjections, cumulPremieresInjections,
-	stockNombreTotalDoses, stockNombreDosesPfizer, stockNombreDosesModerna, livraisonsCumulNombreTotalDoses, 
-	livraisonsCumulNombreDosesPfizer, livraisonsCumulNombreDosesModerna, totalPrisesRendezVousSemaine, 
-	prisesRendezVousSemaineRang1, prisesRendezVousSemaineRang2, stockEhpadNombreDosesPfizer;
-	
-	public LocalDateTime getDate() {
+	private LocalDate date;
+	private int casConfirmes, deces, decesEhpad, reanimation, hospitalises, gueris, nouvellesHospitalisations,
+    nouvellesReanimations, nouvellesPremieresInjections, cumulPremieresInjections,
+    stockNombreTotalDoses, stockNombreDosesPfizer, stockNombreDosesModerna,
+    livraisonsCumulNombreTotalDoses, livraisonsCumulNombreDosesPfizer,
+    livraisonsCumulNombreDosesModerna, totalPrisesRendezVousSemaine, prisesRendezVousSemaineRang1,
+    prisesRendezVousSemaineRang2, stockEhpadNombreDosesPfizer;
+	public LocalDate getDate() {
 		return date;
 	}
-	public void setDate(LocalDateTime date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	public int getCasConfirmes() {
@@ -47,11 +47,11 @@ public class SituationReelleDTO {
 	public void setHospitalises(int hospitalises) {
 		this.hospitalises = hospitalises;
 	}
-	public int getGueries() {
-		return gueries;
+	public int getGueris() {
+		return gueris;
 	}
-	public void setGueries(int gueries) {
-		this.gueries = gueries;
+	public void setGueris(int gueris) {
+		this.gueris = gueris;
 	}
 	public int getNouvellesHospitalisations() {
 		return nouvellesHospitalisations;
@@ -137,4 +137,23 @@ public class SituationReelleDTO {
 	public void setStockEhpadNombreDosesPfizer(int stockEhpadNombreDosesPfizer) {
 		this.stockEhpadNombreDosesPfizer = stockEhpadNombreDosesPfizer;
 	}
+	@Override
+	public String toString() {
+		return "SituationReelleDTO [date=" + date + ", casConfirmes=" + casConfirmes + ", deces=" + deces
+				+ ", decesEhpad=" + decesEhpad + ", reanimation=" + reanimation + ", hospitalises=" + hospitalises
+				+ ", gueris=" + gueris + ", nouvellesHospitalisations=" + nouvellesHospitalisations
+				+ ", nouvellesReanimations=" + nouvellesReanimations + ", nouvellesPremieresInjections="
+				+ nouvellesPremieresInjections + ", cumulPremieresInjections=" + cumulPremieresInjections
+				+ ", stockNombreTotalDoses=" + stockNombreTotalDoses + ", stockNombreDosesPfizer="
+				+ stockNombreDosesPfizer + ", stockNombreDosesModerna=" + stockNombreDosesModerna
+				+ ", livraisonsCumulNombreTotalDoses=" + livraisonsCumulNombreTotalDoses
+				+ ", livraisonsCumulNombreDosesPfizer=" + livraisonsCumulNombreDosesPfizer
+				+ ", livraisonsCumulNombreDosesModerna=" + livraisonsCumulNombreDosesModerna
+				+ ", totalPrisesRendezVousSemaine=" + totalPrisesRendezVousSemaine + ", prisesRendezVousSemaineRang1="
+				+ prisesRendezVousSemaineRang1 + ", prisesRendezVousSemaineRang2=" + prisesRendezVousSemaineRang2
+				+ ", stockEhpadNombreDosesPfizer=" + stockEhpadNombreDosesPfizer + "]";
+	}
+	
+	
+	
 }
