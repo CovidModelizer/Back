@@ -1,6 +1,6 @@
 package com.inf1.app.jpa.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +23,6 @@ public abstract class Coefficient {
 	private int id;
 	@NotNull
 	@Column
-	private LocalDateTime date;
+	private LocalDate date;
 	
 }

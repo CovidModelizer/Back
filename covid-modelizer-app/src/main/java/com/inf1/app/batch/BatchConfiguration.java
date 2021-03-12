@@ -3,6 +3,7 @@ package com.inf1.app.batch;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.sql.DataSource;
 import org.springframework.batch.core.Job;
@@ -11,22 +12,32 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
+import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
+import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.client.RestTemplate;
 
-import com.inf1.app.batch.steps.RESTSituationReelleReader;
+import com.inf1.app.batch.collect_data.steps.RESTSituationReelleReader;
+import com.inf1.app.batch.modelisations.steps.ModelisationsItemProcessor;
+import com.inf1.app.batch.modelisations.steps.ModelisationsItemWriter;
 import com.inf1.app.dto.SituationReelleDTO;
 
 @Configuration
 @EnableBatchProcessing
-@EnableScheduling
+//@EnableScheduling
 public class BatchConfiguration {
 		
     @Bean
@@ -60,11 +71,13 @@ public class BatchConfiguration {
 	}
 	
 	@Bean
-	Job importUserJob(JobBuilderFactory jobBuilderFactory,
-			@Qualifier("restSituationReelleStep") Step step1) {
-	  return jobBuilderFactory.get("collectDataJob")
+	Job job(JobBuilderFactory jobBuilderFactory,
+			@Qualifier("restSituationReelleStep") Step restSituationReelleStep,
+			@Qualifier("modelisationsStep") Step modelisationsStep) {
+	  return jobBuilderFactory.get("job")
 	    .incrementer(new RunIdIncrementer())
-	    .flow(step1)
+	    .flow(restSituationReelleStep)
+	    //.next(modelisationsStep)
 	    .end()
 	    .build();
 	}
@@ -79,5 +92,44 @@ public class BatchConfiguration {
 	    .writer(restItemWriter)
 	    .build();
 	}
+	
+	@Bean
+	JdbcCursorItemReader<SituationReelleDTO> modelisationsItemReader(DataSource dataSource) {
+		return new JdbcCursorItemReaderBuilder<SituationReelleDTO>()
+                .name("modelisationsItemReader")
+                .dataSource(dataSource)
+                .sql("SELECT * FROM SITUATION_REELLE")
+                .rowMapper(new BeanPropertyRowMapper<>(SituationReelleDTO.class))
+                .build();
+    }
+	
+	@Bean
+	ItemProcessor<SituationReelleDTO, List<Double>> modelisationsItemProcessor() {
+		return new ModelisationsItemProcessor();
+	}
+	
+	@Bean
+	ItemWriter<List<Double>> modelisationsItemWriter(DataSource dataSource, NamedParameterJdbcTemplate jdbcTemplate) {
+		return new ModelisationsItemWriter(dataSource, jdbcTemplate);
+	}
+	
+	
+	@Bean
+	Step modelisationsStep(JdbcCursorItemReader<SituationReelleDTO> modelisationsItemReader,
+			ItemProcessor<SituationReelleDTO, List<Double>> modelisationsItemProcessor,
+			ItemWriter<List<Double>> modelisationsItemWriter,
+			StepBuilderFactory stepBuilderFactory) {
+		return stepBuilderFactory.get("modelisationsStep")
+			    .<SituationReelleDTO, List<Double>> chunk(1)
+			    .reader(modelisationsItemReader)
+			    .processor(modelisationsItemProcessor)
+			    .writer(modelisationsItemWriter)
+			    .build();
+	}
+	
+	@Bean
+    public PlatformTransactionManager transactionManager(DataSource ds) {
+        return new DataSourceTransactionManager(ds);
+    }
 	
 }

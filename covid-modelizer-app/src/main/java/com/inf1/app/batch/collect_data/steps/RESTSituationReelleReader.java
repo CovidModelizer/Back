@@ -1,4 +1,4 @@
-package com.inf1.app.batch.steps;
+package com.inf1.app.batch.collect_data.steps;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
