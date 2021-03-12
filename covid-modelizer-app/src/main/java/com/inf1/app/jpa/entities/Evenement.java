@@ -31,4 +31,8 @@ public class Evenement {
 	// Trigramme donc = "CON" ou "IMM"
 	private String typeIndicateur;
 	
+	public Integer getId() {
+		return id;
+	}
+	
 }

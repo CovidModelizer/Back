@@ -58,4 +58,8 @@ public class SituationReelle {
 	@Column(name = "stock_ehpad_nombre_doses_pfizer")
 	private int stockEhpadNombreDosesPfizer;
 	
+	public Integer getId() {
+		return id;
+	}
+	
 }

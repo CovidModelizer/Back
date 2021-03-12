@@ -33,4 +33,8 @@ public class Indicateur {
 	// Trigramme donc = "CAS" ou "VAC"
 	private String typeIndicateur;
 	
+	public Integer getId() {
+		return id;
+	}
+	
 }

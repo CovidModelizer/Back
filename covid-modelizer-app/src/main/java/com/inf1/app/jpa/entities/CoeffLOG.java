@@ -22,5 +22,6 @@ public class CoeffLOG extends Coefficient {
 	public CoeffLOG() {
 		super();
 	}
+
 	
 }

@@ -25,4 +25,11 @@ public abstract class Coefficient {
 	@Column
 	private LocalDate date;
 	
+	public int getId() {
+		return id;
+	}
+
+	
+	
+	
 }
