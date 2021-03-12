@@ -19,7 +19,7 @@ public class CoeffLineaire extends Coefficient {
 	@Column
 	private double a, b;
 	@NotNull
-	@Column
+	@Column(name = "type_coeff")
 	// Trigramme donc = "CAS" ou "VAC"
 	private String typeCoeff;
 	
