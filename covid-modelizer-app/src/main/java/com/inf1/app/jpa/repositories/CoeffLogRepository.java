@@ -1,6 +1,7 @@
 package com.inf1.app.jpa.repositories;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
@@ -18,8 +19,34 @@ public class CoeffLogRepository implements CrudRepository<CoeffLOG, Integer> {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	public CoeffLOG findByDate(LocalDateTime date) {
-		Query q = entityManager.createQuery("select c from CoeffLOG c WHERE c.date = :date AND c.type = :typeCoeff", CoeffLOG.class);
+	@SuppressWarnings("unchecked")
+	public List<CoeffLOG> findBetweenDate(LocalDate date1, LocalDate date2) {
+		Query q = entityManager.createQuery("select c from CoeffLOG c WHERE (c.date BETWEEN :date1 AND :date2)", CoeffLOG.class);
+		q.setParameter("date1", date1);
+		q.setParameter("date2", date2);
+		return q.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<CoeffLOG> findBeforeDate(LocalDate date) {
+		Query q = entityManager.createQuery("select c from CoeffLOG c WHERE (c.date <= :date)", CoeffLOG.class);
+		q.setParameter("date", date);
+		return q.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<CoeffLOG> findAfterDate(LocalDate date) {
+		Query q = entityManager.createQuery("select c from CoeffLOG c WHERE (c.date >= :date)", CoeffLOG.class);
+		q.setParameter("date", date);
+		return q.getResultList();
+	}
+	
+	public List<CoeffLOG> findLastDate(int nbDays) {
+		return findBetweenDate(LocalDate.now().minusDays(nbDays), LocalDate.now());
+	}
+	
+	public CoeffLOG findByDate(LocalDate date) {
+		Query q = entityManager.createQuery("select c from CoeffLOG c WHERE c.date = :date", CoeffLOG.class);
 		q.setParameter("date", date);
 		return (CoeffLOG) q.getSingleResult();
 	}
@@ -56,8 +83,8 @@ public class CoeffLogRepository implements CrudRepository<CoeffLOG, Integer> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Iterable<CoeffLOG> findAll() {
-		Query q = entityManager.createQuery("select * from CoeffLOG", CoeffLOG.class);
-		return (Iterable<CoeffLOG>) q.getResultList().iterator();
+		Query q = entityManager.createQuery("select c from CoeffLOG c", CoeffLOG.class);
+		return (Iterable<CoeffLOG>) () -> q.getResultList().iterator();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -65,12 +92,12 @@ public class CoeffLogRepository implements CrudRepository<CoeffLOG, Integer> {
 	public Iterable<CoeffLOG> findAllById(Iterable<Integer> ids) {
 		Query q = entityManager.createQuery("select c from CoeffLOG c WHERE c.id = :ids", CoeffLOG.class);
 		q.setParameter("id", ids);
-		return (Iterable<CoeffLOG>) q.getResultList().iterator();
+		return (Iterable<CoeffLOG>) () -> q.getResultList().iterator();
 	}
 
 	@Override
 	public long count() {
-		Query q = entityManager.createQuery("select * from CoeffLOG", CoeffLOG.class);
+		Query q = entityManager.createQuery("select c from CoeffLOG c", CoeffLOG.class);
 		return q.getResultList().size();
 	}
 

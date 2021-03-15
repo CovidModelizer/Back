@@ -1,6 +1,7 @@
 package com.inf1.app.jpa.repositories;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
@@ -8,7 +9,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.inf1.app.jpa.entities.Indicateur;
@@ -20,24 +20,36 @@ public class IndicateurRepository implements CrudRepository<Indicateur, Integer>
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	public Indicateur findByDate(@Param("date") LocalDateTime date) {
-		// TODO
-		return null;
+	@SuppressWarnings("unchecked")
+	public List<Indicateur> findBetweenDate(LocalDate date1, LocalDate date2) {
+		Query q = entityManager.createQuery("select c from Indicateur c WHERE (c.date BETWEEN :date1 AND :date2)", Indicateur.class);
+		q.setParameter("date1", date1);
+		q.setParameter("date2", date2);
+		return q.getResultList();
 	}
 	
-	public Indicateur findByTypeModele(@Param("typeModele") String typeModele) {
-		// TODO
-		return null;
+	@SuppressWarnings("unchecked")
+	public List<Indicateur> findBeforeDate(LocalDate date) {
+		Query q = entityManager.createQuery("select c from Indicateur c WHERE (c.date <= :date)", Indicateur.class);
+		q.setParameter("date", date);
+		return q.getResultList();
 	}
 	
-	public Indicateur findByValeur(@Param("valeur") int valeur) {
-		// TODO
-		return null;
+	@SuppressWarnings("unchecked")
+	public List<Indicateur> findAfterDate(LocalDate date) {
+		Query q = entityManager.createQuery("select c from Indicateur c WHERE (c.date >= :date)", Indicateur.class);
+		q.setParameter("date", date);
+		return q.getResultList();
 	}
 	
-	public Indicateur findByTypeIndicateur(@Param("typeIndicateur") String typeIndicateur) {
-		// TODO
-		return null;
+	public List<Indicateur> findLastDate(int nbDays) {
+		return findBetweenDate(LocalDate.now().minusDays(nbDays), LocalDate.now());
+	}
+	
+	public Indicateur findByDate(LocalDate date) {
+		Query q = entityManager.createQuery("select c from Indicateur c WHERE c.date = :date", Indicateur.class);
+		q.setParameter("date", date);
+		return (Indicateur) q.getSingleResult();
 	}
 	
 	@Override
@@ -72,8 +84,8 @@ public class IndicateurRepository implements CrudRepository<Indicateur, Integer>
 	@SuppressWarnings("unchecked")
 	@Override
 	public Iterable<Indicateur> findAll() {
-		Query q = entityManager.createQuery("select * from Indicateur", Indicateur.class);
-		return (Iterable<Indicateur>) q.getResultList().iterator();
+		Query q = entityManager.createQuery("select i from Indicateur i", Indicateur.class);
+		return (Iterable<Indicateur>) () -> q.getResultList().iterator();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -81,12 +93,12 @@ public class IndicateurRepository implements CrudRepository<Indicateur, Integer>
 	public Iterable<Indicateur> findAllById(Iterable<Integer> ids) {
 		Query q = entityManager.createQuery("select c from Indicateur c WHERE c.id = :ids", Indicateur.class);
 		q.setParameter("id", ids);
-		return (Iterable<Indicateur>) q.getResultList().iterator();
+		return (Iterable<Indicateur>) () -> q.getResultList().iterator();
 	}
 
 	@Override
 	public long count() {
-		Query q = entityManager.createQuery("select * from Indicateur", Indicateur.class);
+		Query q = entityManager.createQuery("select i from Indicateur i", Indicateur.class);
 		return q.getResultList().size();
 	}
 

@@ -1,6 +1,7 @@
 package com.inf1.app.jpa.repositories;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
@@ -8,45 +9,48 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.inf1.app.jpa.entities.SituationReelle;
 
+@Repository
 public class SituationReelleRepository implements CrudRepository<SituationReelle, Integer>{
 
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	public SituationReelle findByDate(@Param("date") LocalDateTime date) {
-		// TODO
-		return null;
+	@SuppressWarnings("unchecked")
+	public List<SituationReelle> findBetweenDate(LocalDate date1, LocalDate date2) {
+		Query q = entityManager.createQuery("select c from SituationReelle c WHERE (c.date BETWEEN :date1 AND :date2)", SituationReelle.class);
+		q.setParameter("date1", date1);
+		q.setParameter("date2", date2);
+		return q.getResultList();
 	}
 	
-	public SituationReelle findByNbCas(@Param("nbCas") int nbCas) {
-		// TODO
-		return null;
+	@SuppressWarnings("unchecked")
+	public List<SituationReelle> findBeforeDate(LocalDate date) {
+		Query q = entityManager.createQuery("select c from SituationReelle c WHERE (c.date <= :date)", SituationReelle.class);
+		q.setParameter("date", date);
+		return q.getResultList();
 	}
 	
-	public SituationReelle findByNbHospitalisations(@Param("nbHospitalisations") int nbHospitalisations) {
-		// TODO
-		return null;
+	@SuppressWarnings("unchecked")
+	public List<SituationReelle> findAfterDate(LocalDate date) {
+		Query q = entityManager.createQuery("select c from SituationReelle c WHERE (c.date >= :date)", SituationReelle.class);
+		q.setParameter("date", date);
+		return q.getResultList();
 	}
 	
-	public SituationReelle findByNbReanimations(@Param("nbReanimations") int nbReanimations) {
-		// TODO
-		return null;
+	public List<SituationReelle> findLastDate(int nbDays) {
+		return findBetweenDate(LocalDate.now().minusDays(nbDays), LocalDate.now());
 	}
 	
-	public SituationReelle findByNbDeces(@Param("nbDeces") int nbDeces) {
-		// TODO
-		return null;
+	public SituationReelle findByDate(LocalDate date) {
+		Query q = entityManager.createQuery("select c from SituationReelle c WHERE c.date = :date", SituationReelle.class);
+		q.setParameter("date", date);
+		return (SituationReelle) q.getSingleResult();
 	}
-	
-	public SituationReelle findByNbVaccines(@Param("nbVaccines") int nbVaccines) {
-		// TODO
-		return null;
-	}
-	
+
 	@Override
 	public <S extends SituationReelle> S save(S entity) {
 		entityManager.persist(entity);
@@ -79,8 +83,8 @@ public class SituationReelleRepository implements CrudRepository<SituationReelle
 	@SuppressWarnings("unchecked")
 	@Override
 	public Iterable<SituationReelle> findAll() {
-		Query q = entityManager.createQuery("select * from SituationReelle", SituationReelle.class);
-		return (Iterable<SituationReelle>) q.getResultList().iterator();
+		Query q = entityManager.createQuery("select s from SituationReelle s", SituationReelle.class);
+		return (Iterable<SituationReelle>) () -> q.getResultList().iterator();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -88,12 +92,12 @@ public class SituationReelleRepository implements CrudRepository<SituationReelle
 	public Iterable<SituationReelle> findAllById(Iterable<Integer> ids) {
 		Query q = entityManager.createQuery("select c from SituationReelle c WHERE c.id = :ids", SituationReelle.class);
 		q.setParameter("id", ids);
-		return (Iterable<SituationReelle>) q.getResultList().iterator();
+		return (Iterable<SituationReelle>) () -> q.getResultList().iterator();
 	}
 
 	@Override
 	public long count() {
-		Query q = entityManager.createQuery("select * from SituationReelle", SituationReelle.class);
+		Query q = entityManager.createQuery("select s from SituationReelle s", SituationReelle.class);
 		return q.getResultList().size();
 	}
 

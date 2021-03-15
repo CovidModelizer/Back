@@ -1,6 +1,7 @@
 package com.inf1.app.jpa.repositories;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
@@ -19,12 +20,38 @@ public class CoeffSirRepository implements CrudRepository<CoeffSIR, Integer>{
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	public CoeffSIR findByDate(LocalDateTime date) {
-		Query q = entityManager.createQuery("select c from CoeffSIR c WHERE c.date = :date AND c.type = :typeCoeff", CoeffSIR.class);
+	@SuppressWarnings("unchecked")
+	public List<CoeffSIR> findBetweenDate(LocalDate date1, LocalDate date2) {
+		Query q = entityManager.createQuery("select c from CoeffSIR c WHERE (c.date BETWEEN :date1 AND :date2)", CoeffSIR.class);
+		q.setParameter("date1", date1);
+		q.setParameter("date2", date2);
+		return q.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<CoeffSIR> findBeforeDate(LocalDate date) {
+		Query q = entityManager.createQuery("select c from CoeffSIR c WHERE (c.date <= :date)", CoeffSIR.class);
+		q.setParameter("date", date);
+		return q.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<CoeffSIR> findAfterDate(LocalDate date) {
+		Query q = entityManager.createQuery("select c from CoeffSIR c WHERE (c.date >= :date)", CoeffSIR.class);
+		q.setParameter("date", date);
+		return q.getResultList();
+	}
+	
+	public List<CoeffSIR> findLastDate(int nbDays) {
+		return findBetweenDate(LocalDate.now().minusDays(nbDays), LocalDate.now());
+	}
+	
+	public CoeffSIR findByDate(LocalDate date) {
+		Query q = entityManager.createQuery("select c from CoeffSIR c WHERE c.date = :date", CoeffSIR.class);
 		q.setParameter("date", date);
 		return (CoeffSIR) q.getSingleResult();
 	}
-	
+
 	@Override
 	public <S extends CoeffSIR> S save(S entity) {
 		entityManager.persist(entity);
@@ -57,8 +84,8 @@ public class CoeffSirRepository implements CrudRepository<CoeffSIR, Integer>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public Iterable<CoeffSIR> findAll() {
-		Query q = entityManager.createQuery("select * from CoeffSIR", CoeffSIR.class);
-		return (Iterable<CoeffSIR>) q.getResultList().iterator();
+		Query q = entityManager.createQuery("select c from CoeffSIR c", CoeffSIR.class);
+		return (Iterable<CoeffSIR>) () -> q.getResultList().iterator();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -66,12 +93,12 @@ public class CoeffSirRepository implements CrudRepository<CoeffSIR, Integer>{
 	public Iterable<CoeffSIR> findAllById(Iterable<Integer> ids) {
 		Query q = entityManager.createQuery("select c from CoeffSIR c WHERE c.id = :ids", CoeffSIR.class);
 		q.setParameter("id", ids);
-		return (Iterable<CoeffSIR>) q.getResultList().iterator();
+		return (Iterable<CoeffSIR>) () -> q.getResultList().iterator();
 	}
 
 	@Override
 	public long count() {
-		Query q = entityManager.createQuery("select * from CoeffSIR", CoeffSIR.class);
+		Query q = entityManager.createQuery("select c from CoeffSIR c", CoeffSIR.class);
 		return q.getResultList().size();
 	}
 
