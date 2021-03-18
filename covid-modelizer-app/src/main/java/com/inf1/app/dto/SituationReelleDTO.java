@@ -11,6 +11,7 @@ public class SituationReelleDTO {
     livraisonsCumulNombreTotalDoses, livraisonsCumulNombreDosesPfizer,
     livraisonsCumulNombreDosesModerna, totalPrisesRendezVousSemaine, prisesRendezVousSemaineRang1,
     prisesRendezVousSemaineRang2, stockEhpadNombreDosesPfizer;
+	
 	public LocalDate getDate() {
 		return date;
 	}

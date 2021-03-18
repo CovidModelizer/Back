@@ -43,7 +43,6 @@ import com.inf1.app.batch.modelisations.steps.ModelisationsItemProcessor;
 import com.inf1.app.batch.modelisations.steps.ModelisationsItemWriter;
 import com.inf1.app.dto.GlobalStep2DTO;
 import com.inf1.app.dto.SituationReelleDTO;
-import com.inf1.app.jpa.entities.CoeffLineaire;
 
 @Configuration
 @EnableBatchProcessing
@@ -86,9 +85,8 @@ public class BatchConfiguration {
 			@Qualifier("modelisationsStep") Step modelisationsStep) {
 	  return jobBuilderFactory.get("job")
 	    .incrementer(new RunIdIncrementer())
-	    //.flow(restSituationReelleStep)
-	    //.next(modelisationsStep)
-	    .flow(modelisationsStep)
+	    .flow(restSituationReelleStep)
+	    .next(modelisationsStep)
 	    .end()
 	    .build();
 	}
@@ -124,32 +122,6 @@ public class BatchConfiguration {
 		return new ModelisationsItemWriter(dataSource);
 	}
 	
-	/*
-	@Bean
-	public JdbcBatchItemWriter<GlobalStep2DTO> coeffLineaireWriter(DataSource dataSource) {        
-	    return new JdbcBatchItemWriterBuilder<GlobalStep2DTO>()
-	            .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-	            .sql("INSERT INTO COEFF_LINERAIRE(date, a, b, type_coeff) VALUES(:date, :a, :b, :typeCoeff)")
-	            .dataSource(dataSource)
-	            .build();
-	}
-
-	@Bean
-	public JdbcBatchItemWriter<GlobalStep2DTO> coeffLogWriter(DataSource dataSource) {           
-	    return new JdbcBatchItemWriterBuilder<GlobalStep2DTO>()
-	            .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-	            .sql("INSERT INTO COEFF_LOG(date, coeff) VALUES(:date, :coeff)")
-	            .dataSource(dataSource)             
-	            .build();
-	}
-
-	@Bean
-	public CompositeItemWriter<GlobalStep2DTO> modelisationsItemWriter(DataSource dataSource) {
-	    CompositeItemWriter<GlobalStep2DTO> compositeItemWriter = new CompositeItemWriter<>();
-	    compositeItemWriter.setDelegates(Arrays.asList(coeffLineaireWriter(dataSource), coeffLogWriter(dataSource)));
-	    return compositeItemWriter;
-	}
-	*/
 	
 	@Bean
 	Step modelisationsStep(DataSource dataSource,

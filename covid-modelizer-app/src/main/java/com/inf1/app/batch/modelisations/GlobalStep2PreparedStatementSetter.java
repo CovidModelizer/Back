@@ -17,7 +17,6 @@ public class GlobalStep2PreparedStatementSetter implements ItemPreparedStatement
 	
 	@Override
 	public void setValues(GlobalStep2DTO item, PreparedStatement ps) throws SQLException {
-		LOG.info("*** item : " + item);
 		ps.setDate(1, Date.valueOf(item.getDate()));
 		ps.setDouble(2, item.getA());
 		ps.setDouble(3, item.getB());
