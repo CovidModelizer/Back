@@ -28,7 +28,6 @@ public class Evenement {
 	@Column
 	private String typeModele;
 	@Column
-	// Trigramme donc = "CON" ou "IMM"
 	private String typeIndicateur;
 	
 	public Integer getId() {

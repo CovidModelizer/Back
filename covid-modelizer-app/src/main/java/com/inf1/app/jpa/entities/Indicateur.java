@@ -30,7 +30,6 @@ public class Indicateur {
 	@Column
 	private int valeur;
 	@Column
-	// Trigramme donc = "CAS" ou "VAC"
 	private String typeIndicateur;
 	
 	public Integer getId() {
