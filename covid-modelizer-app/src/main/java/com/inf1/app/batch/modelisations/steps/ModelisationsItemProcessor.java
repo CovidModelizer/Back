@@ -14,12 +14,12 @@ public class ModelisationsItemProcessor implements ItemProcessor<SituationReelle
 
 	@Override
 	public GlobalStep2DTO process(SituationReelleDTO item) throws Exception {
-		GlobalStep2DTO dtoTest = new GlobalStep2DTO(1.2, 1.3, "CAS");
+		//GlobalStep2DTO dtoTest = new GlobalStep2DTO(1.2, 1.3, "CAS");
 		
 		// TODO : algo here
 		
 		//return dtoTest;
-		return dtoTest;
+		return null;
 	}
 
 }

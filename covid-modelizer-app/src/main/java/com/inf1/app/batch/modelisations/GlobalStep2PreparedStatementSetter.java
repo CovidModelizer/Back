@@ -18,10 +18,10 @@ public class GlobalStep2PreparedStatementSetter implements ItemPreparedStatement
 	@Override
 	public void setValues(GlobalStep2DTO item, PreparedStatement ps) throws SQLException {
 		LOG.info("*** item : " + item);
-		ps.setDate(1, Date.valueOf(item.getDate()));
-		ps.setDouble(2, item.getA());
-		ps.setDouble(3, item.getB());
-		ps.setString(4, item.getTypeCoeff());
+//		ps.setDate(1, Date.valueOf(item.getDate()));
+//		ps.setDouble(2, item.getA());
+//		ps.setDouble(3, item.getB());
+//		ps.setString(4, item.getTypeCoeff());
 		
 		// TODO : mapper les args en fonction des données renseignées dans le DTO (quelle table on veut remplir)
 	}}
