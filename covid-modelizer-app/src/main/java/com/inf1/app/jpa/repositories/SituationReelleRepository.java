@@ -11,7 +11,9 @@ import javax.persistence.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import com.inf1.app.dto.SituationReelleDTO;
 import com.inf1.app.jpa.entities.SituationReelle;
+import com.inf1.app.utils.DTOUtils;
 
 @Repository
 public class SituationReelleRepository implements CrudRepository<SituationReelle, Integer>{
@@ -20,35 +22,36 @@ public class SituationReelleRepository implements CrudRepository<SituationReelle
 	private EntityManager entityManager;
 	
 	@SuppressWarnings("unchecked")
-	public List<SituationReelle> findBetweenDate(LocalDate date1, LocalDate date2) {
+	public List<SituationReelleDTO> findBetweenDate(LocalDate date1, LocalDate date2) {
 		Query q = entityManager.createQuery("select c from SituationReelle c WHERE (c.date BETWEEN :date1 AND :date2)", SituationReelle.class);
 		q.setParameter("date1", date1);
 		q.setParameter("date2", date2);
-		return q.getResultList();
+		return DTOUtils.situationsReellesDTOsMapper(q.getResultList());
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<SituationReelle> findBeforeDate(LocalDate date) {
+	public List<SituationReelleDTO> findBeforeDate(LocalDate date) {
 		Query q = entityManager.createQuery("select c from SituationReelle c WHERE (c.date <= :date)", SituationReelle.class);
 		q.setParameter("date", date);
-		return q.getResultList();
+		return DTOUtils.situationsReellesDTOsMapper(q.getResultList());
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<SituationReelle> findAfterDate(LocalDate date) {
+	public List<SituationReelleDTO> findAfterDate(LocalDate date) {
 		Query q = entityManager.createQuery("select c from SituationReelle c WHERE (c.date >= :date)", SituationReelle.class);
 		q.setParameter("date", date);
-		return q.getResultList();
+		return DTOUtils.situationsReellesDTOsMapper(q.getResultList());
 	}
 	
-	public List<SituationReelle> findLastDate(int nbDays) {
+	public List<SituationReelleDTO> findLastDate(int nbDays) {
 		return findBetweenDate(LocalDate.now().minusDays(nbDays), LocalDate.now());
 	}
 	
-	public SituationReelle findByDate(LocalDate date) {
+	@SuppressWarnings("unchecked")
+	public List<SituationReelleDTO> findByDate(LocalDate date) {
 		Query q = entityManager.createQuery("select c from SituationReelle c WHERE c.date = :date", SituationReelle.class);
 		q.setParameter("date", date);
-		return (SituationReelle) q.getSingleResult();
+		return DTOUtils.situationsReellesDTOsMapper(q.getResultList());
 	}
 
 	@Override
@@ -79,6 +82,13 @@ public class SituationReelleRepository implements CrudRepository<SituationReelle
 		}
 		return false;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<SituationReelleDTO> findallDTO() {
+		Query q = entityManager.createQuery("select s from SituationReelle s", SituationReelle.class);
+		return DTOUtils.situationsReellesDTOsMapper(q.getResultList());
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	@Override
