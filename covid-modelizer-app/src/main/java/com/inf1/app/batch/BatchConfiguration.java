@@ -3,8 +3,10 @@ package com.inf1.app.batch;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -16,16 +18,22 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
+import org.springframework.batch.item.database.ItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
+import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
+import org.springframework.batch.item.support.CompositeItemWriter;
+import org.springframework.batch.support.transaction.ResourcelessTransactionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.client.RestTemplate;
@@ -33,7 +41,9 @@ import org.springframework.web.client.RestTemplate;
 import com.inf1.app.batch.collect_data.steps.RESTSituationReelleReader;
 import com.inf1.app.batch.modelisations.steps.ModelisationsItemProcessor;
 import com.inf1.app.batch.modelisations.steps.ModelisationsItemWriter;
+import com.inf1.app.dto.GlobalStep2DTO;
 import com.inf1.app.dto.SituationReelleDTO;
+import com.inf1.app.jpa.entities.CoeffLineaire;
 
 @Configuration
 @EnableBatchProcessing
@@ -76,8 +86,9 @@ public class BatchConfiguration {
 			@Qualifier("modelisationsStep") Step modelisationsStep) {
 	  return jobBuilderFactory.get("job")
 	    .incrementer(new RunIdIncrementer())
-	    .flow(restSituationReelleStep)
+	    //.flow(restSituationReelleStep)
 	    //.next(modelisationsStep)
+	    .flow(modelisationsStep)
 	    .end()
 	    .build();
 	}
@@ -98,38 +109,60 @@ public class BatchConfiguration {
 		return new JdbcCursorItemReaderBuilder<SituationReelleDTO>()
                 .name("modelisationsItemReader")
                 .dataSource(dataSource)
-                .sql("SELECT * FROM SITUATION_REELLE")
+                .sql("SELECT * FROM situation_reelle")
                 .rowMapper(new BeanPropertyRowMapper<>(SituationReelleDTO.class))
                 .build();
     }
 	
 	@Bean
-	ItemProcessor<SituationReelleDTO, List<Double>> modelisationsItemProcessor() {
+	ItemProcessor<SituationReelleDTO, GlobalStep2DTO> modelisationsItemProcessor() {
 		return new ModelisationsItemProcessor();
 	}
-	
+		
 	@Bean
-	ItemWriter<List<Double>> modelisationsItemWriter(DataSource dataSource, NamedParameterJdbcTemplate jdbcTemplate) {
-		return new ModelisationsItemWriter(dataSource, jdbcTemplate);
+	ItemWriter<GlobalStep2DTO> modelisationsItemWriter(DataSource dataSource) {
+		return new ModelisationsItemWriter(dataSource);
 	}
 	
+	/*
+	@Bean
+	public JdbcBatchItemWriter<GlobalStep2DTO> coeffLineaireWriter(DataSource dataSource) {        
+	    return new JdbcBatchItemWriterBuilder<GlobalStep2DTO>()
+	            .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
+	            .sql("INSERT INTO COEFF_LINERAIRE(date, a, b, type_coeff) VALUES(:date, :a, :b, :typeCoeff)")
+	            .dataSource(dataSource)
+	            .build();
+	}
+
+	@Bean
+	public JdbcBatchItemWriter<GlobalStep2DTO> coeffLogWriter(DataSource dataSource) {           
+	    return new JdbcBatchItemWriterBuilder<GlobalStep2DTO>()
+	            .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
+	            .sql("INSERT INTO COEFF_LOG(date, coeff) VALUES(:date, :coeff)")
+	            .dataSource(dataSource)             
+	            .build();
+	}
+
+	@Bean
+	public CompositeItemWriter<GlobalStep2DTO> modelisationsItemWriter(DataSource dataSource) {
+	    CompositeItemWriter<GlobalStep2DTO> compositeItemWriter = new CompositeItemWriter<>();
+	    compositeItemWriter.setDelegates(Arrays.asList(coeffLineaireWriter(dataSource), coeffLogWriter(dataSource)));
+	    return compositeItemWriter;
+	}
+	*/
 	
 	@Bean
-	Step modelisationsStep(JdbcCursorItemReader<SituationReelleDTO> modelisationsItemReader,
-			ItemProcessor<SituationReelleDTO, List<Double>> modelisationsItemProcessor,
-			ItemWriter<List<Double>> modelisationsItemWriter,
+	Step modelisationsStep(DataSource dataSource,
+			JdbcCursorItemReader<SituationReelleDTO> modelisationsItemReader,
+			ItemProcessor<SituationReelleDTO, GlobalStep2DTO> modelisationsItemProcessor,
+			ItemWriter<GlobalStep2DTO> modelisationsItemWriter,
 			StepBuilderFactory stepBuilderFactory) {
 		return stepBuilderFactory.get("modelisationsStep")
-			    .<SituationReelleDTO, List<Double>> chunk(1)
+			    .<SituationReelleDTO, GlobalStep2DTO> chunk(2)
 			    .reader(modelisationsItemReader)
 			    .processor(modelisationsItemProcessor)
 			    .writer(modelisationsItemWriter)
 			    .build();
 	}
-	
-	@Bean
-    public PlatformTransactionManager transactionManager(DataSource ds) {
-        return new DataSourceTransactionManager(ds);
-    }
 	
 }

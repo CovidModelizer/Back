@@ -1,5 +1,7 @@
 package com.inf1.app.jpa.entities;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -20,7 +22,6 @@ public class CoeffLineaire extends Coefficient {
 	private double a, b;
 	@NotNull
 	@Column(name = "type_coeff")
-	// Trigramme donc = "CAS" ou "VAC"
 	private String typeCoeff;
 	
 	public CoeffLineaire() {
@@ -28,6 +29,7 @@ public class CoeffLineaire extends Coefficient {
 	}
 	
 	public CoeffLineaire(double a, double b, String typeCoeff) {
+		this.setDate(LocalDate.now());
 		this.a = a;
 		this.b = b;
 		this.typeCoeff = typeCoeff;
