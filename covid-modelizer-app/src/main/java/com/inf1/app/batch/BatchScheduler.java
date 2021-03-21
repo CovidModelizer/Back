@@ -2,6 +2,7 @@ package com.inf1.app.batch;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -16,11 +17,11 @@ import lombok.AllArgsConstructor;
 public class BatchScheduler {
 
 	private JobLauncher jobLauncher;
-    private Job job;
+    private Job recupDonneesQuotidiennesJob;
     
-    // Launch batch each day at 5AM
+    // Launch batch each day at ? AM/PM
     @Scheduled(cron = "${batch.cron}")
     public void schedule() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
-    	jobLauncher.run(job, new JobParameters());
+    	jobLauncher.run(recupDonneesQuotidiennesJob, new JobParametersBuilder().addLong("uniqueness", System.nanoTime()).toJobParameters());
     }
 }

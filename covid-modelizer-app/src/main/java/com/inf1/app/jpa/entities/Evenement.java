@@ -33,5 +33,35 @@ public class Evenement {
 	public Integer getId() {
 		return id;
 	}
+
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
+
+	public String getTypeModele() {
+		return typeModele;
+	}
+
+	public void setTypeModele(String typeModele) {
+		this.typeModele = typeModele;
+	}
+
+	public String getTypeIndicateur() {
+		return typeIndicateur;
+	}
+
+	public void setTypeIndicateur(String typeIndicateur) {
+		this.typeIndicateur = typeIndicateur;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
 	
 }

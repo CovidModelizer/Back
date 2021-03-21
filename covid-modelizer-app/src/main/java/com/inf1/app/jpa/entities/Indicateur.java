@@ -1,6 +1,6 @@
 package com.inf1.app.jpa.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +23,7 @@ public class Indicateur {
 	private int id;
 	@NotNull
 	@Column
-	private LocalDateTime date;
+	private LocalDate date;
 	@NotNull
 	@Column
 	private String typeModele;
@@ -36,4 +36,39 @@ public class Indicateur {
 		return id;
 	}
 	
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public String getTypeModele() {
+		return typeModele;
+	}
+
+	public void setTypeModele(String typeModele) {
+		this.typeModele = typeModele;
+	}
+
+	public int getValeur() {
+		return valeur;
+	}
+
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
+	}
+
+	public String getTypeIndicateur() {
+		return typeIndicateur;
+	}
+
+	public void setTypeIndicateur(String typeIndicateur) {
+		this.typeIndicateur = typeIndicateur;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }

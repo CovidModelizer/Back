@@ -17,9 +17,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.inf1.app.dto.SituationReelleDTO;
 
 @Component
-public class RESTSituationReelleReader implements ItemReader<SituationReelleDTO>{
+public class SituationReelleReader implements ItemReader<SituationReelleDTO>{
 
-	private static final Logger LOG = LoggerFactory.getLogger(RESTSituationReelleReader.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SituationReelleReader.class);
 
 	@Autowired private RestTemplate restTemplate;
 	
@@ -29,7 +29,7 @@ public class RESTSituationReelleReader implements ItemReader<SituationReelleDTO>
 	private int nextSituationReelleIndex;
     private SituationReelleDTO[] situationReelleData;
     
-    public RESTSituationReelleReader() {
+    public SituationReelleReader() {
         nextSituationReelleIndex = 0;
     }
     

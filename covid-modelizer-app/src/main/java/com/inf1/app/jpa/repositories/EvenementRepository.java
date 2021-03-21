@@ -1,6 +1,5 @@
 package com.inf1.app.jpa.repositories;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +10,9 @@ import javax.persistence.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import com.inf1.app.dto.EvenementDTO;
 import com.inf1.app.jpa.entities.Evenement;
+import com.inf1.app.utils.DTOUtils;
 
 @Repository
 public class EvenementRepository implements CrudRepository<Evenement, Integer>{
@@ -20,35 +21,19 @@ public class EvenementRepository implements CrudRepository<Evenement, Integer>{
 	private EntityManager entityManager;
 	
 	@SuppressWarnings("unchecked")
-	public List<Evenement> findBetweenDate(LocalDate date1, LocalDate date2) {
-		Query q = entityManager.createQuery("select c from Evenement c WHERE (c.date BETWEEN :date1 AND :date2)", Evenement.class);
-		q.setParameter("date1", date1);
-		q.setParameter("date2", date2);
-		return q.getResultList();
+	public List<EvenementDTO> findByModelAndType(String type, String model) {
+		Query q = entityManager.createQuery("select e from Evenement e WHERE e.typeModele = :model AND e.typeIndicateur = :type", Evenement.class);
+		q.setParameter("model", model);
+		q.setParameter("type", type);
+		return DTOUtils.evenementsDTOsMapper(q.getResultList());
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Evenement> findBeforeDate(LocalDate date) {
-		Query q = entityManager.createQuery("select c from Evenement c WHERE (c.date <= :date)", Evenement.class);
-		q.setParameter("date", date);
-		return q.getResultList();
+	public List<EvenementDTO> findImmuByModel(String model) {
+		return findByModelAndType("IMM", model);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Evenement> findAfterDate(LocalDate date) {
-		Query q = entityManager.createQuery("select c from Evenement c WHERE (c.date >= :date)", Evenement.class);
-		q.setParameter("date", date);
-		return q.getResultList();
-	}
-	
-	public List<Evenement> findLastDate(int nbDays) {
-		return findBetweenDate(LocalDate.now().minusDays(nbDays), LocalDate.now());
-	}
-	
-	public Evenement findByDate(LocalDate date) {
-		Query q = entityManager.createQuery("select c from Evenement c WHERE c.date = :date", Evenement.class);
-		q.setParameter("date", date);
-		return (Evenement) q.getSingleResult();
+	public List<EvenementDTO> findConfByModel(String model) {
+		return findByModelAndType("CON", model);
 	}
 	
 	@Override

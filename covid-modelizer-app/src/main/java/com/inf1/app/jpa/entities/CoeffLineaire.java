@@ -34,6 +34,30 @@ public class CoeffLineaire extends Coefficient {
 		this.b = b;
 		this.typeCoeff = typeCoeff;
 	}
+
+	public double getA() {
+		return a;
+	}
+
+	public void setA(double a) {
+		this.a = a;
+	}
+
+	public double getB() {
+		return b;
+	}
+
+	public void setB(double b) {
+		this.b = b;
+	}
+
+	public String getTypeCoeff() {
+		return typeCoeff;
+	}
+
+	public void setTypeCoeff(String typeCoeff) {
+		this.typeCoeff = typeCoeff;
+	}
 	
 	
 	

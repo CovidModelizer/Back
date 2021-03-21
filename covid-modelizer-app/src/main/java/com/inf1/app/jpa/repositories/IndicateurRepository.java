@@ -11,7 +11,9 @@ import javax.persistence.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import com.inf1.app.dto.IndicateurDTO;
 import com.inf1.app.jpa.entities.Indicateur;
+import com.inf1.app.utils.DTOUtils;
 
 
 @Repository
@@ -21,35 +23,52 @@ public class IndicateurRepository implements CrudRepository<Indicateur, Integer>
 	private EntityManager entityManager;
 	
 	@SuppressWarnings("unchecked")
-	public List<Indicateur> findBetweenDate(LocalDate date1, LocalDate date2) {
-		Query q = entityManager.createQuery("select c from Indicateur c WHERE (c.date BETWEEN :date1 AND :date2)", Indicateur.class);
+	public List<IndicateurDTO> findBetweenDate(LocalDate date1, LocalDate date2, String typeIndicateur, String typeModele) {
+		Query q = entityManager.createQuery("select c from Indicateur c WHERE (c.date BETWEEN :date1 AND :date2) AND c.typeIndicateur = :typeIndicateur AND c.typemodele = :typeModele", Indicateur.class);
 		q.setParameter("date1", date1);
 		q.setParameter("date2", date2);
-		return q.getResultList();
+		q.setParameter("typeIndicateur", typeIndicateur);
+		q.setParameter("typeModele", typeModele);
+		return DTOUtils.indicateursDTOsMapper(q.getResultList());
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Indicateur> findBeforeDate(LocalDate date) {
-		Query q = entityManager.createQuery("select c from Indicateur c WHERE (c.date <= :date)", Indicateur.class);
+	public List<IndicateurDTO> findBeforeDate(LocalDate date, String typeIndicateur, String typeModele) {
+		Query q = entityManager.createQuery("select c from Indicateur c WHERE (c.date <= :date) AND c.typeIndicateur = :typeIndicateur AND c.typemodele = :typeModele", Indicateur.class);
 		q.setParameter("date", date);
-		return q.getResultList();
+		q.setParameter("typeIndicateur", typeIndicateur);
+		q.setParameter("typeModele", typeModele);
+		return DTOUtils.indicateursDTOsMapper(q.getResultList());
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Indicateur> findAfterDate(LocalDate date) {
-		Query q = entityManager.createQuery("select c from Indicateur c WHERE (c.date >= :date)", Indicateur.class);
+	public List<IndicateurDTO> findAfterDate(LocalDate date, String typeIndicateur, String typeModele) {
+		Query q = entityManager.createQuery("select c from Indicateur c WHERE (c.date >= :date) AND c.typeIndicateur = :typeIndicateur AND c.typemodele = :typeModele", Indicateur.class);
 		q.setParameter("date", date);
-		return q.getResultList();
+		q.setParameter("typeIndicateur", typeIndicateur);
+		q.setParameter("typeModele", typeModele);
+		return DTOUtils.indicateursDTOsMapper(q.getResultList());
 	}
 	
-	public List<Indicateur> findLastDate(int nbDays) {
-		return findBetweenDate(LocalDate.now().minusDays(nbDays), LocalDate.now());
+	public List<IndicateurDTO> findNextDays(int nbDays, String typeIndicateur, String typeModele) {
+		return findBetweenDate(LocalDate.now(), LocalDate.now().plusDays(nbDays),typeIndicateur, typeModele);
 	}
 	
-	public Indicateur findByDate(LocalDate date) {
-		Query q = entityManager.createQuery("select c from Indicateur c WHERE c.date = :date", Indicateur.class);
+	@SuppressWarnings("unchecked")
+	public List<IndicateurDTO> findByDate(LocalDate date, String typeIndicateur, String typeModele) {
+		Query q = entityManager.createQuery("select c from Indicateur c WHERE c.date = :date AND c.typeIndicateur = :typeIndicateur AND c.typemodele = :typeModele", Indicateur.class);
 		q.setParameter("date", date);
-		return (Indicateur) q.getSingleResult();
+		q.setParameter("typeIndicateur", typeIndicateur);
+		q.setParameter("typeModele", typeModele);
+		return DTOUtils.indicateursDTOsMapper(q.getResultList());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<IndicateurDTO> findAllByModel(String typeIndicateur, String typeModele) {
+		Query q = entityManager.createQuery("select i from Indicateur i WHERE i.typeIndicateur = :typeIndicateur AND i.typeModele = :typeModele", Indicateur.class);
+		q.setParameter("typeIndicateur", typeIndicateur);
+		q.setParameter("typeModele", typeModele);
+		return DTOUtils.indicateursDTOsMapper(q.getResultList());
 	}
 	
 	@Override
