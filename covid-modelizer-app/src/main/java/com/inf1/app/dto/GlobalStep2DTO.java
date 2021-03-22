@@ -1,6 +1,7 @@
 package com.inf1.app.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
@@ -107,7 +108,7 @@ public class GlobalStep2DTO {
 	
 	private class CasSVIR {
 		private Map<LocalDate, Integer> values;
-		private int S, I, R, V, R0 ;
+		private int S, I, R, V, R0;
 		
 		public void putValue(LocalDate date, int value) {
 			values.put(date, value);
@@ -160,27 +161,18 @@ public class GlobalStep2DTO {
 	
 	private class CasMachineLearning {
 		private Map<LocalDate, Integer> values;
-		private Map<String, Integer> variablesExplicatives;
 		private Map<String, Integer> coefficients;
 		
 		public void putValue(LocalDate date, int value) {
 			values.put(date, value);
 		}
-		
-		public void putVariablesExplicatives(String s, int value) {
-			variablesExplicatives.put(s, value);
-		}
-		
+
 		public void putCoefficients(String s, int value) {
 			coefficients.put(s, value);
 		}
 
 		public Map<LocalDate, Integer> getValues() {
 			return values;
-		}
-
-		public Map<String, Integer> getVariablesExplicatives() {
-			return variablesExplicatives;
 		}
 
 		public Map<String, Integer> getCoefficients() {
@@ -238,15 +230,10 @@ public class GlobalStep2DTO {
 	
 	private class VaccinMachineLearning {
 		private Map<LocalDate, Integer> values;
-		private Map<String, Integer> variablesExplicatives;
 		private Map<String, Integer> coefficients;
 		
 		public void putValue(LocalDate date, int value) {
 			values.put(date, value);
-		}
-		
-		public void putVariablesExplicatives(String s, int value) {
-			variablesExplicatives.put(s, value);
 		}
 		
 		public void putCoefficients(String s, int value) {
@@ -255,10 +242,6 @@ public class GlobalStep2DTO {
 
 		public Map<LocalDate, Integer> getValues() {
 			return values;
-		}
-
-		public Map<String, Integer> getVariablesExplicatives() {
-			return variablesExplicatives;
 		}
 
 		public Map<String, Integer> getCoefficients() {
