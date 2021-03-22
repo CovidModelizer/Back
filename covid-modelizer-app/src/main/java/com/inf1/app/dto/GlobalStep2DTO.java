@@ -4,15 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
 public class GlobalStep2DTO {
 
 	private LocalDate date;
@@ -36,7 +27,7 @@ public class GlobalStep2DTO {
 		vaccinMachineLearning = new VaccinMachineLearning();
 	}
 	
-	private class CasLineaire {
+	public class CasLineaire {
 		private Map<LocalDate, Integer> values;
 		private int a, b;
 		
@@ -60,7 +51,7 @@ public class GlobalStep2DTO {
 		}
 	}
 	
-	private class CasSIR {
+	public class CasSIR {
 		private Map<LocalDate, Integer> values;
 		private int S, I, R, R0 ;
 		
@@ -280,6 +271,4 @@ public class GlobalStep2DTO {
 	public VaccinMachineLearning getVaccinMachineLearning() {
 		return vaccinMachineLearning;
 	}
-	
-
 }
