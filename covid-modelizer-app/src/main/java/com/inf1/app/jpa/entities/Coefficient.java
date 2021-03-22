@@ -29,6 +29,18 @@ public abstract class Coefficient {
 		return id;
 	}
 
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	
 	
 	

@@ -17,20 +17,20 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.inf1.app.dto.SituationReelleDTO;
 
 @Component
-public class RESTSituationReelleReader implements ItemReader<SituationReelleDTO>{
+public class SituationReelleReader implements ItemReader<SituationReelleDTO>{
 
-	private static final Logger LOG = LoggerFactory.getLogger(RESTSituationReelleReader.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SituationReelleReader.class);
 
 	@Autowired private RestTemplate restTemplate;
 	
 	@Autowired private ObjectMapper objectMapper;
 	
 	private static final String API_URL = "https://www.data.gouv.fr/fr/datasets/r/d2671c6c-c0eb-4e12-b69a-8e8f87fc224c";
-    private int nextStudentIndex;
+	private int nextSituationReelleIndex;
     private SituationReelleDTO[] situationReelleData;
     
-    public RESTSituationReelleReader() {
-        nextStudentIndex = 0;
+    public SituationReelleReader() {
+        nextSituationReelleIndex = 0;
     }
     
 	@Override
@@ -40,11 +40,11 @@ public class RESTSituationReelleReader implements ItemReader<SituationReelleDTO>
 		if (situationReelleDataIsNotInitialized()) {
 			situationReelleData = fetchSituationReelleDataFromAPI(API_URL);
         }
-        if (nextStudentIndex < situationReelleData.length) {
-        	nextSituationReelleDto = situationReelleData[nextStudentIndex];
-            nextStudentIndex++;
+        if (nextSituationReelleIndex < situationReelleData.length) {
+        	nextSituationReelleDto = situationReelleData[nextSituationReelleIndex];
+            nextSituationReelleIndex++;
         } else {
-            nextStudentIndex = 0;
+            nextSituationReelleIndex = 0;
             situationReelleData = null;
         }
         LOG.info(nextSituationReelleDto == null ? "" : nextSituationReelleDto.toString());
