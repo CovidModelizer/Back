@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inf1.app.dto.SituationReelleDTO;
-import com.inf1.app.jpa.repositories.SituationReelleRepository;
+import com.inf1.app.jpa.repository.SituationReelleRepository;
 
 @RestController
 @RequestMapping("/donneesReelles")

@@ -1,6 +1,6 @@
 package com.inf1.app.jpa.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +23,7 @@ public class Evenement {
 	private int id;
 	@NotNull
 	@Column
-	private LocalDateTime date;
+	private LocalDate date;
 	@NotNull
 	@Column
 	private String typeModele;
@@ -34,11 +34,11 @@ public class Evenement {
 		return id;
 	}
 
-	public LocalDateTime getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

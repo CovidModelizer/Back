@@ -2,7 +2,7 @@ package com.inf1.app.jpa.entities;
 
 import java.util.Map;
 
-public class VaccinMachineLearningModel {
+public class VaccinMachineLearningModel extends Modelisation{
 	
 	private Map<String, Integer> variablesExplicatives;
 	private Map<String, Integer> coefficients;
