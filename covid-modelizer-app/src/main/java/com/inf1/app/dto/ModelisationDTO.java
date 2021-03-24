@@ -3,15 +3,20 @@ package com.inf1.app.dto;
 import java.time.LocalDate;
 import java.util.Map;
 
-public abstract class ModelisationDTO {
-	private Map<LocalDate, Integer> values;
+public class ModelisationDTO {
+	private Map<LocalDate, Double> values;
+	private Map<String, Double> coeff;
 	private LocalDate DateCalcul;
 
-	public Map<LocalDate, Integer> getValues() {
+	public ModelisationDTO() {
+		DateCalcul  = LocalDate.now();
+	}
+	
+	public Map<LocalDate, Double> getValues() {
 		return values;
 	}
 
-	public void setValues(Map<LocalDate, Integer> values) {
+	public void setValues(Map<LocalDate, Double> values) {
 		this.values = values;
 	}
 
@@ -19,9 +24,14 @@ public abstract class ModelisationDTO {
 		return DateCalcul;
 	}
 
-	public void setDateCalcul(LocalDate dateCalcul) {
-		DateCalcul = dateCalcul;
+	public Map<String, Double> getCoeff() {
+		return coeff;
 	}
+
+	public void setCoeff(Map<String, Double> coeff) {
+		this.coeff = coeff;
+	}
+	
 
 	
 

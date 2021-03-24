@@ -15,22 +15,13 @@ import com.inf1.app.batch.modelisations.calculators.CasSVIRCalculator;
 import com.inf1.app.batch.modelisations.calculators.VaccinLineaireCalculator;
 import com.inf1.app.batch.modelisations.calculators.VaccinLogCalculator;
 import com.inf1.app.batch.modelisations.calculators.VaccinMachineLearningCalculator;
-import com.inf1.app.dto.CasLineaireDTO;
-import com.inf1.app.dto.CasMachineLearningDTO;
-import com.inf1.app.dto.CasSIRDTO;
-import com.inf1.app.dto.CasSVIRDTO;
+import com.inf1.app.dto.ModelisationDTO;
 import com.inf1.app.dto.SituationReelleDTO;
-import com.inf1.app.dto.VaccinLineaireDTO;
-import com.inf1.app.dto.VaccinLogDTO;
-import com.inf1.app.dto.VaccinMachineLearningDTO;
-import com.inf1.app.jpa.repository.CasLineaireRepository;
-import com.inf1.app.jpa.repository.CasMachineLearningRepository;
-import com.inf1.app.jpa.repository.CasSIRRespository;
-import com.inf1.app.jpa.repository.CasSVIRRepository;
+import com.inf1.app.jpa.entities.Modelisation;
+
+import com.inf1.app.jpa.repository.ModelisationRepository;
 import com.inf1.app.jpa.repository.SituationReelleRepository;
-import com.inf1.app.jpa.repository.VaccinLineaireRepository;
-import com.inf1.app.jpa.repository.VaccinLogRepository;
-import com.inf1.app.jpa.repository.VaccinMachineLearningRepository;
+
 
 @Component
 public class calculsQuotidiensBatch {
@@ -38,13 +29,8 @@ public class calculsQuotidiensBatch {
 	 private static final Logger LOG = LoggerFactory.getLogger(calculsQuotidiensBatch.class);
 
 	 @Autowired SituationReelleRepository situationReelleRepository;
-	 @Autowired CasLineaireRepository casLineaireRepository;
-	 @Autowired CasMachineLearningRepository casMachineLearningRepository;
-	 @Autowired CasSIRRespository casSIRRepository;
-	 @Autowired CasSVIRRepository casSVIRRepository;
-	 @Autowired VaccinLineaireRepository vaccinLineaireRepository;
-	 @Autowired VaccinLogRepository vaccinLogRepository;
-	 @Autowired VaccinMachineLearningRepository vaccinMachineLearningRepository;
+	 @Autowired ModelisationRepository modelisationRepository;
+
 	 
 	 @Scheduled(cron = "0 28 18 * * *")
 	 public void calculerData() {
@@ -59,30 +45,30 @@ public class calculsQuotidiensBatch {
 		 start = System.currentTimeMillis();
 		 LOG.info("> Prediction cas : Lineaire");
 		 CasLineaireCalculator c1 = new CasLineaireCalculator();
-		 CasLineaireDTO casLineaireDTO = c1.calculate(situationsReellesDTO);
-		 casLineaireRepository.persistDTO(casLineaireDTO);
+		 ModelisationDTO casLineaireDTO = c1.calculate(situationsReellesDTO);
+		 modelisationRepository.persistDTO(casLineaireDTO, "CAS", "LIN");
 		 LOG.info("FIN - " + (System.currentTimeMillis() - start) + "ms");
 		 
 		 start = System.currentTimeMillis();
 		 LOG.info("> Prediction cas : MachineLearning");
 		 CasMachineLearningCalculator c2 = new CasMachineLearningCalculator();
-		 CasMachineLearningDTO casMachineLearningDTO = c2.calculate(situationsReellesDTO);
-		 casMachineLearningRepository.persistDTO(casMachineLearningDTO);
+		 ModelisationDTO casMachineLearningDTO = c2.calculate(situationsReellesDTO);
+		 modelisationRepository.persistDTO(casMachineLearningDTO, "CAS", "MCL");
 		 LOG.info("FIN - " + (System.currentTimeMillis() - start) + "ms");
 		 
 		 
 		 start = System.currentTimeMillis();
 		 LOG.info("> Prediction cas : SIR");
 		 CasSIRCalculator c3 = new CasSIRCalculator();
-		 CasSIRDTO casSIRDTO = c3.calculate(situationsReellesDTO);
-		 casSIRRepository.persistDTO(casSIRDTO);
+		 ModelisationDTO casSIRDTO = c3.calculate(situationsReellesDTO);
+		 modelisationRepository.persistDTO(casSIRDTO, "CAS", "SIR");
 		 LOG.info("FIN - " + (System.currentTimeMillis() - start) + "ms");
 		 
 		 start = System.currentTimeMillis();
 		 LOG.info("> Prediction cas : SVIR");
 		 CasSVIRCalculator c4 = new CasSVIRCalculator();
-		 CasSVIRDTO casSVIRDTO = c4.calculate(situationsReellesDTO);
-		 casSVIRRepository.persistDTO(casSVIRDTO);
+		 ModelisationDTO casSVIRDTO = c4.calculate(situationsReellesDTO);
+		 modelisationRepository.persistDTO(casSVIRDTO, "CAS", "SVR");
 		 LOG.info("FIN - " + (System.currentTimeMillis() - start) + "ms");
 		 
 		 
@@ -92,22 +78,22 @@ public class calculsQuotidiensBatch {
 		 start = System.currentTimeMillis();
 		 LOG.info("> Prediction vaccin : Lineaire");
 		 VaccinLineaireCalculator v1 = new VaccinLineaireCalculator();
-		 VaccinLineaireDTO vaccinLineaireDTO = v1.calculate(situationsReellesDTO);
-		 vaccinLineaireRepository.persistDTO(vaccinLineaireDTO);
+		 ModelisationDTO vaccinLineaireDTO = v1.calculate(situationsReellesDTO);
+		 modelisationRepository.persistDTO(vaccinLineaireDTO, "VAC", "LIN");
 		 LOG.info("FIN - " + (System.currentTimeMillis() - start) + "ms");
 		 
 		 start = System.currentTimeMillis();
 		 LOG.info("> Prediction vaccin : Log");
 		 VaccinLogCalculator v2 = new VaccinLogCalculator();
-		 VaccinLogDTO vaccinLogDTO = v2.calculate(situationsReellesDTO);
-		 vaccinLogRepository.persistDTO(vaccinLogDTO);
+		 ModelisationDTO vaccinLogDTO = v2.calculate(situationsReellesDTO);
+		 modelisationRepository.persistDTO(vaccinLogDTO, "VAC", "LOG");
 		 LOG.info("FIN - " + (System.currentTimeMillis() - start) + "ms");
 		 
 		 start = System.currentTimeMillis();
 		 LOG.info("> Prediction vaccin : MachineLearning");
 		 VaccinMachineLearningCalculator v3 = new VaccinMachineLearningCalculator();
-		 VaccinMachineLearningDTO vaccinMachineLearningDTO = v3.calculate(situationsReellesDTO);
-		 vaccinMachineLearningRepository.persistDTO(vaccinMachineLearningDTO);
+		 ModelisationDTO vaccinMachineLearningDTO = v3.calculate(situationsReellesDTO);
+		 modelisationRepository.persistDTO(vaccinMachineLearningDTO, "VAC", "MCL");
 		 LOG.info("FIN - " + (System.currentTimeMillis() - start) + "ms");
 	 }
 }

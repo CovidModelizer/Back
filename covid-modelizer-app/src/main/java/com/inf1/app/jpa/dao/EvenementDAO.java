@@ -6,9 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.inf1.app.jpa.entities.Evenement;
 
+@Repository
 public class EvenementDAO {
 	
 	@Autowired EntityManager entityManager;
