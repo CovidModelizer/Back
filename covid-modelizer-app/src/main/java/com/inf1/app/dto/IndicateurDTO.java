@@ -6,7 +6,7 @@ public class IndicateurDTO {
 	LocalDate date;
 	String typeIndicateur;
 	String typeModel;
-	int value;
+	double value;
 
 	public LocalDate getDate() {
 		return date;
@@ -24,11 +24,11 @@ public class IndicateurDTO {
 		this.typeModel = typeModel;
 	}
 
-	public int getValue() {
+	public double getValue() {
 		return value;
 	}
 
-	public void setValue(int value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 

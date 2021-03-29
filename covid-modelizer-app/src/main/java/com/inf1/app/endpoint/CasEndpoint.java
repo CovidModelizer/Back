@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inf1.app.dto.IndicateurDTO;
-import com.inf1.app.jpa.repositories.IndicateurRepository;
+import com.inf1.app.jpa.repository.IndicateurRepository;
 
 @RestController
 @RequestMapping("/Modelisation/Cas")

@@ -7,14 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import com.sun.istack.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 @Entity
-@Getter
-@Setter
-@ToString
 public class Indicateur {
 	
 	@Id
@@ -28,7 +22,7 @@ public class Indicateur {
 	@Column
 	private String typeModele;
 	@Column
-	private int valeur;
+	private double valeur;
 	@Column
 	private String typeIndicateur;
 	
@@ -52,11 +46,11 @@ public class Indicateur {
 		this.typeModele = typeModele;
 	}
 
-	public int getValeur() {
+	public double getValeur() {
 		return valeur;
 	}
 
-	public void setValeur(int valeur) {
+	public void setValeur(double valeur) {
 		this.valeur = valeur;
 	}
 
@@ -71,4 +65,5 @@ public class Indicateur {
 	public void setId(int id) {
 		this.id = id;
 	}
+
 }

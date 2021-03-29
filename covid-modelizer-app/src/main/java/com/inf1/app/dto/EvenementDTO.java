@@ -1,17 +1,17 @@
 package com.inf1.app.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 public class EvenementDTO {
-	private LocalDateTime date;
+	private LocalDate date;
 	private String typeModele;
 	private String typeIndicateur;
 	
-	public LocalDateTime getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
-	public void setDate(LocalDateTime date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	public String getTypeModele() {

@@ -8,15 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import com.sun.istack.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Table(name="situation_reelle")
-@Getter
-@Setter
-@ToString
 public class SituationReelle {
 	
 	@Id
