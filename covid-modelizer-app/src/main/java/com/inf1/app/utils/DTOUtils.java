@@ -29,9 +29,9 @@ public class DTOUtils {
 		sDTO.setLivraisonsCumulNombreDosesModerna(s.getLivraisonsCumulNombreDosesModerna());
 		sDTO.setLivraisonsCumulNombreDosesPfizer(s.getLivraisonsCumulNombreDosesPfizer());
 		sDTO.setLivraisonsCumulNombreTotalDoses(s.getLivraisonsCumulNombreTotalDoses());
-		sDTO.setNouvellesHospitalisations(s.getNouvellesHospitalisations());
-		sDTO.setNouvellesPremieresInjections(s.getNouvellesHospitalisations());
 		sDTO.setNouvellesReanimations(s.getNouvellesReanimations());
+		sDTO.setNouvellesHospitalisations(s.getNouvellesHospitalisations());
+		sDTO.setNouvellesPremieresInjections(s.getNouvellesPremieresInjections());
 		sDTO.setPrisesRendezVousSemaineRang1(s.getPrisesRendezVousSemaineRang1());
 		sDTO.setPrisesRendezVousSemaineRang2(s.getPrisesRendezVousSemaineRang2());
 		sDTO.setReanimation(s.getReanimation());

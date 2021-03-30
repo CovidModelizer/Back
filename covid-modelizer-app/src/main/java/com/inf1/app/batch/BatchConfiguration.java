@@ -29,7 +29,7 @@ import com.inf1.app.dto.SituationReelleDTO;
 
 @Configuration
 @EnableBatchProcessing
-@EnableScheduling
+//@EnableScheduling
 public class BatchConfiguration {
 
 	@Bean
@@ -71,14 +71,9 @@ public class BatchConfiguration {
 	@Bean
 	Step situationsReellesStep(ItemReader<SituationReelleDTO> reader,
 			ItemProcessor<SituationReelleDTO, SituationReelleDTO> processor,
-			JdbcBatchItemWriter<SituationReelleDTO> writer,
-			StepBuilderFactory stepBuilderFactory) {
-	  return stepBuilderFactory.get("situationsReellesStep")
-	    .<SituationReelleDTO, SituationReelleDTO> chunk(10000)
-	    .reader(reader)
-	    .processor(processor)
-	    .writer(writer)
-	    .build();
+			JdbcBatchItemWriter<SituationReelleDTO> writer, StepBuilderFactory stepBuilderFactory) {
+		return stepBuilderFactory.get("situationsReellesStep").<SituationReelleDTO, SituationReelleDTO>chunk(10000)
+				.reader(reader).processor(processor).writer(writer).build();
 	}
 
 	@Bean

@@ -16,7 +16,7 @@ public class SituationReelleProcessor implements ItemProcessor<SituationReelleDT
 		// TODO : Est appelé même lorsque le batch n'est pas appelé donc pas bon!
 		LOG.info("$$$ Purge Table $$$");
 		jdbcTemplate.setDataSource(dataSource);
-//		jdbcTemplate.update("DELETE FROM situation_reelle");
+		//jdbcTemplate.update("DELETE FROM situation_reelle");
 	}
 	
 	@Override
@@ -24,5 +24,4 @@ public class SituationReelleProcessor implements ItemProcessor<SituationReelleDT
 		// Utile uniquement pour vider la table des données récupérées la veille
 		return item;
 	}
-
 }

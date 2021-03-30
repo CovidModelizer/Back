@@ -46,7 +46,6 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 
 		try {
 			dataSet = initDataSet(situationsReellesDTO);
-			LOG.info(dataSet.toString());
 
 			// Entraînement du modèle de régression linéaire
 			for (int n = 1; n <= expanse; n++) {
@@ -54,7 +53,7 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 					realValue = (i + n) >= dataSet.size() ? Double.NaN : dataSet.instance(i + n).value(5);
 					dataSet.instance(i).setValue(dataSet.numAttributes() - 1, realValue);
 				}
-
+				
 				dataSet.renameAttribute(dataSet.numAttributes() - 1, "nouveaux cas J+" + n);
 
 				trainSet = dataSet.trainCV(5, 0, new Random());
@@ -70,6 +69,8 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 				predictedValue[n - 1] = lrClassifier[n - 1].classifyInstance(predictionData);
 
 				allDataSet[n - 1] = new Instances(dataSet);
+				
+				LOG.info(lrClassifier[n - 1].toString());
 
 				for (int i = 0; i < dataSet.numAttributes(); i++) {
 					if (lrClassifier[n - 1].coefficients()[i] != 0.0) {
@@ -79,10 +80,6 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 				}
 				model.getCoeff().put("PredJ+" + n + "_constante",
 						lrClassifier[n - 1].coefficients()[lrClassifier[n - 1].coefficients().length - 1]);
-			}
-
-			for (Map.Entry<String, Double> entry : model.getCoeff().entrySet()) {
-				LOG.info(entry.getKey() + " : " + entry.getValue());
 			}
 
 			// Prédictions sur 21 (= expanse) jours
@@ -97,6 +94,7 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 								.plusDays(i + 1),
 								String.valueOf((int) lrClassifier[i].classifyInstance(predictionData)));
 			}
+			
 			for (int i = 0; i < expanse; i++) {
 				predictionData = allDataSet[i].lastInstance();
 
@@ -109,6 +107,7 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 			for (Map.Entry<LocalDate, String> entry : model.getValues().entrySet()) {
 				LOG.info(entry.getKey() + " : " + entry.getValue());
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -136,70 +135,69 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 		Instances dataSet = new Instances("CasMachineLearningCalculator dataSet", atts, 0);
 		dataSet.setClassIndex(atts.size() - 1);
 
+		double[] firstInstanceValue = new double[dataSet.numAttributes()];
+		firstInstanceValue[0] = dataSet.attribute("date").parseDate("2020-03-01");
+		for (int j = 1; j < firstInstanceValue.length; j++) {
+			firstInstanceValue[j] = Double.NaN;
+		}
+		dataSet.add(new DenseInstance(1.0, firstInstanceValue));
+
 		for (int i = 0; i < situationsReellesDTO.size(); i++) {
 			double[] instanceValue = new double[dataSet.numAttributes()];
-			if (i == 0) {
-				instanceValue[0] = dataSet.attribute("date").parseDate("2020-03-01");
-				for (int j = 1; j < instanceValue.length - 1; j++) {
-					instanceValue[j] = Double.NaN;
-				}
-			} else {
-				instanceValue[0] = dataSet.attribute("date").parseDate(
-						situationsReellesDTO.get(i).getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-				instanceValue[1] = (i == 1)
-						? situationsReellesDTO.get(i).getDeces().isEmpty() ? Double.NaN
-								: Double.parseDouble(situationsReellesDTO.get(i).getDeces())
-						: situationsReellesDTO.get(i).getDeces().isEmpty()
-								|| situationsReellesDTO.get(i - 1).getDeces().isEmpty() ? Double.NaN
-										: Double.parseDouble(situationsReellesDTO.get(i).getDeces())
-												- Double.parseDouble(situationsReellesDTO.get(i - 1).getDeces());
-				instanceValue[2] = (i == 1)
-						? situationsReellesDTO.get(i).getGueris().isEmpty() ? Double.NaN
-								: Double.parseDouble(situationsReellesDTO.get(i).getGueris())
-						: situationsReellesDTO.get(i).getGueris().isEmpty()
-								|| situationsReellesDTO.get(i - 1).getGueris().isEmpty() ? Double.NaN
-										: Double.parseDouble(situationsReellesDTO.get(i).getGueris())
-												- Double.parseDouble(situationsReellesDTO.get(i - 1).getGueris());
-				instanceValue[3] = (i == 1)
-						? situationsReellesDTO.get(i).getDecesEhpad().isEmpty() ? Double.NaN
-								: Double.parseDouble(situationsReellesDTO.get(i).getDecesEhpad())
-						: situationsReellesDTO.get(i).getDecesEhpad().isEmpty()
-								|| situationsReellesDTO.get(i - 1).getDecesEhpad().isEmpty() ? Double.NaN
-										: Double.parseDouble(situationsReellesDTO.get(i).getDecesEhpad())
-												- Double.parseDouble(situationsReellesDTO.get(i - 1).getDecesEhpad());
-				instanceValue[4] = situationsReellesDTO.get(i).getReanimation().isEmpty() ? Double.NaN
-						: Double.parseDouble(situationsReellesDTO.get(i).getReanimation());
-				instanceValue[5] = (i == 1)
-						? situationsReellesDTO.get(i).getCasConfirmes().isEmpty() ? Double.NaN
-								: Double.parseDouble(situationsReellesDTO.get(i).getCasConfirmes())
-						: situationsReellesDTO.get(i).getCasConfirmes().isEmpty()
-								|| situationsReellesDTO.get(i - 1).getCasConfirmes().isEmpty() ? Double.NaN
-										: Double.parseDouble(situationsReellesDTO.get(i).getCasConfirmes())
-												- Double.parseDouble(situationsReellesDTO.get(i - 1).getCasConfirmes());
-				instanceValue[6] = situationsReellesDTO.get(i).getHospitalises().isEmpty() ? Double.NaN
-						: Double.parseDouble(situationsReellesDTO.get(i).getHospitalises());
-				instanceValue[7] = situationsReellesDTO.get(i).getTestsRealises().isEmpty() ? Double.NaN
-						: Double.parseDouble(situationsReellesDTO.get(i).getTestsRealises());
-				instanceValue[8] = situationsReellesDTO.get(i).getTestsPositifs().isEmpty() ? Double.NaN
-						: Double.parseDouble(situationsReellesDTO.get(i).getTestsPositifs());
-				instanceValue[9] = (i == 1)
-						? situationsReellesDTO.get(i).getCasConfirmesEhpad().isEmpty() ? Double.NaN
-								: Double.parseDouble(situationsReellesDTO.get(i).getCasConfirmesEhpad())
-						: situationsReellesDTO.get(i).getCasConfirmesEhpad().isEmpty()
-								|| situationsReellesDTO.get(i - 1).getCasConfirmesEhpad().isEmpty()
-										? Double.NaN
-										: Double.parseDouble(situationsReellesDTO.get(i).getCasConfirmesEhpad())
-												- Double.parseDouble(
-														situationsReellesDTO.get(i - 1).getCasConfirmesEhpad());
-				instanceValue[10] = situationsReellesDTO.get(i).getNouvellesReanimations().isEmpty() ? Double.NaN
-						: Double.parseDouble(situationsReellesDTO.get(i).getNouvellesReanimations());
-				instanceValue[11] = situationsReellesDTO.get(i).getNouvellesHospitalisations().isEmpty() ? Double.NaN
-						: Double.parseDouble(situationsReellesDTO.get(i).getNouvellesHospitalisations());
-				instanceValue[12] = situationsReellesDTO.get(i).getNouvellesPremieresInjections().isEmpty()
-						? Double.NaN
-						: Double.parseDouble(situationsReellesDTO.get(i).getNouvellesPremieresInjections());
-				instanceValue[13] = Double.NaN;
-			}
+
+			instanceValue[0] = dataSet.attribute("date")
+					.parseDate(situationsReellesDTO.get(i).getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+			instanceValue[1] = (i == 0)
+					? situationsReellesDTO.get(i).getDeces() == null ? Double.NaN
+							: Double.parseDouble(situationsReellesDTO.get(i).getDeces())
+					: situationsReellesDTO.get(i).getDeces() == null
+							|| situationsReellesDTO.get(i - 1).getDeces() == null ? Double.NaN
+									: Double.parseDouble(situationsReellesDTO.get(i).getDeces())
+											- Double.parseDouble(situationsReellesDTO.get(i - 1).getDeces());
+			instanceValue[2] = (i == 0)
+					? situationsReellesDTO.get(i).getGueris() == null ? Double.NaN
+							: Double.parseDouble(situationsReellesDTO.get(i).getGueris())
+					: situationsReellesDTO.get(i).getGueris() == null
+							|| situationsReellesDTO.get(i - 1).getGueris() == null ? Double.NaN
+									: Double.parseDouble(situationsReellesDTO.get(i).getGueris())
+											- Double.parseDouble(situationsReellesDTO.get(i - 1).getGueris());
+			instanceValue[3] = (i == 0)
+					? situationsReellesDTO.get(i).getDecesEhpad() == null ? Double.NaN
+							: Double.parseDouble(situationsReellesDTO.get(i).getDecesEhpad())
+					: situationsReellesDTO.get(i).getDecesEhpad() == null
+							|| situationsReellesDTO.get(i - 1).getDecesEhpad() == null ? Double.NaN
+									: Double.parseDouble(situationsReellesDTO.get(i).getDecesEhpad())
+											- Double.parseDouble(situationsReellesDTO.get(i - 1).getDecesEhpad());
+			instanceValue[4] = situationsReellesDTO.get(i).getReanimation() == null ? Double.NaN
+					: Double.parseDouble(situationsReellesDTO.get(i).getReanimation());
+			instanceValue[5] = (i == 0)
+					? situationsReellesDTO.get(i).getCasConfirmes() == null ? Double.NaN
+							: Double.parseDouble(situationsReellesDTO.get(i).getCasConfirmes())
+					: situationsReellesDTO.get(i).getCasConfirmes() == null
+							|| situationsReellesDTO.get(i - 1).getCasConfirmes() == null ? Double.NaN
+									: Double.parseDouble(situationsReellesDTO.get(i).getCasConfirmes())
+											- Double.parseDouble(situationsReellesDTO.get(i - 1).getCasConfirmes());
+			instanceValue[6] = situationsReellesDTO.get(i).getHospitalises() == null ? Double.NaN
+					: Double.parseDouble(situationsReellesDTO.get(i).getHospitalises());
+			instanceValue[7] = situationsReellesDTO.get(i).getTestsRealises() == null ? Double.NaN
+					: Double.parseDouble(situationsReellesDTO.get(i).getTestsRealises());
+			instanceValue[8] = situationsReellesDTO.get(i).getTestsPositifs() == null ? Double.NaN
+					: Double.parseDouble(situationsReellesDTO.get(i).getTestsPositifs());
+			instanceValue[9] = (i == 0)
+					? situationsReellesDTO.get(i).getCasConfirmesEhpad() == null ? Double.NaN
+							: Double.parseDouble(situationsReellesDTO.get(i).getCasConfirmesEhpad())
+					: situationsReellesDTO.get(i).getCasConfirmesEhpad() == null
+							|| situationsReellesDTO.get(i - 1).getCasConfirmesEhpad() == null ? Double.NaN
+									: Double.parseDouble(situationsReellesDTO.get(i).getCasConfirmesEhpad()) - Double
+											.parseDouble(situationsReellesDTO.get(i - 1).getCasConfirmesEhpad());
+			instanceValue[10] = situationsReellesDTO.get(i).getNouvellesReanimations() == null ? Double.NaN
+					: Double.parseDouble(situationsReellesDTO.get(i).getNouvellesReanimations());
+			instanceValue[11] = situationsReellesDTO.get(i).getNouvellesHospitalisations() == null ? Double.NaN
+					: Double.parseDouble(situationsReellesDTO.get(i).getNouvellesHospitalisations());
+			instanceValue[12] = situationsReellesDTO.get(i).getNouvellesPremieresInjections() == null ? Double.NaN
+					: Double.parseDouble(situationsReellesDTO.get(i).getNouvellesPremieresInjections());
+			instanceValue[13] = Double.NaN;
+
 			dataSet.add(new DenseInstance(1.0, instanceValue));
 		}
 
