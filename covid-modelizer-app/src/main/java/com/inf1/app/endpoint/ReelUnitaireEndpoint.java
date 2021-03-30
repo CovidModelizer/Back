@@ -24,33 +24,33 @@ public class ReelUnitaireEndpoint {
 		return repository.findallDTO(nomIndicateur);
 	}
 
-	@GetMapping("/Date")
+	@GetMapping("/date")
 	public List<DonneeReelleDTO> findByDate(@RequestParam(name = "date") String date, @RequestParam(name = "nomIndicateur") String nomIndicateur) {
 		return repository.findByDate(LocalDate.parse(date), nomIndicateur);
 	}
 
-	@GetMapping("/Between")
+	@GetMapping("/between")
 	public List<DonneeReelleDTO> findBetween(@RequestParam(name = "start") String start,
 			@RequestParam(name = "end") String end, @RequestParam(name = "nomIndicateur") String nomIndicateur) {
 		return repository.findBetweenDate(LocalDate.parse(start), LocalDate.parse(end), nomIndicateur);
 	}
 
-	@GetMapping("/Before")
+	@GetMapping("/before")
 	public List<DonneeReelleDTO> findBefore(@RequestParam(name = "date") String date, @RequestParam(name = "nomIndicateur") String nomIndicateur) {
 		return repository.findBeforeDate(LocalDate.parse(date), nomIndicateur);
 	}
 
-	@GetMapping("/After")
+	@GetMapping("/after")
 	public List<DonneeReelleDTO> findAfter(@RequestParam(name = "date") String date, @RequestParam(name = "nomIndicateur") String nomIndicateur) {
 		return repository.findAfterDate(LocalDate.parse(date), nomIndicateur);
 	}
 
-	@GetMapping("/LasWeek")
+	@GetMapping("/lasWeek")
 	public List<DonneeReelleDTO> LastWeek(@RequestParam(name = "nomIndicateur") String nomIndicateur) {
 		return repository.findLastDate(7, nomIndicateur);
 	}
 
-	@GetMapping("/LastDays")
+	@GetMapping("/lastDays")
 	public List<DonneeReelleDTO> LastDays(@RequestParam(name = "nb") int nb, @RequestParam(name = "nomIndicateur") String nomIndicateur) {
 		return repository.findLastDate(nb, nomIndicateur);
 	}

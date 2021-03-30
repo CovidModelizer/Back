@@ -34,36 +34,36 @@ public class ModelisationCasEndpoint {
 		cqb.calculerData();
 	}
 
-	@GetMapping("/Date")
+	@GetMapping("/date")
 	public List<IndicateurDTO> findByDate(@RequestParam(name = "date") String date,
 			@RequestParam(name = "model") String typeModel) {
 		return repository.findByDate(LocalDate.parse(date), "CAS", typeModel);
 	}
 
-	@GetMapping("/Between")
+	@GetMapping("/between")
 	public Iterable<IndicateurDTO> findBetween(@RequestParam(name = "start") String start,
 			@RequestParam(name = "end") String end, @RequestParam(name = "model") String typeModel) {
 		return repository.findBetweenDate(LocalDate.parse(start), LocalDate.parse(end), "CAS", typeModel);
 	}
 
-	@GetMapping("/Before")
+	@GetMapping("/before")
 	public Iterable<IndicateurDTO> findBefore(@RequestParam(name = "date") String date,
 			@RequestParam(name = "model") String typeModel) {
 		return repository.findBeforeDate(LocalDate.parse(date), "CAS", typeModel);
 	}
 
-	@GetMapping("/After")
+	@GetMapping("/after")
 	public Iterable<IndicateurDTO> findAfter(@RequestParam(name = "date") String date,
 			@RequestParam(name = "model") String typeModel) {
 		return repository.findAfterDate(LocalDate.parse(date), "CAS", typeModel);
 	}
 
-	@GetMapping("/NextWeek")
+	@GetMapping("/nextWeek")
 	public Iterable<IndicateurDTO> NextWeek(@RequestParam(name = "model") String typeModel) {
 		return repository.findNextDays(7, "CAS", typeModel);
 	}
 
-	@GetMapping("/NextDays")
+	@GetMapping("/nextDays")
 	public Iterable<IndicateurDTO> NextDays(@RequestParam(name = "nb") int nb,
 			@RequestParam(name = "model") String typeModel) {
 		return repository.findNextDays(nb, "CAS", typeModel);

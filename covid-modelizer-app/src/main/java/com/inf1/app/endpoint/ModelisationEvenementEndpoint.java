@@ -23,12 +23,12 @@ public class ModelisationEvenementEndpoint {
 		return repository.findConfByModel(typeModel);
 	}
 	
-	@GetMapping("/ImmuniteCollective")
+	@GetMapping("/immuniteCollective")
 	public List<EvenementDTO> findImmu(@RequestParam(name = "model") String typeModel) {
 		return repository.findImmuByModel(typeModel);
 	}
 
-	@GetMapping("/Confinement")
+	@GetMapping("/confinement")
 	public List<EvenementDTO> findConf(@RequestParam(name = "model") String typeModel, @RequestParam(name = "type") String typeEvenement) {
 		return repository.findByModelAndType(typeEvenement, typeModel);
 	}

@@ -23,32 +23,32 @@ public class ModelisationVaccinsEndpoint {
 		return repository.findAllByModel("VAC", typeModel);
 	}
 	
-	@GetMapping("/Date")
+	@GetMapping("/date")
 	public Iterable<IndicateurDTO> findByDate(@RequestParam(name = "date") String date, @RequestParam(name = "model") String typeModel) {
 		return repository.findByDate(LocalDate.parse(date), "VAC", typeModel);
 	}
 	
-	@GetMapping("/Between")
+	@GetMapping("/between")
 	public Iterable<IndicateurDTO> findBetween(@RequestParam(name = "start") String start, @RequestParam(name = "end") String end,  @RequestParam(name = "model") String typeModel) {
 		return repository.findBetweenDate(LocalDate.parse(start), LocalDate.parse(end), "VAC", typeModel);
 	}
 
-	@GetMapping("/Before")
+	@GetMapping("/before")
 	public Iterable<IndicateurDTO> findBefore(@RequestParam(name = "date") String date,  @RequestParam(name = "model") String typeModel) {
 		return repository.findBeforeDate(LocalDate.parse(date), "VAC", typeModel);
 	}
 	
-	@GetMapping("/After")
+	@GetMapping("/after")
 	public Iterable<IndicateurDTO> findAfter(@RequestParam(name = "date") String date,  @RequestParam(name = "model") String typeModel) {
 		return repository.findAfterDate(LocalDate.parse(date), "VAC", typeModel);
 	}
 	
-	@GetMapping("/NextWeek")
+	@GetMapping("/nextWeek")
 	public Iterable<IndicateurDTO> NextWeek(@RequestParam(name = "model") String typeModel) {
 		return repository.findNextDays(7, "VAC", typeModel);
 	}
 	
-	@GetMapping("/NextDays")
+	@GetMapping("/nextDays")
 	public Iterable<IndicateurDTO> NextDays(@RequestParam(name = "nb") int nb,  @RequestParam(name = "model") String typeModel) {
 		return repository.findNextDays(nb, "VAC", typeModel);
 	}

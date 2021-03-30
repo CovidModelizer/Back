@@ -24,12 +24,12 @@ public class ReelCompletEndpoint {
 		return repository.findallDTO();
 	}
 	
-	@GetMapping("/Date")
+	@GetMapping("/date")
 	public List<SituationReelleDTO> findByDate(@RequestParam(name = "date") String date) {
 		return repository.findByDate(LocalDate.parse(date));
 	}
 	
-	@GetMapping("/Between")
+	@GetMapping("/between")
 	public Iterable<SituationReelleDTO> findBetween(@RequestParam(name = "start") String start, @RequestParam(name = "end") String end) {
 		return repository.findBetweenDate(LocalDate.parse(start), LocalDate.parse(end));
 	}
@@ -39,17 +39,17 @@ public class ReelCompletEndpoint {
 		return repository.findBeforeDate(LocalDate.parse(date));
 	}
 	
-	@GetMapping("/After")
+	@GetMapping("/after")
 	public Iterable<SituationReelleDTO> findAfter(@RequestParam(name = "date") String date) {
 		return repository.findAfterDate(LocalDate.parse(date));
 	}
 	
-	@GetMapping("/LasWeek")
+	@GetMapping("/lasWeek")
 	public Iterable<SituationReelleDTO> LastWeek() {
 		return repository.findLastDate(7);
 	}
 	
-	@GetMapping("/LastDays")
+	@GetMapping("/lastDays")
 	public Iterable<SituationReelleDTO> LastDays(@RequestParam(name = "nb") int nb) {
 		return repository.findLastDate(nb);
 	}
