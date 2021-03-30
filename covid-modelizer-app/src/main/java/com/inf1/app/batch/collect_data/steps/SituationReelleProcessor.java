@@ -13,6 +13,7 @@ public class SituationReelleProcessor implements ItemProcessor<SituationReelleDT
 	private static final Logger LOG = LoggerFactory.getLogger(SituationReelleProcessor.class);
 
 	public SituationReelleProcessor(DataSource dataSource, JdbcTemplate jdbcTemplate) {
+		// TODO : Est appelé même lorsque le batch n'est pas appelé donc pas bon!
 		LOG.info("$$$ Purge Table $$$");
 		jdbcTemplate.setDataSource(dataSource);
 		jdbcTemplate.update("DELETE FROM situation_reelle");
