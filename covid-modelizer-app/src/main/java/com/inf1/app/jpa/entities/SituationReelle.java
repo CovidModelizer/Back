@@ -19,6 +19,7 @@ public class SituationReelle {
 	@NotNull
 	@Column(name = "date")
 	private LocalDate date;
+	private String r0;
 	@Column(name = "cas_confirmes")
 	private String casConfirmes;
 	@Column(name = "deces")
@@ -84,9 +85,11 @@ public class SituationReelle {
 		this.date = date;
 	}
 
-	public String getCasConfirmes() {
-		return casConfirmes;
-	}
+	public String getR0() { return r0; }
+
+	public void setR0(String r0) { this.r0 = r0; }
+
+	public String getCasConfirmes() { return casConfirmes; }
 
 	public void setCasConfirmes(String casConfirmes) {
 		this.casConfirmes = casConfirmes;
