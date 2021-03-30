@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class SituationReelleDTO {
 	
 	private LocalDate date;
+	private String r0;
 	private int casConfirmes, deces, decesEhpad, reanimation, hospitalises, gueris, nouvellesHospitalisations,
     nouvellesReanimations, nouvellesPremieresInjections, cumulPremieresInjections,
     stockNombreTotalDoses, stockNombreDosesPfizer, stockNombreDosesModerna,
@@ -18,6 +19,8 @@ public class SituationReelleDTO {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
+	public String getR0() { return r0; }
+	public void setR0(String r0) { this.r0 = r0; }
 	public int getCasConfirmes() {
 		return casConfirmes;
 	}

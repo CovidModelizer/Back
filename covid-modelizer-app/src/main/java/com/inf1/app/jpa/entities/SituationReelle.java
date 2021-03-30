@@ -18,6 +18,7 @@ public class SituationReelle {
 	private int id;
 	@NotNull
 	private LocalDate date;
+	private String r0;
 	@Column(name = "cas_confirmes")
 	private int casConfirmes;
 	private int deces, reanimation, hospitalises, gueris;
@@ -63,6 +64,10 @@ public class SituationReelle {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
+
+	public String getR0() { return r0; }
+
+	public void setR0(String r0) { this.r0 = r0; }
 
 	public int getCasConfirmes() {
 		return casConfirmes;
