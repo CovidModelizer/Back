@@ -19,6 +19,7 @@ public class SituationReelle {
 	@NotNull
 	@Column(name = "date")
 	private LocalDate date;
+	@Column(name = "r0")
 	private String r0;
 	@Column(name = "cas_confirmes")
 	private String casConfirmes;
