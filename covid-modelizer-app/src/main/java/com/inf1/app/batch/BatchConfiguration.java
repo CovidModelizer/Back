@@ -43,8 +43,8 @@ public class BatchConfiguration {
 	}
 
 	@Bean
-	ItemProcessor<SituationReelleDTO, SituationReelleDTO> processor(DataSource dataSource) {
-		return new SituationReelleProcessor(dataSource);
+	ItemProcessor<SituationReelleDTO, SituationReelleDTO> processor() {
+		return new SituationReelleProcessor();
 	}
 
 	@Bean
