@@ -1,22 +1,25 @@
 package com.inf1.app.dto;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ModelisationDTO {
-	private Map<LocalDate, Double> values;
+	private Map<LocalDate, String> values;
 	private Map<String, Double> coeff;
 	private LocalDate DateCalcul;
 
 	public ModelisationDTO() {
+		values = new HashMap<LocalDate, String>();
+		coeff = new HashMap<String, Double>();
 		DateCalcul  = LocalDate.now();
 	}
 	
-	public Map<LocalDate, Double> getValues() {
+	public Map<LocalDate, String> getValues() {
 		return values;
 	}
 
-	public void setValues(Map<LocalDate, Double> values) {
+	public void setValues(Map<LocalDate, String> values) {
 		this.values = values;
 	}
 

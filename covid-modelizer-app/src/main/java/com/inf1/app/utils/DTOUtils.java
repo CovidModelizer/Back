@@ -22,6 +22,10 @@ public class DTOUtils {
 		sDTO.setDecesEhpad(s.getDecesEhpad());
 		sDTO.setGueris(s.getGueris());
 		sDTO.setHospitalises(s.getHospitalises());
+		sDTO.setTestsRealises(s.getTestsRealises());
+		sDTO.setTestsPositifs(s.getTestsPositifs());
+		sDTO.setCasConfirmesEhpad(s.getCasConfirmesEhpad());
+		sDTO.setCasPossiblesEhpad(s.getCasPossiblesEhpad());
 		sDTO.setLivraisonsCumulNombreDosesModerna(s.getLivraisonsCumulNombreDosesModerna());
 		sDTO.setLivraisonsCumulNombreDosesPfizer(s.getLivraisonsCumulNombreDosesPfizer());
 		sDTO.setLivraisonsCumulNombreTotalDoses(s.getLivraisonsCumulNombreTotalDoses());
@@ -53,8 +57,8 @@ public class DTOUtils {
 
 		iDTO.setDate(i.getDate());
 		iDTO.setTypeIndicateur(i.getTypeIndicateur());
-		iDTO.setTypeModel(i.getTypeModele());
-		iDTO.setValue(i.getValeur());
+		iDTO.setTypeModel(i.getTypeModel());
+		iDTO.setValue(i.getValue());
 		return null;
 	}
 
@@ -100,7 +104,7 @@ public class DTOUtils {
 		}
 		return iDTO;
 	}
-	
+
 	public static EvenementDTO evenementDTOMapper(Evenement e) {
 		EvenementDTO eDTO = new EvenementDTO();
 		eDTO.setDate(e.getDate());
@@ -108,7 +112,7 @@ public class DTOUtils {
 		eDTO.setTypeModele(e.getTypeModele());
 		return eDTO;
 	}
-	
+
 	public static List<EvenementDTO> evenementsDTOsMapper(List<Evenement> es) {
 		List<EvenementDTO> eDTO = new ArrayList<EvenementDTO>();
 		for (Evenement e : es) {
@@ -116,6 +120,5 @@ public class DTOUtils {
 		}
 		return eDTO;
 	}
-	
-	
+
 }

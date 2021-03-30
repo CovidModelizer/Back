@@ -20,14 +20,18 @@ public class Indicateur {
 	private LocalDate date;
 	@NotNull
 	@Column
-	private String typeModele;
-	@Column
-	private double valeur;
+	private String typeModel;
 	@Column
 	private String typeIndicateur;
+	@Column
+	private String value;
 	
 	public Integer getId() {
 		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public LocalDate getDate() {
@@ -38,20 +42,12 @@ public class Indicateur {
 		this.date = date;
 	}
 
-	public String getTypeModele() {
-		return typeModele;
+	public String getTypeModel() {
+		return typeModel;
 	}
 
-	public void setTypeModele(String typeModele) {
-		this.typeModele = typeModele;
-	}
-
-	public double getValeur() {
-		return valeur;
-	}
-
-	public void setValeur(double valeur) {
-		this.valeur = valeur;
+	public void setTypeModel(String typeModel) {
+		this.typeModel = typeModel;
 	}
 
 	public String getTypeIndicateur() {
@@ -61,9 +57,12 @@ public class Indicateur {
 	public void setTypeIndicateur(String typeIndicateur) {
 		this.typeIndicateur = typeIndicateur;
 	}
-
-	public void setId(int id) {
-		this.id = id;
+	
+	public String getValue() {
+		return value;
 	}
 
+	public void setValue(String value) {
+		this.value = value;
+	}
 }

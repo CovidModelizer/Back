@@ -28,15 +28,15 @@ public class ModelisationRepository {
 		modelisationDAO.save(modelisation);
 	}
 	
-	public List<Indicateur> getIndicateurs(Map<LocalDate, Double> map, String type, String model){
+	public List<Indicateur> getIndicateurs(Map<LocalDate, String> map, String type, String model){
 		List<Indicateur> indicateurs = new ArrayList<Indicateur>();
 		
 		for(LocalDate date : map.keySet()){
 			Indicateur indicateur = new Indicateur();
 			indicateur.setDate(date);
 			indicateur.setTypeIndicateur(type);
-			indicateur.setTypeModele(model);
-			indicateur.setValeur(map.get(date));
+			indicateur.setTypeModel(model);
+			indicateur.setValue(map.get(date));
 			indicateurs.add(indicateur);
 		}
 		return indicateurs;
