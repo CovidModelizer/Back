@@ -3,158 +3,230 @@ package com.inf1.app.dto;
 import java.time.LocalDate;
 
 public class SituationReelleDTO {
-	
+
 	private LocalDate date;
-	private int casConfirmes, deces, decesEhpad, reanimation, hospitalises, gueris, nouvellesHospitalisations,
-    nouvellesReanimations, nouvellesPremieresInjections, cumulPremieresInjections,
-    stockNombreTotalDoses, stockNombreDosesPfizer, stockNombreDosesModerna,
-    livraisonsCumulNombreTotalDoses, livraisonsCumulNombreDosesPfizer,
-    livraisonsCumulNombreDosesModerna, totalPrisesRendezVousSemaine, prisesRendezVousSemaineRang1,
-    prisesRendezVousSemaineRang2, stockEhpadNombreDosesPfizer;
-	
+	private String casConfirmes, deces, decesEhpad, reanimation, hospitalises, gueris, testsRealises, testsPositifs,
+			casConfirmesEhpad, casPossiblesEhpad, nouvellesHospitalisations, nouvellesReanimations,
+			nouvellesPremieresInjections, cumulPremieresInjections, stockNombreTotalDoses, stockNombreDosesPfizer,
+			stockNombreDosesModerna, livraisonsCumulNombreTotalDoses, livraisonsCumulNombreDosesPfizer,
+			livraisonsCumulNombreDosesModerna, totalPrisesRendezVousSemaine, prisesRendezVousSemaineRang1,
+			prisesRendezVousSemaineRang2, stockEhpadNombreDosesPfizer;
+
 	public LocalDate getDate() {
 		return date;
 	}
+
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	public int getCasConfirmes() {
+
+	public String getCasConfirmes() {
 		return casConfirmes;
 	}
-	public void setCasConfirmes(int casConfirmes) {
+
+	public void setCasConfirmes(String casConfirmes) {
 		this.casConfirmes = casConfirmes;
 	}
-	public int getDeces() {
+
+	public String getDeces() {
 		return deces;
 	}
-	public void setDeces(int deces) {
+
+	public void setDeces(String deces) {
 		this.deces = deces;
 	}
-	public int getDecesEhpad() {
+
+	public String getDecesEhpad() {
 		return decesEhpad;
 	}
-	public void setDecesEhpad(int decesEhpad) {
+
+	public void setDecesEhpad(String decesEhpad) {
 		this.decesEhpad = decesEhpad;
 	}
-	public int getReanimation() {
+
+	public String getReanimation() {
 		return reanimation;
 	}
-	public void setReanimation(int reanimation) {
+
+	public void setReanimation(String reanimation) {
 		this.reanimation = reanimation;
 	}
-	public int getHospitalises() {
+
+	public String getHospitalises() {
 		return hospitalises;
 	}
-	public void setHospitalises(int hospitalises) {
+
+	public void setHospitalises(String hospitalises) {
 		this.hospitalises = hospitalises;
 	}
-	public int getGueris() {
+
+	public String getGueris() {
 		return gueris;
 	}
-	public void setGueris(int gueris) {
+
+	public void setGueris(String gueris) {
 		this.gueris = gueris;
 	}
-	public int getNouvellesHospitalisations() {
+
+	public String getTestsRealises() {
+		return testsRealises;
+	}
+
+	public void setTestsRealises(String testsRealises) {
+		this.testsRealises = testsRealises;
+	}
+
+	public String getTestsPositifs() {
+		return testsPositifs;
+	}
+
+	public void setTestsPositifs(String testsPositifs) {
+		this.testsPositifs = testsPositifs;
+	}
+
+	public String getCasConfirmesEhpad() {
+		return casConfirmesEhpad;
+	}
+
+	public void setCasConfirmesEhpad(String casConfirmesEhpad) {
+		this.casConfirmesEhpad = casConfirmesEhpad;
+	}
+
+	public String getCasPossiblesEhpad() {
+		return casPossiblesEhpad;
+	}
+
+	public void setCasPossiblesEhpad(String casPossiblesEhpad) {
+		this.casPossiblesEhpad = casPossiblesEhpad;
+	}
+
+	public String getNouvellesHospitalisations() {
 		return nouvellesHospitalisations;
 	}
-	public void setNouvellesHospitalisations(int nouvellesHospitalisations) {
+
+	public void setNouvellesHospitalisations(String nouvellesHospitalisations) {
 		this.nouvellesHospitalisations = nouvellesHospitalisations;
 	}
-	public int getNouvellesReanimations() {
+
+	public String getNouvellesReanimations() {
 		return nouvellesReanimations;
 	}
-	public void setNouvellesReanimations(int nouvellesReanimations) {
+
+	public void setNouvellesReanimations(String nouvellesReanimations) {
 		this.nouvellesReanimations = nouvellesReanimations;
 	}
-	public int getNouvellesPremieresInjections() {
+
+	public String getNouvellesPremieresInjections() {
 		return nouvellesPremieresInjections;
 	}
-	public void setNouvellesPremieresInjections(int nouvellesPremieresInjections) {
+
+	public void setNouvellesPremieresInjections(String nouvellesPremieresInjections) {
 		this.nouvellesPremieresInjections = nouvellesPremieresInjections;
 	}
-	public int getCumulPremieresInjections() {
+
+	public String getCumulPremieresInjections() {
 		return cumulPremieresInjections;
 	}
-	public void setCumulPremieresInjections(int cumulPremieresInjections) {
+
+	public void setCumulPremieresInjections(String cumulPremieresInjections) {
 		this.cumulPremieresInjections = cumulPremieresInjections;
 	}
-	public int getStockNombreTotalDoses() {
+
+	public String getStockNombreTotalDoses() {
 		return stockNombreTotalDoses;
 	}
-	public void setStockNombreTotalDoses(int stockNombreTotalDoses) {
+
+	public void setStockNombreTotalDoses(String stockNombreTotalDoses) {
 		this.stockNombreTotalDoses = stockNombreTotalDoses;
 	}
-	public int getStockNombreDosesPfizer() {
+
+	public String getStockNombreDosesPfizer() {
 		return stockNombreDosesPfizer;
 	}
-	public void setStockNombreDosesPfizer(int stockNombreDosesPfizer) {
+
+	public void setStockNombreDosesPfizer(String stockNombreDosesPfizer) {
 		this.stockNombreDosesPfizer = stockNombreDosesPfizer;
 	}
-	public int getStockNombreDosesModerna() {
+
+	public String getStockNombreDosesModerna() {
 		return stockNombreDosesModerna;
 	}
-	public void setStockNombreDosesModerna(int stockNombreDosesModerna) {
+
+	public void setStockNombreDosesModerna(String stockNombreDosesModerna) {
 		this.stockNombreDosesModerna = stockNombreDosesModerna;
 	}
-	public int getLivraisonsCumulNombreTotalDoses() {
+
+	public String getLivraisonsCumulNombreTotalDoses() {
 		return livraisonsCumulNombreTotalDoses;
 	}
-	public void setLivraisonsCumulNombreTotalDoses(int livraisonsCumulNombreTotalDoses) {
+
+	public void setLivraisonsCumulNombreTotalDoses(String livraisonsCumulNombreTotalDoses) {
 		this.livraisonsCumulNombreTotalDoses = livraisonsCumulNombreTotalDoses;
 	}
-	public int getLivraisonsCumulNombreDosesPfizer() {
+
+	public String getLivraisonsCumulNombreDosesPfizer() {
 		return livraisonsCumulNombreDosesPfizer;
 	}
-	public void setLivraisonsCumulNombreDosesPfizer(int livraisonsCumulNombreDosesPfizer) {
+
+	public void setLivraisonsCumulNombreDosesPfizer(String livraisonsCumulNombreDosesPfizer) {
 		this.livraisonsCumulNombreDosesPfizer = livraisonsCumulNombreDosesPfizer;
 	}
-	public int getLivraisonsCumulNombreDosesModerna() {
+
+	public String getLivraisonsCumulNombreDosesModerna() {
 		return livraisonsCumulNombreDosesModerna;
 	}
-	public void setLivraisonsCumulNombreDosesModerna(int livraisonsCumulNombreDosesModerna) {
+
+	public void setLivraisonsCumulNombreDosesModerna(String livraisonsCumulNombreDosesModerna) {
 		this.livraisonsCumulNombreDosesModerna = livraisonsCumulNombreDosesModerna;
 	}
-	public int getTotalPrisesRendezVousSemaine() {
+
+	public String getTotalPrisesRendezVousSemaine() {
 		return totalPrisesRendezVousSemaine;
 	}
-	public void setTotalPrisesRendezVousSemaine(int totalPrisesRendezVousSemaine) {
+
+	public void setTotalPrisesRendezVousSemaine(String totalPrisesRendezVousSemaine) {
 		this.totalPrisesRendezVousSemaine = totalPrisesRendezVousSemaine;
 	}
-	public int getPrisesRendezVousSemaineRang1() {
+
+	public String getPrisesRendezVousSemaineRang1() {
 		return prisesRendezVousSemaineRang1;
 	}
-	public void setPrisesRendezVousSemaineRang1(int prisesRendezVousSemaineRang1) {
+
+	public void setPrisesRendezVousSemaineRang1(String prisesRendezVousSemaineRang1) {
 		this.prisesRendezVousSemaineRang1 = prisesRendezVousSemaineRang1;
 	}
-	public int getPrisesRendezVousSemaineRang2() {
+
+	public String getPrisesRendezVousSemaineRang2() {
 		return prisesRendezVousSemaineRang2;
 	}
-	public void setPrisesRendezVousSemaineRang2(int prisesRendezVousSemaineRang2) {
+
+	public void setPrisesRendezVousSemaineRang2(String prisesRendezVousSemaineRang2) {
 		this.prisesRendezVousSemaineRang2 = prisesRendezVousSemaineRang2;
 	}
-	public int getStockEhpadNombreDosesPfizer() {
+
+	public String getStockEhpadNombreDosesPfizer() {
 		return stockEhpadNombreDosesPfizer;
 	}
-	public void setStockEhpadNombreDosesPfizer(int stockEhpadNombreDosesPfizer) {
+
+	public void setStockEhpadNombreDosesPfizer(String stockEhpadNombreDosesPfizer) {
 		this.stockEhpadNombreDosesPfizer = stockEhpadNombreDosesPfizer;
 	}
+
 	@Override
 	public String toString() {
 		return "SituationReelleDTO [date=" + date + ", casConfirmes=" + casConfirmes + ", deces=" + deces
 				+ ", decesEhpad=" + decesEhpad + ", reanimation=" + reanimation + ", hospitalises=" + hospitalises
-				+ ", gueris=" + gueris + ", nouvellesHospitalisations=" + nouvellesHospitalisations
-				+ ", nouvellesReanimations=" + nouvellesReanimations + ", nouvellesPremieresInjections="
-				+ nouvellesPremieresInjections + ", cumulPremieresInjections=" + cumulPremieresInjections
-				+ ", stockNombreTotalDoses=" + stockNombreTotalDoses + ", stockNombreDosesPfizer="
-				+ stockNombreDosesPfizer + ", stockNombreDosesModerna=" + stockNombreDosesModerna
-				+ ", livraisonsCumulNombreTotalDoses=" + livraisonsCumulNombreTotalDoses
-				+ ", livraisonsCumulNombreDosesPfizer=" + livraisonsCumulNombreDosesPfizer
-				+ ", livraisonsCumulNombreDosesModerna=" + livraisonsCumulNombreDosesModerna
-				+ ", totalPrisesRendezVousSemaine=" + totalPrisesRendezVousSemaine + ", prisesRendezVousSemaineRang1="
-				+ prisesRendezVousSemaineRang1 + ", prisesRendezVousSemaineRang2=" + prisesRendezVousSemaineRang2
-				+ ", stockEhpadNombreDosesPfizer=" + stockEhpadNombreDosesPfizer + "]";
+				+ ", gueris=" + gueris + ", testsRealises=" + testsRealises + ", testsPositifs=" + testsPositifs
+				+ ", casConfirmesEhpad=" + casConfirmesEhpad + ", casPossiblesEhpad=" + casPossiblesEhpad
+				+ ", nouvellesHospitalisations=" + nouvellesHospitalisations + ", nouvellesReanimations="
+				+ nouvellesReanimations + ", nouvellesPremieresInjections=" + nouvellesPremieresInjections
+				+ ", cumulPremieresInjections=" + cumulPremieresInjections + ", stockNombreTotalDoses="
+				+ stockNombreTotalDoses + ", stockNombreDosesPfizer=" + stockNombreDosesPfizer
+				+ ", stockNombreDosesModerna=" + stockNombreDosesModerna + ", livraisonsCumulNombreTotalDoses="
+				+ livraisonsCumulNombreTotalDoses + ", livraisonsCumulNombreDosesPfizer="
+				+ livraisonsCumulNombreDosesPfizer + ", livraisonsCumulNombreDosesModerna="
+				+ livraisonsCumulNombreDosesModerna + ", totalPrisesRendezVousSemaine=" + totalPrisesRendezVousSemaine
+				+ ", prisesRendezVousSemaineRang1=" + prisesRendezVousSemaineRang1 + ", prisesRendezVousSemaineRang2="
+				+ prisesRendezVousSemaineRang2 + ", stockEhpadNombreDosesPfizer=" + stockEhpadNombreDosesPfizer + "]";
 	}
-	
-	
-	
 }

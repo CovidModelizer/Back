@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,7 @@ public class ModelisationDAO {
 	
 	@Autowired EntityManager entityManager;
 	
+	@Transactional
 	public Modelisation save(Modelisation entity) {
 		entityManager.persist(entity);
 		return entity;
