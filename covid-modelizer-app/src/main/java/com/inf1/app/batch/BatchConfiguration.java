@@ -29,11 +29,11 @@ import com.inf1.app.dto.SituationReelleDTO;
 
 @Configuration
 @EnableBatchProcessing
-@EnableScheduling
+//@EnableScheduling
 public class BatchConfiguration {
 
 	@Bean
-	public RestTemplate restTemplate() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
 
@@ -43,8 +43,8 @@ public class BatchConfiguration {
 	}
 
 	@Bean
-	ItemProcessor<SituationReelleDTO, SituationReelleDTO> processor(DataSource dataSource, JdbcTemplate jdbcTemplate) {
-		return new SituationReelleProcessor(dataSource, jdbcTemplate);
+	ItemProcessor<SituationReelleDTO, SituationReelleDTO> processor(DataSource dataSource) {
+		return new SituationReelleProcessor(dataSource);
 	}
 
 	@Bean
