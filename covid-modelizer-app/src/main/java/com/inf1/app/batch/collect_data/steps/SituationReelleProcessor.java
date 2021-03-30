@@ -15,7 +15,7 @@ public class SituationReelleProcessor implements ItemProcessor<SituationReelleDT
 	public SituationReelleProcessor(DataSource dataSource, JdbcTemplate jdbcTemplate) {
 		LOG.info("$$$ Purge Table $$$");
 		jdbcTemplate.setDataSource(dataSource);
-		jdbcTemplate.update("DELETE FROM situation_reelle");
+//		jdbcTemplate.update("DELETE FROM situation_reelle");
 	}
 	
 	@Override

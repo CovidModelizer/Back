@@ -15,8 +15,8 @@ import com.inf1.app.jpa.dao.ModelisationDAO;
 import com.inf1.app.jpa.repository.IndicateurRepository;
 
 @RestController
-@RequestMapping("/Modelisation/Cas")
-public class CasEndpoint {
+@RequestMapping("/modelisation/cas")
+public class ModelisationCasEndpoint {
 
 	@Autowired(required = true)
 	IndicateurRepository repository;

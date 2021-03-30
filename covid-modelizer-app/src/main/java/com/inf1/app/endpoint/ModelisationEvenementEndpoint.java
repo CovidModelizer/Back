@@ -13,8 +13,8 @@ import com.inf1.app.dto.EvenementDTO;
 import com.inf1.app.jpa.repository.EvenementRepository;
 
 @RestController
-@RequestMapping("/Evenement")
-public class EvenementEndpoint {
+@RequestMapping("/modelisation/evenement")
+public class ModelisationEvenementEndpoint {
 	
 	@Autowired EvenementRepository repository;
 	

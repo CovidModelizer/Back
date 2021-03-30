@@ -13,8 +13,8 @@ import com.inf1.app.dto.SituationReelleDTO;
 import com.inf1.app.jpa.repository.SituationReelleRepository;
 
 @RestController
-@RequestMapping("/donneesReelles")
-public class DonneesReelsEndpoint {
+@RequestMapping("/reel/complet")
+public class ReelCompletEndpoint {
 
 	@Autowired(required=true)
 	SituationReelleRepository repository;

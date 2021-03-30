@@ -12,8 +12,8 @@ import com.inf1.app.dto.IndicateurDTO;
 import com.inf1.app.jpa.repository.IndicateurRepository;
 
 @RestController
-@RequestMapping("/Modelisation/Vaccin")
-public class VaccinsEndpoint {
+@RequestMapping("/modelisation/vaccin")
+public class ModelisationVaccinsEndpoint {
 
 	@Autowired(required=true)
 	IndicateurRepository repository;
