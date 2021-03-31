@@ -25,21 +25,37 @@ public class Modelisation {
 	@NotNull
 	@Column
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Indicateur> indicateurs;
+	private List<Indicateur> indicators;
 	@NotNull
 	@Column
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Coefficient> coefficient;
+	private List<Coefficient> coefficients;
 	@NotNull
 	@Column
 	private LocalDate calculDate;
 	
-	public List<Indicateur> getIndicateurs() {
-		return indicateurs;
+	public int getId() {
+		return id;
 	}
 
-	public void setIndicateurs(List<Indicateur> indicateurs) {
-		this.indicateurs = indicateurs;
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public List<Indicateur> getIndicators() {
+		return indicators;
+	}
+
+	public void setIndicators(List<Indicateur> indicateurs) {
+		this.indicators = indicateurs;
+	}
+	
+	public List<Coefficient> getCoefficients() {
+		return coefficients;
+	}
+
+	public void setCoefficients(List<Coefficient> coefficients) {
+		this.coefficients = coefficients;
 	}
 
 	public LocalDate getCalculDate() {
@@ -48,23 +64,5 @@ public class Modelisation {
 
 	public void setCalculDate(LocalDate calculDate) {
 		this.calculDate = calculDate;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public List<Coefficient> getCoefficient() {
-		return coefficient;
-	}
-
-	public void setCoefficient(List<Coefficient> coefficient) {
-		this.coefficient = coefficient;
-	}
-	
-	
+	}	
 }

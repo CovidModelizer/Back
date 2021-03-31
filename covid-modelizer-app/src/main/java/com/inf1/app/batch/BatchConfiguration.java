@@ -1,8 +1,5 @@
 package com.inf1.app.batch;
 
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import javax.sql.DataSource;
 
 import org.springframework.batch.core.Job;
@@ -19,8 +16,6 @@ import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilde
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
 import com.inf1.app.batch.collect_data.steps.SituationReelleReader;
@@ -33,7 +28,7 @@ import com.inf1.app.dto.SituationReelleDTO;
 public class BatchConfiguration {
 
 	@Bean
-	public RestTemplate restTemplate() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
 
@@ -43,8 +38,8 @@ public class BatchConfiguration {
 	}
 
 	@Bean
-	ItemProcessor<SituationReelleDTO, SituationReelleDTO> processor(DataSource dataSource, JdbcTemplate jdbcTemplate) {
-		return new SituationReelleProcessor(dataSource, jdbcTemplate);
+	ItemProcessor<SituationReelleDTO, SituationReelleDTO> processor() {
+		return new SituationReelleProcessor();
 	}
 
 	@Bean

@@ -14,7 +14,7 @@ public class DTOUtils {
 
 	public static SituationReelleDTO situationReelleDTOMapper(SituationReelle s) {
 		SituationReelleDTO sDTO = new SituationReelleDTO();
-
+		sDTO.setR0(s.getR0());
 		sDTO.setCasConfirmes(s.getCasConfirmes());
 		sDTO.setCumulPremieresInjections(s.getCumulPremieresInjections());
 		sDTO.setDate(s.getDate());
@@ -40,7 +40,6 @@ public class DTOUtils {
 		sDTO.setStockNombreDosesPfizer(s.getStockNombreDosesPfizer());
 		sDTO.setStockNombreTotalDoses(s.getStockNombreTotalDoses());
 		sDTO.setTotalPrisesRendezVousSemaine(s.getTotalPrisesRendezVousSemaine());
-
 		return sDTO;
 	}
 
@@ -54,9 +53,8 @@ public class DTOUtils {
 
 	public static IndicateurDTO indicateurDTOMapper(Indicateur i) {
 		IndicateurDTO iDTO = new IndicateurDTO();
-
 		iDTO.setDate(i.getDate());
-		iDTO.setTypeIndicateur(i.getTypeIndicateur());
+		iDTO.setTypeIndicateur(i.getTypeIndicator());
 		iDTO.setTypeModel(i.getTypeModel());
 		iDTO.setValue(i.getValue());
 		return null;
@@ -72,7 +70,6 @@ public class DTOUtils {
 
 	public static IndicateurDTO indicateurReelVaccinDTOMapper(SituationReelle i) {
 		IndicateurDTO iDTO = new IndicateurDTO();
-
 		iDTO.setDate(i.getDate());
 		iDTO.setTypeIndicateur("VAC");
 		iDTO.setTypeModel("REL");
@@ -108,8 +105,8 @@ public class DTOUtils {
 	public static EvenementDTO evenementDTOMapper(Evenement e) {
 		EvenementDTO eDTO = new EvenementDTO();
 		eDTO.setDate(e.getDate());
-		eDTO.setTypeIndicateur(e.getTypeIndicateur());
-		eDTO.setTypeModele(e.getTypeModele());
+		eDTO.setTypeIndicateur(e.getTypeIndicator());
+		eDTO.setTypeModele(e.getTypeModel());
 		return eDTO;
 	}
 

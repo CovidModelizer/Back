@@ -23,8 +23,8 @@ public class ModelisationRepository {
 		Modelisation modelisation = new Modelisation();
 
 		modelisation.setCalculDate(modelisationDTO.getDateCalcul());
-		modelisation.setIndicateurs(getIndicateurs(modelisationDTO.getValues(), type, model));
-		modelisation.setCoefficient(getCoefficients(modelisationDTO.getCoeff(), type, model));
+		modelisation.setIndicators(getIndicateurs(modelisationDTO.getValues(), type, model));
+		modelisation.setCoefficients(getCoefficients(modelisationDTO.getCoeff(), type, model));
 		modelisationDAO.save(modelisation);
 	}
 	
@@ -34,7 +34,7 @@ public class ModelisationRepository {
 		for(LocalDate date : map.keySet()){
 			Indicateur indicateur = new Indicateur();
 			indicateur.setDate(date);
-			indicateur.setTypeIndicateur(type);
+			indicateur.setTypeIndicator(type);
 			indicateur.setTypeModel(model);
 			indicateur.setValue(map.get(date));
 			indicateurs.add(indicateur);
@@ -48,9 +48,9 @@ public class ModelisationRepository {
 		for(String coeffName : map.keySet()){
 			Coefficient coefficient = new Coefficient();
 			coefficient.setNom(coeffName);
-			coefficient.setTypeIndicateur(type);
-			coefficient.setTypeModele(model);
-			coefficient.setValeur(map.get(coeffName));
+			coefficient.setTypeIndicator(type);
+			coefficient.setTypeModel(model);
+			coefficient.setValue(map.get(coeffName));
 			coefficients.add(coefficient);
 		}
 		return coefficients;

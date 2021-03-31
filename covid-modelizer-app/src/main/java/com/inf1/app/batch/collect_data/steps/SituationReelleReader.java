@@ -12,14 +12,16 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.inf1.app.dto.SituationReelleDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.inf1.app.dto.SituationReelleDTO;
+
 @Component
 public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
 
+	@SuppressWarnings("unused")
 	private static final Logger LOG = LoggerFactory.getLogger(SituationReelleReader.class);
 
 	@Autowired
@@ -45,30 +47,36 @@ public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
 		SituationReelleDTO nextSituationReelleDto = null;
 		if (situationReelleDataIsNotInitialized()) {
 			situationReelleData = fetchSituationReelleDataFromAPI(API_URL_INFOS);
+
 		}
-		if (nextSituationReelleIndex < situationReelleData.length) {
+		if (nextSituationReelleIndex < situationReelleData.length)
+
+		{
 			nextSituationReelleDto = situationReelleData[nextSituationReelleIndex];
 			/*
 			 * Le R0 commence le 18/03/2020 alors que l'API proposant les autres données
-			 * commence le 02/03/2020. Ainsi, on décale pour avoir les 16 premiers jours
+			 * commence le 02/03/2020. Ainsi, on décalle pour avoir les 16 premiers jours
 			 * avec un R0 à vide.
 			 */
 			int nbJoursPlusTard = 16;
 			if (nextSituationReelleIndex == nbJoursPlusTard) {
 				r0data = fetchR0DataFromAPI(API_URL_R0);
-				nextR0Index = 0;
 			}
-			if (r0dataIsNotInitialized()) {
-				nextSituationReelleDto.setR0("");
-			} else {
-				nextSituationReelleDto.setR0(r0data.get(nextR0Index++).get(1));
+			String val = null;
+			if (r0dataIsInitialized()) {
+				if (!r0data.get(nextR0Index).get(1).equals("NA")) {
+					val = r0data.get(nextR0Index).get(1);
+				}
+				nextR0Index++;
 			}
+			nextSituationReelleDto.setR0(val);
 			nextSituationReelleIndex++;
 		} else {
 			nextSituationReelleIndex = 0;
 			situationReelleData = null;
+			nextR0Index = 0;
+			r0data = null;
 		}
-		LOG.info(nextSituationReelleDto == null ? "" : nextSituationReelleDto.toString());
 		return nextSituationReelleDto;
 	}
 
@@ -76,8 +84,8 @@ public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
 		return this.situationReelleData == null;
 	}
 
-	private boolean r0dataIsNotInitialized() {
-		return this.r0data == null;
+	private boolean r0dataIsInitialized() {
+		return this.r0data != null;
 	}
 
 	private SituationReelleDTO[] fetchSituationReelleDataFromAPI(String url) throws JsonProcessingException {
