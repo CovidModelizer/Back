@@ -54,7 +54,7 @@ public class SituationReelleRepository {
 	
 	@SuppressWarnings("unchecked")
 	public List<SituationReelleDTO> findallDTO() {
-		Query q = entityManager.createQuery("select s from SituationReelle s", SituationReelle.class);
+		Query q = entityManager.createQuery("select s from SituationReelle s order by s.date", SituationReelle.class);
 		return DTOUtils.situationsReellesDTOsMapper(q.getResultList());
 	}	
 }

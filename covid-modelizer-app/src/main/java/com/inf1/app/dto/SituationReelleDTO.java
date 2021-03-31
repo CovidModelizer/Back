@@ -22,9 +22,13 @@ public class SituationReelleDTO {
 		this.date = date;
 	}
 
-	public String getR0() { return r0; }
+	public String getR0() {
+		return r0;
+	}
 
-	public void setR0(String r0) { this.r0 = r0; }
+	public void setR0(String r0) {
+		this.r0 = r0;
+	}
 
 	public String getCasConfirmes() {
 		return casConfirmes;
@@ -220,33 +224,22 @@ public class SituationReelleDTO {
 
 	@Override
 	public String toString() {
-		return "SituationReelleDTO{" +
-				"date=" + date +
-				", r0='" + r0 + '\'' +
-				", casConfirmes='" + casConfirmes + '\'' +
-				", deces='" + deces + '\'' +
-				", decesEhpad='" + decesEhpad + '\'' +
-				", reanimation='" + reanimation + '\'' +
-				", hospitalises='" + hospitalises + '\'' +
-				", gueris='" + gueris + '\'' +
-				", testsRealises='" + testsRealises + '\'' +
-				", testsPositifs='" + testsPositifs + '\'' +
-				", casConfirmesEhpad='" + casConfirmesEhpad + '\'' +
-				", casPossiblesEhpad='" + casPossiblesEhpad + '\'' +
-				", nouvellesHospitalisations='" + nouvellesHospitalisations + '\'' +
-				", nouvellesReanimations='" + nouvellesReanimations + '\'' +
-				", nouvellesPremieresInjections='" + nouvellesPremieresInjections + '\'' +
-				", cumulPremieresInjections='" + cumulPremieresInjections + '\'' +
-				", stockNombreTotalDoses='" + stockNombreTotalDoses + '\'' +
-				", stockNombreDosesPfizer='" + stockNombreDosesPfizer + '\'' +
-				", stockNombreDosesModerna='" + stockNombreDosesModerna + '\'' +
-				", livraisonsCumulNombreTotalDoses='" + livraisonsCumulNombreTotalDoses + '\'' +
-				", livraisonsCumulNombreDosesPfizer='" + livraisonsCumulNombreDosesPfizer + '\'' +
-				", livraisonsCumulNombreDosesModerna='" + livraisonsCumulNombreDosesModerna + '\'' +
-				", totalPrisesRendezVousSemaine='" + totalPrisesRendezVousSemaine + '\'' +
-				", prisesRendezVousSemaineRang1='" + prisesRendezVousSemaineRang1 + '\'' +
-				", prisesRendezVousSemaineRang2='" + prisesRendezVousSemaineRang2 + '\'' +
-				", stockEhpadNombreDosesPfizer='" + stockEhpadNombreDosesPfizer + '\'' +
-				'}';
+		return "SituationReelleDTO{" + "date=" + date + ", r0='" + r0 + '\'' + ", casConfirmes='" + casConfirmes + '\''
+				+ ", deces='" + deces + '\'' + ", decesEhpad='" + decesEhpad + '\'' + ", reanimation='" + reanimation
+				+ '\'' + ", hospitalises='" + hospitalises + '\'' + ", gueris='" + gueris + '\'' + ", testsRealises='"
+				+ testsRealises + '\'' + ", testsPositifs='" + testsPositifs + '\'' + ", casConfirmesEhpad='"
+				+ casConfirmesEhpad + '\'' + ", casPossiblesEhpad='" + casPossiblesEhpad + '\''
+				+ ", nouvellesHospitalisations='" + nouvellesHospitalisations + '\'' + ", nouvellesReanimations='"
+				+ nouvellesReanimations + '\'' + ", nouvellesPremieresInjections='" + nouvellesPremieresInjections
+				+ '\'' + ", cumulPremieresInjections='" + cumulPremieresInjections + '\'' + ", stockNombreTotalDoses='"
+				+ stockNombreTotalDoses + '\'' + ", stockNombreDosesPfizer='" + stockNombreDosesPfizer + '\''
+				+ ", stockNombreDosesModerna='" + stockNombreDosesModerna + '\'' + ", livraisonsCumulNombreTotalDoses='"
+				+ livraisonsCumulNombreTotalDoses + '\'' + ", livraisonsCumulNombreDosesPfizer='"
+				+ livraisonsCumulNombreDosesPfizer + '\'' + ", livraisonsCumulNombreDosesModerna='"
+				+ livraisonsCumulNombreDosesModerna + '\'' + ", totalPrisesRendezVousSemaine='"
+				+ totalPrisesRendezVousSemaine + '\'' + ", prisesRendezVousSemaineRang1='"
+				+ prisesRendezVousSemaineRang1 + '\'' + ", prisesRendezVousSemaineRang2='"
+				+ prisesRendezVousSemaineRang2 + '\'' + ", stockEhpadNombreDosesPfizer='" + stockEhpadNombreDosesPfizer
+				+ '\'' + '}';
 	}
 }

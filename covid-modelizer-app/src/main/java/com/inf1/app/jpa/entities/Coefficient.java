@@ -17,44 +17,51 @@ public class Coefficient {
 	@NotNull
 	@Column
 	private String nom;
+	@Column
+	private String typeIndicator;
 	@NotNull
 	@Column
-	private String typeModele;
+	private String typeModel;
 	@Column
-	private double valeur;
-	@Column
-	private String typeIndicateur;
+	private double value;
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getNom() {
 		return nom;
 	}
+
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public String getTypeModele() {
-		return typeModele;
+
+	public String getTypeIndicator() {
+		return typeIndicator;
 	}
-	public void setTypeModele(String typeModele) {
-		this.typeModele = typeModele;
+
+	public void setTypeIndicator(String typeIndicator) {
+		this.typeIndicator = typeIndicator;
 	}
-	public double getValeur() {
-		return valeur;
+
+	public String getTypeModel() {
+		return typeModel;
 	}
-	public void setValeur(double valeur) {
-		this.valeur = valeur;
+
+	public void setTypeModel(String typeModel) {
+		this.typeModel = typeModel;
 	}
-	public String getTypeIndicateur() {
-		return typeIndicateur;
+
+	public double getValue() {
+		return value;
 	}
-	public void setTypeIndicateur(String typeIndicateur) {
-		this.typeIndicateur = typeIndicateur;
+
+	public void setValue(double value) {
+		this.value = value;
 	}
-	
-	
-	
 }

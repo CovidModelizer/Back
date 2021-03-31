@@ -1,8 +1,5 @@
 package com.inf1.app.batch;
 
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import javax.sql.DataSource;
 
 import org.springframework.batch.core.Job;
@@ -19,8 +16,6 @@ import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilde
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
 import com.inf1.app.batch.collect_data.steps.SituationReelleReader;
@@ -71,14 +66,9 @@ public class BatchConfiguration {
 	@Bean
 	Step situationsReellesStep(ItemReader<SituationReelleDTO> reader,
 			ItemProcessor<SituationReelleDTO, SituationReelleDTO> processor,
-			JdbcBatchItemWriter<SituationReelleDTO> writer,
-			StepBuilderFactory stepBuilderFactory) {
-	  return stepBuilderFactory.get("situationsReellesStep")
-	    .<SituationReelleDTO, SituationReelleDTO> chunk(10000)
-	    .reader(reader)
-	    .processor(processor)
-	    .writer(writer)
-	    .build();
+			JdbcBatchItemWriter<SituationReelleDTO> writer, StepBuilderFactory stepBuilderFactory) {
+		return stepBuilderFactory.get("situationsReellesStep").<SituationReelleDTO, SituationReelleDTO>chunk(10000)
+				.reader(reader).processor(processor).writer(writer).build();
 	}
 
 	@Bean

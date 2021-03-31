@@ -17,7 +17,7 @@ public class SituationReelle {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@NotNull
-	@Column(name = "date")
+	@Column(name = "date", nullable = false)
 	private LocalDate date;
 	@Column(name = "r0")
 	private String r0;
@@ -86,11 +86,17 @@ public class SituationReelle {
 		this.date = date;
 	}
 
-	public String getR0() { return r0; }
+	public String getR0() {
+		return r0;
+	}
 
-	public void setR0(String r0) { this.r0 = r0; }
+	public void setR0(String r0) {
+		this.r0 = r0;
+	}
 
-	public String getCasConfirmes() { return casConfirmes; }
+	public String getCasConfirmes() {
+		return casConfirmes;
+	}
 
 	public void setCasConfirmes(String casConfirmes) {
 		this.casConfirmes = casConfirmes;

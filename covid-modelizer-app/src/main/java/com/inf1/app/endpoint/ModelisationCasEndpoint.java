@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inf1.app.batch.modelisations.calculsQuotidiensBatch;
 import com.inf1.app.dto.IndicateurDTO;
-import com.inf1.app.jpa.dao.ModelisationDAO;
 import com.inf1.app.jpa.repository.IndicateurRepository;
 
 @RestController
@@ -29,7 +28,7 @@ public class ModelisationCasEndpoint {
 		return repository.findAllByModel("CAS", typeModel);
 	}
 
-	@GetMapping("/Calculation")
+	@GetMapping("/test-calcul")
 	public void calculation() {
 		cqb.calculerData();
 	}

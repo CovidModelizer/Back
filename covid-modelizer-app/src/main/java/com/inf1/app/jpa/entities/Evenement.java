@@ -20,12 +20,16 @@ public class Evenement {
 	private LocalDate date;
 	@NotNull
 	@Column
-	private String typeModele;
+	private String typeModel;
 	@Column
-	private String typeIndicateur;
-	
+	private String typeIndicator;
+
 	public Integer getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public LocalDate getDate() {
@@ -36,26 +40,19 @@ public class Evenement {
 		this.date = date;
 	}
 
-	public String getTypeModele() {
-		return typeModele;
+	public String getTypeModel() {
+		return typeModel;
 	}
 
-	public void setTypeModele(String typeModele) {
-		this.typeModele = typeModele;
+	public void setTypeModel(String typeModel) {
+		this.typeModel = typeModel;
 	}
 
-	public String getTypeIndicateur() {
-		return typeIndicateur;
+	public String getTypeIndicator() {
+		return typeIndicator;
 	}
 
-	public void setTypeIndicateur(String typeIndicateur) {
-		this.typeIndicateur = typeIndicateur;
+	public void setTypeIndicator(String typeIndicateur) {
+		this.typeIndicator = typeIndicateur;
 	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	
-	
 }

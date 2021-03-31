@@ -22,7 +22,7 @@ public class Indicateur {
 	@Column
 	private String typeModel;
 	@Column
-	private String typeIndicateur;
+	private String typeIndicator;
 	@Column
 	private String value;
 	
@@ -50,12 +50,12 @@ public class Indicateur {
 		this.typeModel = typeModel;
 	}
 
-	public String getTypeIndicateur() {
-		return typeIndicateur;
+	public String getTypeIndicator() {
+		return typeIndicator;
 	}
 
-	public void setTypeIndicateur(String typeIndicateur) {
-		this.typeIndicateur = typeIndicateur;
+	public void setTypeIndicator(String typeIndicator) {
+		this.typeIndicator = typeIndicator;
 	}
 	
 	public String getValue() {
