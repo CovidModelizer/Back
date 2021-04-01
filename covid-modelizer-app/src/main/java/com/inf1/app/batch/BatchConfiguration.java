@@ -16,6 +16,7 @@ import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilde
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
 import com.inf1.app.batch.collect_data.steps.SituationReelleReader;
@@ -24,7 +25,7 @@ import com.inf1.app.dto.SituationReelleDTO;
 
 @Configuration
 @EnableBatchProcessing
-//@EnableScheduling
+@EnableScheduling
 public class BatchConfiguration {
 
 	@Bean
