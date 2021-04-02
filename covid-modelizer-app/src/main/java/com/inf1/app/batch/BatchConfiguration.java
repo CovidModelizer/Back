@@ -18,6 +18,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.inf1.app.batch.collect_data.steps.SituationReelleReader;
 import com.inf1.app.batch.collect_data.steps.SituationReelleProcessor;
@@ -26,7 +28,12 @@ import com.inf1.app.dto.SituationReelleDTO;
 @Configuration
 @EnableBatchProcessing
 @EnableScheduling
-public class BatchConfiguration {
+public class BatchConfiguration implements WebMvcConfigurer {
+
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET");
+	}
 
 	@Bean
 	public RestTemplate restTemplate() {
