@@ -1,7 +1,7 @@
 package com.inf1.app.utils;
 
 import com.inf1.app.batch.collect_data.steps.SituationReelleProcessor;
-import com.inf1.app.jpa.repository.SituationReelleRepository;
+import com.inf1.app.jpa.dao.SituationReelleDAO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +13,11 @@ public class DatabaseUtils {
 	private static final Logger LOG = LoggerFactory.getLogger(SituationReelleProcessor.class);
 
 	@Autowired
-	static SituationReelleRepository s;
+	static SituationReelleDAO sDAO;
 	
 	public static void cleanDatabase(JdbcTemplate jdbcTemplate) {
 		LOG.warn("*** Clean DB ***");
-		jdbcTemplate.update("DELETE FROM situation_reelle");
-		LOG.warn("&&&&&&&&& Size DB" + s.findallDTO().size());
+		sDAO.deleteAll();
 		
 		// TODO : autres tables à vider
 		// TODO : il faut pouvoir supprimer les coefficients et les indicateurs en
