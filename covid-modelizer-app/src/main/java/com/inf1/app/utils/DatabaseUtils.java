@@ -1,9 +1,10 @@
 package com.inf1.app.utils;
 
-import com.inf1.app.batch.collect_data.steps.SituationReelleProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.inf1.app.batch.data.collect.SituationReelleProcessor;
 
 public class DatabaseUtils {
 

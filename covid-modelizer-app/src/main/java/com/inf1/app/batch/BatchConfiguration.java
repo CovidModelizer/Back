@@ -19,8 +19,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
-import com.inf1.app.batch.collect_data.steps.SituationReelleReader;
-import com.inf1.app.batch.collect_data.steps.SituationReelleProcessor;
+import com.inf1.app.batch.data.collect.SituationReelleProcessor;
+import com.inf1.app.batch.data.collect.SituationReelleReader;
 import com.inf1.app.dto.SituationReelleDTO;
 
 @Configuration
