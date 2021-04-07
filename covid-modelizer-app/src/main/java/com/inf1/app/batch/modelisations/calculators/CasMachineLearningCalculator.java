@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.inf1.app.dto.ModelisationDTO;
 import com.inf1.app.dto.SituationReelleDTO;
 
@@ -22,30 +19,30 @@ import weka.core.Instances;
 
 public class CasMachineLearningCalculator implements ModelisationCalculator {
 
-	@SuppressWarnings("unused")
-	private static final Logger LOG = LoggerFactory.getLogger(CasMachineLearningCalculator.class);
-
 	@Override
 	public ModelisationDTO calculate(List<SituationReelleDTO> situationsReellesDTO) {
 		ModelisationDTO model = new ModelisationDTO();
 
 		// Variables utiles à l'entraînement du modèle de prédiction
-		double realValue = Double.NaN;
 		int expanse = 21;
+
+		double realValue = Double.NaN;
 
 		Instances[] allDataSet = new Instances[expanse];
 
 		Instances dataSet = null;
 		Instances trainSet = null;
 		Instances testSet = null;
+
 		LinearRegression[] lrClassifier = new LinearRegression[expanse];
+
 		Evaluation[] eval = new Evaluation[expanse];
 
-		Instance predictionData = null;
+		Instance predictiveData = null;
 
 		try {
 			dataSet = initDataSet(situationsReellesDTO);
-			// Entraînement du modèle de régression linéaire
+			// Entraînement du modèle de régression linéaire à plusieurs variables
 			for (int n = 1; n <= expanse; n++) {
 				for (int i = 0; i < dataSet.size(); i++) {
 					realValue = (i + n) >= dataSet.size() ? Double.NaN : dataSet.instance(i + n).value(5);
@@ -58,16 +55,17 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 				testSet = dataSet.testCV(5, 0);
 
 				lrClassifier[n - 1] = new LinearRegression();
+				lrClassifier[n - 1].setOptions(new String[] { "-R", "1" });
 				lrClassifier[n - 1].buildClassifier(trainSet);
 
 				eval[n - 1] = new Evaluation(trainSet);
 				eval[n - 1].evaluateModel(lrClassifier[n - 1], testSet);
 
-				predictionData = dataSet.get(dataSet.size() - 1 - n);
+				predictiveData = dataSet.get(dataSet.size() - 1 - n);
 
 				allDataSet[n - 1] = new Instances(dataSet);
 
-				for (int i = 0; i < dataSet.numAttributes(); i++) {
+				for (int i = 1; i < dataSet.numAttributes(); i++) {
 					if (lrClassifier[n - 1].coefficients()[i] != 0.0) {
 						model.getCoeff().put("PredJ+" + n + "_" + dataSet.attribute(i).name(),
 								lrClassifier[n - 1].coefficients()[i]);
@@ -76,30 +74,30 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 				model.getCoeff().put("PredJ+" + n + "_constante",
 						lrClassifier[n - 1].coefficients()[lrClassifier[n - 1].coefficients().length - 1]);
 			}
-			// Prédictions sur 21 (= expanse) jours
+			// Prédictions
 			for (int i = 0; i < expanse; i++) {
-				predictionData = allDataSet[i].instance(dataSet.size() - (2 * expanse) - 1);
-
+				predictiveData = allDataSet[i].instance(dataSet.size() - (2 * expanse) - 1);
 				model.getValues()
-						.put(LocalDate.parse(predictionData.stringValue(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+						.put(LocalDate.parse(predictiveData.stringValue(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 								.plusDays(i + 1),
-								String.valueOf((int) lrClassifier[i].classifyInstance(predictionData)));
+								lrClassifier[i].classifyInstance(predictiveData) < 0 ? "0"
+										: String.valueOf((int) lrClassifier[i].classifyInstance(predictiveData)));
 			}
 			for (int i = 0; i < allDataSet.length; i++) {
-				predictionData = allDataSet[i].get(allDataSet[i].size() - 1 - expanse);
-
+				predictiveData = allDataSet[i].get(allDataSet[i].size() - 1 - expanse);
 				model.getValues()
-						.put(LocalDate.parse(predictionData.stringValue(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+						.put(LocalDate.parse(predictiveData.stringValue(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 								.plusDays(i + 1),
-								String.valueOf((int) lrClassifier[i].classifyInstance(predictionData)));
+								lrClassifier[i].classifyInstance(predictiveData) < 0 ? "0"
+										: String.valueOf((int) lrClassifier[i].classifyInstance(predictiveData)));
 			}
 			for (int i = 0; i < expanse; i++) {
-				predictionData = allDataSet[i].lastInstance();
-
+				predictiveData = allDataSet[i].lastInstance();
 				model.getValues()
-						.put(LocalDate.parse(predictionData.stringValue(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+						.put(LocalDate.parse(predictiveData.stringValue(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 								.plusDays(i + 1),
-								String.valueOf((int) lrClassifier[i].classifyInstance(predictionData)));
+								lrClassifier[i].classifyInstance(predictiveData) < 0 ? "0"
+										: String.valueOf((int) lrClassifier[i].classifyInstance(predictiveData)));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,43 +138,24 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 			double[] instanceValue = new double[dataSet.numAttributes()];
 			instanceValue[0] = dataSet.attribute("date")
 					.parseDate(srDTO.get(i).getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-			instanceValue[1] = (i == 0)
-					? srDTO.get(i).getDeces() == null ? Double.NaN : Double.parseDouble(srDTO.get(i).getDeces())
-					: srDTO.get(i).getDeces() == null || srDTO.get(i - 1).getDeces() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getDeces())
-									- Double.parseDouble(srDTO.get(i - 1).getDeces());
-			instanceValue[2] = (i == 0)
-					? srDTO.get(i).getGueris() == null ? Double.NaN : Double.parseDouble(srDTO.get(i).getGueris())
-					: srDTO.get(i).getGueris() == null || srDTO.get(i - 1).getGueris() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getGueris())
-									- Double.parseDouble(srDTO.get(i - 1).getGueris());
-			instanceValue[3] = (i == 0)
-					? srDTO.get(i).getDecesEhpad() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getDecesEhpad())
-					: srDTO.get(i).getDecesEhpad() == null || srDTO.get(i - 1).getDecesEhpad() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getDecesEhpad())
-									- Double.parseDouble(srDTO.get(i - 1).getDecesEhpad());
+			instanceValue[1] = srDTO.get(i).getNouveauxDeces() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getNouveauxDeces());
+			instanceValue[2] = srDTO.get(i).getNouveauxGueris() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getNouveauxGueris());
+			instanceValue[3] = srDTO.get(i).getNouveauxDecesEhpad() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getNouveauxDecesEhpad());
 			instanceValue[4] = srDTO.get(i).getReanimation() == null ? Double.NaN
 					: Double.parseDouble(srDTO.get(i).getReanimation());
-			instanceValue[5] = (i == 0)
-					? srDTO.get(i).getCasConfirmes() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getCasConfirmes())
-					: srDTO.get(i).getCasConfirmes() == null || srDTO.get(i - 1).getCasConfirmes() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getCasConfirmes())
-									- Double.parseDouble(srDTO.get(i - 1).getCasConfirmes());
+			instanceValue[5] = srDTO.get(i).getNouveauxCasConfirmes() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getNouveauxCasConfirmes());
 			instanceValue[6] = srDTO.get(i).getHospitalises() == null ? Double.NaN
 					: Double.parseDouble(srDTO.get(i).getHospitalises());
 			instanceValue[7] = srDTO.get(i).getTestsRealises() == null ? Double.NaN
 					: Double.parseDouble(srDTO.get(i).getTestsRealises());
 			instanceValue[8] = srDTO.get(i).getTestsPositifs() == null ? Double.NaN
 					: Double.parseDouble(srDTO.get(i).getTestsPositifs());
-			instanceValue[9] = (i == 0)
-					? srDTO.get(i).getCasConfirmesEhpad() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getCasConfirmesEhpad())
-					: srDTO.get(i).getCasConfirmesEhpad() == null || srDTO.get(i - 1).getCasConfirmesEhpad() == null
-							? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getCasConfirmesEhpad())
-									- Double.parseDouble(srDTO.get(i - 1).getCasConfirmesEhpad());
+			instanceValue[9] = srDTO.get(i).getNouveauxCasConfirmesEhpad() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getNouveauxCasConfirmesEhpad());
 			instanceValue[10] = srDTO.get(i).getNouvellesReanimations() == null ? Double.NaN
 					: Double.parseDouble(srDTO.get(i).getNouvellesReanimations());
 			instanceValue[11] = srDTO.get(i).getNouvellesHospitalisations() == null ? Double.NaN

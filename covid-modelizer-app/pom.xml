@@ -84,6 +84,11 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
+		<dependency> <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.4.0</version>
+		</dependency>
 		<dependency> <!-- https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka/weka-stable -->
 			<groupId>nz.ac.waikato.cms.weka</groupId>
 			<artifactId>weka-stable</artifactId>

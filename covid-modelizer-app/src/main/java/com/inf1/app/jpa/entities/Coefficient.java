@@ -6,62 +6,36 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.sun.istack.NotNull;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
 @Entity
 public class Coefficient {
+
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Getter
 	private int id;
-	@NotNull
+	@NonNull
 	@Column
-	private String nom;
+	@Getter
+	@Setter
+	private String name;
+	@NonNull
 	@Column
-	private String typeIndicator;
-	@NotNull
+	@Getter
+	@Setter
+	private String indicator;
+	@NonNull
 	@Column
-	private String typeModel;
+	@Getter
+	@Setter
+	private String model;
 	@Column
+	@Getter
+	@Setter
 	private double value;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getTypeIndicator() {
-		return typeIndicator;
-	}
-
-	public void setTypeIndicator(String typeIndicator) {
-		this.typeIndicator = typeIndicator;
-	}
-
-	public String getTypeModel() {
-		return typeModel;
-	}
-
-	public void setTypeModel(String typeModel) {
-		this.typeModel = typeModel;
-	}
-
-	public double getValue() {
-		return value;
-	}
-
-	public void setValue(double value) {
-		this.value = value;
-	}
 }

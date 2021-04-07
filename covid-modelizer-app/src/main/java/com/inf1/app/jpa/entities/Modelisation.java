@@ -12,57 +12,34 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.sun.istack.NotNull;
-
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
 @Entity
 public class Modelisation {
-	
+
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Getter
 	private int id;
-	@NotNull
+	@NonNull
 	@Column
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Indicateur> indicators;
-	@NotNull
+	@Getter
+	@Setter
+	private List<Indicateur> indicateur;
+	@NonNull
 	@Column
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Coefficient> coefficients;
-	@NotNull
+	@Getter
+	@Setter
+	private List<Coefficient> coefficient;
+	@NonNull
 	@Column
+	@Getter
+	@Setter
 	private LocalDate calculDate;
-	
-	public int getId() {
-		return id;
-	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public List<Indicateur> getIndicators() {
-		return indicators;
-	}
-
-	public void setIndicators(List<Indicateur> indicateurs) {
-		this.indicators = indicateurs;
-	}
-	
-	public List<Coefficient> getCoefficients() {
-		return coefficients;
-	}
-
-	public void setCoefficients(List<Coefficient> coefficients) {
-		this.coefficients = coefficients;
-	}
-
-	public LocalDate getCalculDate() {
-		return calculDate;
-	}
-
-	public void setCalculDate(LocalDate calculDate) {
-		this.calculDate = calculDate;
-	}	
 }

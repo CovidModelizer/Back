@@ -2,30 +2,18 @@ package com.inf1.app.dto;
 
 import java.time.LocalDate;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@AllArgsConstructor
 public class DonneeReelleDTO {
+
+	@Getter
+	@Setter
 	LocalDate date;
+	@Getter
+	@Setter
 	String value;
-    
-	public DonneeReelleDTO(String value, LocalDate date) {
-		this.value = value;
-		this.date = date;
-	}
 
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	
 }
