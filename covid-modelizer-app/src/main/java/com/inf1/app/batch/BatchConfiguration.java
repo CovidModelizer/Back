@@ -27,7 +27,7 @@ import com.inf1.app.dto.SituationReelleDTO;
 
 @Configuration
 @EnableBatchProcessing
-//@EnableScheduling
+@EnableScheduling
 public class BatchConfiguration implements WebMvcConfigurer {
 
 	@Override
