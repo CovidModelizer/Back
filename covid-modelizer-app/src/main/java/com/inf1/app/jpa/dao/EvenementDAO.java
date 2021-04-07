@@ -12,14 +12,14 @@ import com.inf1.app.jpa.entities.Evenement;
 
 @Repository
 public class EvenementDAO {
-	
-	@Autowired EntityManager entityManager;
-	
+
+	@Autowired
+	EntityManager entityManager;
+
 	public Evenement save(Evenement entity) {
 		entityManager.persist(entity);
 		return entity;
 	}
-
 
 	public List<Evenement> saveAll(List<Evenement> entities) {
 		for (Evenement entity : entities) {
@@ -29,23 +29,22 @@ public class EvenementDAO {
 	}
 
 	public Evenement findById(Integer id) {
-		Query q = entityManager.createQuery("select c from Evenement c WHERE c.id = :id", Evenement.class);
+		Query q = entityManager.createQuery("select e from Evenement e WHERE e.id = :id", Evenement.class);
 		q.setParameter("id", id);
 		return (Evenement) q.getSingleResult();
 	}
 
 	public boolean existsById(Integer id) {
-		if(findById(id) != null) {
+		if (findById(id) != null) {
 			return true;
 		}
 		return false;
 	}
 
-
 	@SuppressWarnings("unchecked")
 	public List<Evenement> findAll() {
 		Query q = entityManager.createQuery("select e from Evenement e", Evenement.class);
-		return  (List<Evenement>) q.getResultList().iterator();
+		return (List<Evenement>) q.getResultList().iterator();
 	}
 
 	public long count() {
@@ -54,7 +53,7 @@ public class EvenementDAO {
 	}
 
 	public void deleteById(Integer id) {
-		Query q = entityManager.createQuery("delete from Evenement c WHERE id=:id", Evenement.class);
+		Query q = entityManager.createQuery("delete from Evenement e WHERE e.id = :id", Evenement.class);
 		q.setParameter("id", id);
 		q.executeUpdate();
 	}
@@ -64,7 +63,7 @@ public class EvenementDAO {
 	}
 
 	public void deleteAll(List<Evenement> entities) {
-		for(Evenement c : entities) {
+		for (Evenement c : entities) {
 			delete(c);
 		}
 	}
@@ -74,5 +73,5 @@ public class EvenementDAO {
 			delete(c);
 		}
 	}
-	
+
 }

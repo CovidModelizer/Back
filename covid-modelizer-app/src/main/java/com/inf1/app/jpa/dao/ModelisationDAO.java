@@ -13,15 +13,15 @@ import com.inf1.app.jpa.entities.Modelisation;
 
 @Repository
 public class ModelisationDAO {
-	
-	@Autowired EntityManager entityManager;
-	
+
+	@Autowired
+	EntityManager entityManager;
+
 	@Transactional
 	public Modelisation save(Modelisation entity) {
 		entityManager.persist(entity);
 		return entity;
 	}
-
 
 	public List<Modelisation> saveAll(List<Modelisation> entities) {
 		for (Modelisation entity : entities) {
@@ -31,32 +31,31 @@ public class ModelisationDAO {
 	}
 
 	public Modelisation findById(Integer id) {
-		Query q = entityManager.createQuery("select c from Modelisation c WHERE c.id = :id", Modelisation.class);
+		Query q = entityManager.createQuery("select m from Modelisation m WHERE m.id = :id", Modelisation.class);
 		q.setParameter("id", id);
 		return (Modelisation) q.getSingleResult();
 	}
 
 	public boolean existsById(Integer id) {
-		if(findById(id) != null) {
+		if (findById(id) != null) {
 			return true;
 		}
 		return false;
 	}
 
-
 	@SuppressWarnings("unchecked")
 	public List<Modelisation> findAll() {
-		Query q = entityManager.createQuery("select e from Modelisation e", Modelisation.class);
-		return  (List<Modelisation>) q.getResultList().iterator();
+		Query q = entityManager.createQuery("select m from Modelisation m", Modelisation.class);
+		return (List<Modelisation>) q.getResultList().iterator();
 	}
 
 	public long count() {
-		Query q = entityManager.createQuery("select e from Modelisation e", Modelisation.class);
+		Query q = entityManager.createQuery("select m from Modelisation m", Modelisation.class);
 		return q.getResultList().size();
 	}
 
 	public void deleteById(Integer id) {
-		Query q = entityManager.createQuery("delete from Modelisation c WHERE id=:id", Modelisation.class);
+		Query q = entityManager.createQuery("delete from Modelisation m WHERE m.id = :id", Modelisation.class);
 		q.setParameter("id", id);
 		q.executeUpdate();
 	}
@@ -66,7 +65,7 @@ public class ModelisationDAO {
 	}
 
 	public void deleteAll(List<Modelisation> entities) {
-		for(Modelisation c : entities) {
+		for (Modelisation c : entities) {
 			delete(c);
 		}
 	}

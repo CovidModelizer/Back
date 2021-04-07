@@ -13,23 +13,24 @@ import com.inf1.app.jpa.entities.Evenement;
 import com.inf1.app.utils.DTOUtils;
 
 @Repository
-public class EvenementRepository{
+public class EvenementRepository {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
+
 	@SuppressWarnings("unchecked")
 	public List<EvenementDTO> findByModelAndType(String type, String model) {
-		Query q = entityManager.createQuery("select e from Evenement e WHERE e.typeModele = :model AND e.typeIndicateur = :type", Evenement.class);
-		q.setParameter("model", model);
+		Query q = entityManager.createQuery("select e from Evenement e WHERE e.type = :type AND e.model = :model order by e.date",
+				Evenement.class);
 		q.setParameter("type", type);
+		q.setParameter("model", model);
 		return DTOUtils.evenementsDTOsMapper(q.getResultList());
 	}
-	
+
 	public List<EvenementDTO> findImmuByModel(String model) {
 		return findByModelAndType("IMM", model);
 	}
-	
+
 	public List<EvenementDTO> findConfByModel(String model) {
 		return findByModelAndType("CON", model);
 	}

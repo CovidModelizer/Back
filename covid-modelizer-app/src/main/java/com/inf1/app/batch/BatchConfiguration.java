@@ -21,8 +21,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.inf1.app.batch.collect_data.steps.SituationReelleReader;
-import com.inf1.app.batch.collect_data.steps.SituationReelleProcessor;
+import com.inf1.app.batch.data.collect.SituationReelleProcessor;
+import com.inf1.app.batch.data.collect.SituationReelleReader;
 import com.inf1.app.dto.SituationReelleDTO;
 
 @Configuration
@@ -54,20 +54,27 @@ public class BatchConfiguration implements WebMvcConfigurer {
 	JdbcBatchItemWriter<SituationReelleDTO> writer(DataSource dataSource) {
 		return new JdbcBatchItemWriterBuilder<SituationReelleDTO>()
 				.itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-				.sql("INSERT INTO situation_reelle (r0, cas_confirmes, deces, deces_ehpad, reanimation, hospitalises, "
-						+ "gueris, date, nouvelles_hospitalisations, nouvelles_reanimations, nouvelles_premieres_injections, "
-						+ "tests_realises, tests_positifs, cas_confirmes_ehpad, cas_possibles_ehpad, "
-						+ "cumul_premieres_injections, stock_nombre_total_doses, stock_nombre_doses_pfizer, "
-						+ "stock_nombre_doses_moderna, livraisons_cumul_nombre_total_doses, livraisons_cumul_nombre_doses_pfizer, "
-						+ "livraisons_cumul_nombre_doses_moderna, total_prises_rendez_vous_semaine, "
-						+ "prises_rendez_vous_semaine_rang1, prises_rendez_vous_semaine_rang2, stock_ehpad_nombre_doses_pfizer) "
-						+ "VALUES (:r0, :casConfirmes, :deces, :decesEhpad, :reanimation, :hospitalises, :gueris, :date, "
-						+ ":nouvellesHospitalisations, :nouvellesReanimations, :nouvellesPremieresInjections, "
-						+ ":testsRealises, :testsPositifs, :casConfirmesEhpad, :casPossiblesEhpad, "
-						+ ":cumulPremieresInjections, :stockNombreTotalDoses, :stockNombreDosesPfizer, :stockNombreDosesModerna, "
-						+ ":livraisonsCumulNombreTotalDoses, :livraisonsCumulNombreDosesPfizer, "
-						+ ":livraisonsCumulNombreDosesModerna, :totalPrisesRendezVousSemaine, :prisesRendezVousSemaineRang1, "
-						+ ":prisesRendezVousSemaineRang2, :stockEhpadNombreDosesPfizer)")
+				.sql("INSERT INTO situation_reelle (date, r0, cumul_cas_confirmes, nouveaux_cas_confirmes, cumul_cas_confirmes_ehpad, "
+						+ "nouveaux_cas_confirmes_ehpad, cas_possibles_ehpad, cumul_gueris, nouveaux_gueris, cumul_deces, "
+						+ "nouveaux_deces, cumul_deces_ehpad, nouveaux_deces_ehpad, reanimation, hospitalises, tests_realises, "
+						+ "tests_positifs, nouvelles_hospitalisations, nouvelles_reanimations, cumul_premieres_injections, "
+						+ "nouvelles_premieres_injections, stock_nombre_total_doses, stock_nombre_doses_pfizer, "
+						+ "stock_nombre_doses_moderna, stock_ehpad_nombre_doses_pfizer, cumul_livraisons_nombre_total_doses, "
+						+ "nouvelles_livraisons_nombre_total_doses, cumul_livraisons_nombre_doses_pfizer, "
+						+ "nouvelles_livraisons_nombre_doses_pfizer, cumul_livraisons_nombre_doses_moderna, "
+						+ "nouvelles_livraisons_nombre_doses_moderna, total_prises_rendez_vous_semaine, prises_rendez_vous_semaine_rang1, "
+						+ "prises_rendez_vous_semaine_rang2, sir_s, sir_i, sir_r, svir_s, svir_v, svir_i, svir_r, svir_nouveau_taux_vaccination) "
+						+ "VALUES (:date, :r0, :cumulCasConfirmes, :nouveauxCasConfirmes, :cumulCasConfirmesEhpad, "
+						+ ":nouveauxCasConfirmesEhpad, :casPossiblesEhpad, :cumulGueris, :nouveauxGueris, :cumulDeces, "
+						+ ":nouveauxDeces, :cumulDecesEhpad, :nouveauxDecesEhpad, :reanimation, :hospitalises, :testsRealises, "
+						+ ":testsPositifs, :nouvellesHospitalisations, :nouvellesReanimations, :cumulPremieresInjections, "
+						+ ":nouvellesPremieresInjections, :stockNombreTotalDoses, :stockNombreDosesPfizer, "
+						+ ":stockNombreDosesModerna, :stockEhpadNombreDosesPfizer, :cumulLivraisonsNombreTotalDoses, "
+						+ ":nouvellesLivraisonsNombreTotalDoses, :cumulLivraisonsNombreDosesPfizer, "
+						+ ":nouvellesLivraisonsNombreDosesPfizer, :cumulLivraisonsNombreDosesModerna, "
+						+ ":nouvellesLivraisonsNombreDosesModerna, :totalPrisesRendezVousSemaine, :prisesRendezVousSemaineRang1, "
+						+ ":prisesRendezVousSemaineRang2, :sirS, :sirI, :sirR, :svirS, :svirV, :svirI, :svirR, "
+						+ ":svirNouveauTauxVaccination)")
 				.dataSource(dataSource).build();
 	}
 

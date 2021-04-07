@@ -6,7 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import com.sun.istack.NotNull;
+
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
 @Entity
 public class Evenement {
@@ -14,45 +17,22 @@ public class Evenement {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Getter
 	private int id;
-	@NotNull
+	@NonNull
 	@Column
+	@Getter
+	@Setter
 	private LocalDate date;
-	@NotNull
+	@NonNull
 	@Column
-	private String typeModel;
+	@Getter
+	@Setter
+	private String type;
+	@NonNull
 	@Column
-	private String typeIndicator;
+	@Getter
+	@Setter
+	private String model;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	public String getTypeModel() {
-		return typeModel;
-	}
-
-	public void setTypeModel(String typeModel) {
-		this.typeModel = typeModel;
-	}
-
-	public String getTypeIndicator() {
-		return typeIndicator;
-	}
-
-	public void setTypeIndicator(String typeIndicateur) {
-		this.typeIndicator = typeIndicateur;
-	}
 }

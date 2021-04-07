@@ -18,10 +18,10 @@ public class SituationReelleUnitaireRepository {
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public List<DonneeReelleDTO> findBetweenDate(LocalDate date1, LocalDate date2, String nomIndicateur) {
+	public List<DonneeReelleDTO> findBetweenDate(LocalDate date1, LocalDate date2, String nom) {
 		Query q = entityManager.createQuery(
-				"select new com.inf1.app.dto.DonneeReelleDTO(s." + nomIndicateur
-						+ ", s.date) from SituationReelle s WHERE (date BETWEEN :date1 AND :date2)",
+				"select new com.inf1.app.dto.DonneeReelleDTO(s." + nom
+						+ ", s.date) from SituationReelle s WHERE (date BETWEEN :date1 AND :date2) order by s.date",
 				DonneeReelleDTO.class);
 		q.setParameter("date1", date1);
 		q.setParameter("date2", date2);
@@ -29,38 +29,43 @@ public class SituationReelleUnitaireRepository {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<DonneeReelleDTO> findBeforeDate(LocalDate date, String nomIndicateur) {
-		Query q = entityManager.createQuery("select new com.inf1.app.dto.DonneeReelleDTO(s." + nomIndicateur
-				+ ", s.date) from SituationReelle s WHERE (s.date <= :date)", DonneeReelleDTO.class);
-		q.setParameter("date", date);
-		return q.getResultList();
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<DonneeReelleDTO> findAfterDate(LocalDate date, String nomIndicateur) {
-		Query q = entityManager.createQuery("select new com.inf1.app.dto.DonneeReelleDTO(s." + nomIndicateur
-				+ ", s.date) from SituationReelle s WHERE (s.date >= :date)", DonneeReelleDTO.class);
-		q.setParameter("date", date);
-		return q.getResultList();
-	}
-
-	public List<DonneeReelleDTO> findLastDate(int nbDays, String nomIndicateur) {
-		return findBetweenDate(LocalDate.now().minusDays(nbDays), LocalDate.now(), nomIndicateur);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<DonneeReelleDTO> findByDate(LocalDate date, String nomIndicateur) {
-		Query q = entityManager.createQuery("select new com.inf1.app.dto.DonneeReelleDTO(s." + nomIndicateur
-				+ ", s.date) from SituationReelle s  WHERE s.date = :date", DonneeReelleDTO.class);
-		q.setParameter("date", date);
-		return q.getResultList();
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<DonneeReelleDTO> findallDTO(String nomIndicateur) {
+	public List<DonneeReelleDTO> findBeforeDate(LocalDate date, String nom) {
 		Query q = entityManager.createQuery(
-				"select new com.inf1.app.dto.DonneeReelleDTO(s." + nomIndicateur + ", s.date) from SituationReelle s",
+				"select new com.inf1.app.dto.DonneeReelleDTO(s." + nom
+						+ ", s.date) from SituationReelle s WHERE (s.date <= :date) order by s.date",
 				DonneeReelleDTO.class);
+		q.setParameter("date", date);
+		return q.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<DonneeReelleDTO> findAfterDate(LocalDate date, String nom) {
+		Query q = entityManager.createQuery(
+				"select new com.inf1.app.dto.DonneeReelleDTO(s." + nom
+						+ ", s.date) from SituationReelle s WHERE (s.date >= :date) order by s.date",
+				DonneeReelleDTO.class);
+		q.setParameter("date", date);
+		return q.getResultList();
+	}
+
+	public List<DonneeReelleDTO> findLastDate(int nbDays, String nom) {
+		return findBetweenDate(LocalDate.now().minusDays(nbDays), LocalDate.now(), nom);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<DonneeReelleDTO> findByDate(LocalDate date, String nom) {
+		Query q = entityManager.createQuery(
+				"select new com.inf1.app.dto.DonneeReelleDTO(s." + nom
+						+ ", s.date) from SituationReelle s WHERE s.date = :date order by s.date",
+				DonneeReelleDTO.class);
+		q.setParameter("date", date);
+		return q.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<DonneeReelleDTO> findallDTO(String nom) {
+		Query q = entityManager.createQuery("select new com.inf1.app.dto.DonneeReelleDTO(s." + nom
+				+ ", s.date) from SituationReelle s order by s.date", DonneeReelleDTO.class);
 		return q.getResultList();
 	}
 }

@@ -12,9 +12,10 @@ import com.inf1.app.jpa.entities.Indicateur;
 
 @Repository
 public class IndicateurDAO {
-	
-	@Autowired EntityManager entityManager;
-	
+
+	@Autowired
+	EntityManager entityManager;
+
 	public Indicateur save(Indicateur entity) {
 		entityManager.persist(entity);
 		return entity;
@@ -28,13 +29,13 @@ public class IndicateurDAO {
 	}
 
 	public Indicateur findById(Integer id) {
-		Query q = entityManager.createQuery("select c from Indicateur c WHERE c.id = :id", Indicateur.class);
+		Query q = entityManager.createQuery("select i from Indicateur i WHERE i.id = :id", Indicateur.class);
 		q.setParameter("id", id);
 		return (Indicateur) q.getSingleResult();
 	}
 
 	public boolean existsById(Integer id) {
-		if(findById(id) != null) {
+		if (findById(id) != null) {
 			return true;
 		}
 		return false;
@@ -42,17 +43,17 @@ public class IndicateurDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Indicateur> findAll() {
-		Query q = entityManager.createQuery("select e from Indicateur e", Indicateur.class);
-		return  (List<Indicateur>) q.getResultList().iterator();
+		Query q = entityManager.createQuery("select i from Indicateur i", Indicateur.class);
+		return (List<Indicateur>) q.getResultList().iterator();
 	}
 
 	public long count() {
-		Query q = entityManager.createQuery("select e from Indicateur e", Indicateur.class);
+		Query q = entityManager.createQuery("select i from Indicateur i", Indicateur.class);
 		return q.getResultList().size();
 	}
 
 	public void deleteById(Integer id) {
-		Query q = entityManager.createQuery("delete from Indicateur c WHERE id=:id", Indicateur.class);
+		Query q = entityManager.createQuery("delete from Indicateur i WHERE i.id = :id", Indicateur.class);
 		q.setParameter("id", id);
 		q.executeUpdate();
 	}
@@ -62,7 +63,7 @@ public class IndicateurDAO {
 	}
 
 	public void deleteAll(List<Indicateur> entities) {
-		for(Indicateur c : entities) {
+		for (Indicateur c : entities) {
 			delete(c);
 		}
 	}

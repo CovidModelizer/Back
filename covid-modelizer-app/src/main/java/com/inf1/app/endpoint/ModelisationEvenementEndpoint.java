@@ -1,6 +1,5 @@
 package com.inf1.app.endpoint;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +14,23 @@ import com.inf1.app.jpa.repository.EvenementRepository;
 @RestController
 @RequestMapping("/modelisation/evenement")
 public class ModelisationEvenementEndpoint {
-	
-	@Autowired EvenementRepository repository;
-	
+
+	@Autowired
+	EvenementRepository repository;
+
 	@GetMapping
-	public List<EvenementDTO> findConf(@RequestParam(name = "model") String typeModel) {
-		return repository.findConfByModel(typeModel);
-	}
-	
-	@GetMapping("/immuniteCollective")
-	public List<EvenementDTO> findImmu(@RequestParam(name = "model") String typeModel) {
-		return repository.findImmuByModel(typeModel);
+	public List<EvenementDTO> findEvent(@RequestParam(name = "type") String type,
+			@RequestParam(name = "model") String model) {
+		return repository.findByModelAndType(type, model);
 	}
 
 	@GetMapping("/confinement")
-	public List<EvenementDTO> findConf(@RequestParam(name = "model") String typeModel, @RequestParam(name = "type") String typeEvenement) {
-		return repository.findByModelAndType(typeEvenement, typeModel);
+	public List<EvenementDTO> findConf(@RequestParam(name = "model") String model) {
+		return repository.findConfByModel(model);
+	}
+
+	@GetMapping("/immuniteCollective")
+	public List<EvenementDTO> findImmu(@RequestParam(name = "model") String model) {
+		return repository.findImmuByModel(model);
 	}
 }
