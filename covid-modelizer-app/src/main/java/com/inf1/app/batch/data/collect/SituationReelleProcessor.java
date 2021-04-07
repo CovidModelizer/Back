@@ -18,14 +18,13 @@ public class SituationReelleProcessor implements ItemProcessor<SituationReelleDT
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-	private boolean databaseCleaned = false;
-
 	@Override
 	public SituationReelleDTO process(SituationReelleDTO item) throws Exception {
-		if (this.databaseCleaned == false) {
-			this.databaseCleaned = true;
-			DatabaseUtils.cleanDatabase(jdbcTemplate);
+		if (DatabaseUtils.getJdbcTemplate() == null) {
+			DatabaseUtils.setJdbcTemplate(jdbcTemplate);
+			DatabaseUtils.cleanSituationReelle();
 		}
 		return item;
 	}
+
 }

@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.inf1.app.dto.ModelisationDTO;
 import com.inf1.app.dto.SituationReelleDTO;
 
@@ -21,9 +18,6 @@ import weka.core.Instance;
 import weka.core.Instances;
 
 public class VaccinMachineLearningCalculator implements ModelisationCalculator {
-
-	@SuppressWarnings("unused")
-	private static final Logger LOG = LoggerFactory.getLogger(CasMachineLearningCalculator.class);
 
 	@Override
 	public ModelisationDTO calculate(List<SituationReelleDTO> situationsReellesDTO) {
@@ -158,27 +152,12 @@ public class VaccinMachineLearningCalculator implements ModelisationCalculator {
 					: Double.parseDouble(srDTO.get(i).getPrisesRendezVousSemaineRang1());
 			instanceValue[8] = srDTO.get(i).getPrisesRendezVousSemaineRang2() == null ? Double.NaN
 					: Double.parseDouble(srDTO.get(i).getPrisesRendezVousSemaineRang2());
-			instanceValue[9] = (i < 307)
-					? srDTO.get(i).getLivraisonsCumulNombreTotalDoses() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getLivraisonsCumulNombreTotalDoses())
-					: srDTO.get(i).getLivraisonsCumulNombreTotalDoses() == null
-							|| srDTO.get(i - 7).getLivraisonsCumulNombreTotalDoses() == null ? Double.NaN
-									: Double.parseDouble(srDTO.get(i).getLivraisonsCumulNombreTotalDoses())
-											- Double.parseDouble(srDTO.get(i - 7).getLivraisonsCumulNombreTotalDoses());
-			instanceValue[10] = (i < 307)
-					? srDTO.get(i).getLivraisonsCumulNombreDosesPfizer() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getLivraisonsCumulNombreDosesPfizer())
-					: srDTO.get(i).getLivraisonsCumulNombreDosesPfizer() == null
-							|| srDTO.get(i - 7).getLivraisonsCumulNombreDosesPfizer() == null ? Double.NaN
-									: Double.parseDouble(srDTO.get(i).getLivraisonsCumulNombreDosesPfizer()) - Double
-											.parseDouble(srDTO.get(i - 7).getLivraisonsCumulNombreDosesPfizer());
-			instanceValue[11] = (i < 307)
-					? srDTO.get(i).getLivraisonsCumulNombreDosesModerna() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getLivraisonsCumulNombreDosesModerna())
-					: srDTO.get(i).getLivraisonsCumulNombreDosesModerna() == null
-							|| srDTO.get(i - 7).getLivraisonsCumulNombreDosesModerna() == null ? Double.NaN
-									: Double.parseDouble(srDTO.get(i).getLivraisonsCumulNombreDosesModerna()) - Double
-											.parseDouble(srDTO.get(i - 7).getLivraisonsCumulNombreDosesModerna());
+			instanceValue[9] = srDTO.get(i).getNouvellesLivraisonsNombreTotalDoses() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getNouvellesLivraisonsNombreTotalDoses());
+			instanceValue[10] = srDTO.get(i).getNouvellesLivraisonsNombreDosesPfizer() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getNouvellesLivraisonsNombreDosesPfizer());
+			instanceValue[11] = srDTO.get(i).getNouvellesLivraisonsNombreDosesModerna() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getNouvellesLivraisonsNombreDosesModerna());
 			instanceValue[12] = Double.NaN;
 			for (int j = 1; j < instanceValue.length; j++) {
 				instanceValue[j] = Double.isNaN(instanceValue[j]) ? instanceValue[j]

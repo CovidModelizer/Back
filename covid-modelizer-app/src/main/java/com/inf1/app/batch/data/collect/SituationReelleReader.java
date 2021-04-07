@@ -16,7 +16,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.inf1.app.dto.CollectSituationReelleDTO;
 import com.inf1.app.dto.SituationReelleDTO;
+import com.inf1.app.utils.DTOUtils;
 
 @Component
 public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
@@ -55,7 +57,7 @@ public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
 			nextSituationReelleDto = situationReelleData[nextSituationReelleIndex];
 			/*
 			 * Le R0 commence le 18/03/2020 alors que l'API proposant les autres données
-			 * commence le 02/03/2020. Ainsi, on décalle pour avoir les 16 premiers jours
+			 * commence le 02/03/2020. Ainsi, on décale pour avoir les 16 premiers jours
 			 * avec un R0 à vide.
 			 */
 			int nbJoursPlusTard = 16;
@@ -92,7 +94,8 @@ public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
 		objectMapper.registerModule(new JavaTimeModule());
 		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 		String data = response.getBody();
-		SituationReelleDTO[] lines = objectMapper.readValue(data, SituationReelleDTO[].class);
+		CollectSituationReelleDTO[] collect = objectMapper.readValue(data, CollectSituationReelleDTO[].class);
+		SituationReelleDTO[] lines = DTOUtils.collectToSituationsReellesDTOsMapper(collect);
 		return lines;
 	}
 

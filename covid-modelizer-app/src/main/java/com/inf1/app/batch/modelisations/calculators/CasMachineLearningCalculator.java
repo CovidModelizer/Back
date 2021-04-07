@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.inf1.app.dto.ModelisationDTO;
 import com.inf1.app.dto.SituationReelleDTO;
 
@@ -21,9 +18,6 @@ import weka.core.Instance;
 import weka.core.Instances;
 
 public class CasMachineLearningCalculator implements ModelisationCalculator {
-
-	@SuppressWarnings("unused")
-	private static final Logger LOG = LoggerFactory.getLogger(CasMachineLearningCalculator.class);
 
 	@Override
 	public ModelisationDTO calculate(List<SituationReelleDTO> situationsReellesDTO) {
@@ -144,43 +138,24 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 			double[] instanceValue = new double[dataSet.numAttributes()];
 			instanceValue[0] = dataSet.attribute("date")
 					.parseDate(srDTO.get(i).getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-			instanceValue[1] = (i == 0)
-					? srDTO.get(i).getDeces() == null ? Double.NaN : Double.parseDouble(srDTO.get(i).getDeces())
-					: srDTO.get(i).getDeces() == null || srDTO.get(i - 1).getDeces() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getDeces())
-									- Double.parseDouble(srDTO.get(i - 1).getDeces());
-			instanceValue[2] = (i == 0)
-					? srDTO.get(i).getGueris() == null ? Double.NaN : Double.parseDouble(srDTO.get(i).getGueris())
-					: srDTO.get(i).getGueris() == null || srDTO.get(i - 1).getGueris() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getGueris())
-									- Double.parseDouble(srDTO.get(i - 1).getGueris());
-			instanceValue[3] = (i == 0)
-					? srDTO.get(i).getDecesEhpad() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getDecesEhpad())
-					: srDTO.get(i).getDecesEhpad() == null || srDTO.get(i - 1).getDecesEhpad() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getDecesEhpad())
-									- Double.parseDouble(srDTO.get(i - 1).getDecesEhpad());
+			instanceValue[1] = srDTO.get(i).getNouveauxDeces() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getNouveauxDeces());
+			instanceValue[2] = srDTO.get(i).getNouveauxGueris() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getNouveauxGueris());
+			instanceValue[3] = srDTO.get(i).getNouveauxDecesEhpad() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getNouveauxDecesEhpad());
 			instanceValue[4] = srDTO.get(i).getReanimation() == null ? Double.NaN
 					: Double.parseDouble(srDTO.get(i).getReanimation());
-			instanceValue[5] = (i == 0)
-					? srDTO.get(i).getCasConfirmes() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getCasConfirmes())
-					: srDTO.get(i).getCasConfirmes() == null || srDTO.get(i - 1).getCasConfirmes() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getCasConfirmes())
-									- Double.parseDouble(srDTO.get(i - 1).getCasConfirmes());
+			instanceValue[5] = srDTO.get(i).getNouveauxCasConfirmes() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getNouveauxCasConfirmes());
 			instanceValue[6] = srDTO.get(i).getHospitalises() == null ? Double.NaN
 					: Double.parseDouble(srDTO.get(i).getHospitalises());
 			instanceValue[7] = srDTO.get(i).getTestsRealises() == null ? Double.NaN
 					: Double.parseDouble(srDTO.get(i).getTestsRealises());
 			instanceValue[8] = srDTO.get(i).getTestsPositifs() == null ? Double.NaN
 					: Double.parseDouble(srDTO.get(i).getTestsPositifs());
-			instanceValue[9] = (i == 0)
-					? srDTO.get(i).getCasConfirmesEhpad() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getCasConfirmesEhpad())
-					: srDTO.get(i).getCasConfirmesEhpad() == null || srDTO.get(i - 1).getCasConfirmesEhpad() == null
-							? Double.NaN
-							: Double.parseDouble(srDTO.get(i).getCasConfirmesEhpad())
-									- Double.parseDouble(srDTO.get(i - 1).getCasConfirmesEhpad());
+			instanceValue[9] = srDTO.get(i).getNouveauxCasConfirmesEhpad() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getNouveauxCasConfirmesEhpad());
 			instanceValue[10] = srDTO.get(i).getNouvellesReanimations() == null ? Double.NaN
 					: Double.parseDouble(srDTO.get(i).getNouvellesReanimations());
 			instanceValue[11] = srDTO.get(i).getNouvellesHospitalisations() == null ? Double.NaN

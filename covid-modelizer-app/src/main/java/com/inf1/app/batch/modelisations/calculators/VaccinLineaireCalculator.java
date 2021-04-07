@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.inf1.app.dto.ModelisationDTO;
 import com.inf1.app.dto.SituationReelleDTO;
 
@@ -21,9 +18,6 @@ import weka.core.Instance;
 import weka.core.Instances;
 
 public class VaccinLineaireCalculator implements ModelisationCalculator {
-
-	@SuppressWarnings("unused")
-	private static final Logger LOG = LoggerFactory.getLogger(CasMachineLearningCalculator.class);
 
 	@Override
 	public ModelisationDTO calculate(List<SituationReelleDTO> situationsReellesDTO) {
@@ -47,8 +41,8 @@ public class VaccinLineaireCalculator implements ModelisationCalculator {
 		try {
 			dataSet = initDataSet(situationsReellesDTO);
 			// Entraînement du modèle de régression linéaire à une variable
-			dataSet.trainCV(5, 0, new Random());
-			dataSet.testCV(5, 0);
+			trainSet = dataSet.trainCV(5, 0, new Random());
+			testSet = dataSet.testCV(5, 0);
 
 			lrClassifier = new LinearRegression();
 			lrClassifier.setOptions(new String[] { "-R", "1" });
@@ -101,6 +95,7 @@ public class VaccinLineaireCalculator implements ModelisationCalculator {
 		double[] firstInstanceValue = new double[dataSet.numAttributes()];
 		firstInstanceValue[0] = dataSet.attribute("date").parseDate("2020-12-26");
 		firstInstanceValue[1] = Double.NaN;
+		firstInstanceValue[2] = Double.NaN;
 		dataSet.add(new DenseInstance(1.0, firstInstanceValue));
 
 		for (int i = 300; i < srDTO.size(); i++) {
@@ -109,7 +104,9 @@ public class VaccinLineaireCalculator implements ModelisationCalculator {
 					.parseDate(srDTO.get(i).getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 			instanceValue[1] = srDTO.get(i).getCumulPremieresInjections() == null ? Double.NaN
 					: Double.parseDouble(srDTO.get(i).getCumulPremieresInjections());
-			instanceValue[2] = Double.NaN;
+			instanceValue[2] = (i + 1 >= srDTO.size()) ? Double.NaN
+					: srDTO.get(i + 1).getCumulPremieresInjections() == null ? Double.NaN
+							: Double.parseDouble(srDTO.get(i + 1).getCumulPremieresInjections());
 			for (int j = 1; j < instanceValue.length; j++) {
 				instanceValue[j] = Double.isNaN(instanceValue[j]) ? instanceValue[j]
 						: instanceValue[j] < 0.0 ? Double.NaN : instanceValue[j];

@@ -13,8 +13,9 @@ import com.inf1.app.jpa.entities.SituationReelle;
 @Repository
 public class SituationReelleDAO {
 
-	@Autowired EntityManager entityManager;
-	
+	@Autowired
+	EntityManager entityManager;
+
 	public SituationReelle save(SituationReelle entity) {
 		entityManager.persist(entity);
 		return entity;
@@ -28,13 +29,13 @@ public class SituationReelleDAO {
 	}
 
 	public SituationReelle findById(Integer id) {
-		Query q = entityManager.createQuery("select c from SituationReelle c WHERE c.id = :id", SituationReelle.class);
+		Query q = entityManager.createQuery("select s from SituationReelle s WHERE s.id = :id", SituationReelle.class);
 		q.setParameter("id", id);
 		return (SituationReelle) q.getSingleResult();
 	}
 
 	public boolean existsById(Integer id) {
-		if(findById(id) != null) {
+		if (findById(id) != null) {
 			return true;
 		}
 		return false;
@@ -42,17 +43,17 @@ public class SituationReelleDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<SituationReelle> findAll() {
-		Query q = entityManager.createQuery("select e from SituationReelle e", SituationReelle.class);
-		return  (List<SituationReelle>) q.getResultList().iterator();
+		Query q = entityManager.createQuery("select s from SituationReelle s", SituationReelle.class);
+		return (List<SituationReelle>) q.getResultList().iterator();
 	}
 
 	public long count() {
-		Query q = entityManager.createQuery("select e from SituationReelle e", SituationReelle.class);
+		Query q = entityManager.createQuery("select s from SituationReelle s", SituationReelle.class);
 		return q.getResultList().size();
 	}
 
 	public void deleteById(Integer id) {
-		Query q = entityManager.createQuery("delete from SituationReelle c WHERE id=:id", SituationReelle.class);
+		Query q = entityManager.createQuery("delete from SituationReelle s WHERE s.id = :id", SituationReelle.class);
 		q.setParameter("id", id);
 		q.executeUpdate();
 	}
@@ -62,7 +63,7 @@ public class SituationReelleDAO {
 	}
 
 	public void deleteAll(List<SituationReelle> entities) {
-		for(SituationReelle c : entities) {
+		for (SituationReelle c : entities) {
 			delete(c);
 		}
 	}

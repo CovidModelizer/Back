@@ -2,30 +2,19 @@ package com.inf1.app.dto;
 
 import java.time.LocalDate;
 
+import lombok.Getter;
+import lombok.Setter;
 
 public class EvenementDTO {
+
+	@Getter
+	@Setter
 	private LocalDate date;
+	@Getter
+	@Setter
 	private String typeModele;
+	@Getter
+	@Setter
 	private String typeIndicateur;
-	
-	public LocalDate getDate() {
-		return date;
-	}
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-	public String getTypeModele() {
-		return typeModele;
-	}
-	public void setTypeModele(String typeModele) {
-		this.typeModele = typeModele;
-	}
-	public String getTypeIndicateur() {
-		return typeIndicateur;
-	}
-	public void setTypeIndicateur(String typeIndicateur) {
-		this.typeIndicateur = typeIndicateur;
-	}
-	
-	
+
 }
