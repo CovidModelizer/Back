@@ -3,3 +3,4 @@
 ## Technologies
 * Spring Boot
 * Spring Batch
+* Swagger
