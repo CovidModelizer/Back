@@ -2,5 +2,5 @@ version: "3"
 services:
   covid_modelizer_back:
     build: .
-    image: davidekchajzer/covid_modelizer:latest
+    image: covidmodelizer/back:latest
     container_name: covid_modelizer_back
