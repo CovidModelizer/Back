@@ -39,7 +39,7 @@ public class CasMachineLearningCalculatorTest {
 		CasMachineLearningCalculator c = new CasMachineLearningCalculator();
 		ModelisationDTO m = c.calculate(situationsReelsDTO);
 		assertEquals(m.getDateCalcul(), LocalDate.now());
-		assertEquals(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9)), "53749");
+		assert(Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) >= 53748 && Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) <= 53750);
 		assert(m.getCoeff().get("PredJ+1_constante").toString().startsWith("-5766.6346"));
 	}
 
