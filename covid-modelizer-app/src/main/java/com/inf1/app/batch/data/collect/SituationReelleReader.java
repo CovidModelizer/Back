@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,6 +20,7 @@ import java.util.List;
 import com.inf1.app.dto.CollectSituationReelleDTO;
 import com.inf1.app.dto.SituationReelleDTO;
 import com.inf1.app.utils.DTOUtils;
+import com.inf1.app.utils.DatabaseUtils;
 
 @Component
 public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
@@ -30,6 +32,8 @@ public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
 	private RestTemplate restTemplate;
 	@Autowired
 	private ObjectMapper objectMapper;
+	@Autowired
+	JdbcTemplate jdbcTemplate;
 
 	private static final String API_URL_INFOS = "https://www.data.gouv.fr/fr/datasets/r/d2671c6c-c0eb-4e12-b69a-8e8f87fc224c";
 	private static final String API_URL_R0 = "https://www.data.gouv.fr/fr/datasets/r/381a9472-ce83-407d-9a64-1b8c23af83df";
@@ -49,7 +53,7 @@ public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
 		SituationReelleDTO nextSituationReelleDto = null;
 		if (situationReelleDataIsNotInitialized()) {
 			situationReelleData = fetchSituationReelleDataFromAPI(API_URL_INFOS);
-
+			cleanDb();
 		}
 		if (nextSituationReelleIndex < situationReelleData.length)
 
@@ -115,4 +119,11 @@ public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
 		return r0s;
 	}
 
+	private void cleanDb() {
+		if (DatabaseUtils.getJdbcTemplate() == null) {
+			DatabaseUtils.setJdbcTemplate(jdbcTemplate);
+			DatabaseUtils.cleanSituationReelle();
+		}
+	}
+	
 }
