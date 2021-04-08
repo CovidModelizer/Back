@@ -40,8 +40,7 @@ public class VaccinMachineLearningCalculatorTest {
 		ModelisationDTO m = c.calculate(situationsReelsDTO);
 		assertEquals(m.getDateCalcul(), LocalDate.now());
 		assert(Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) >= 138300 && Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) <= 138310);
-		System.out.println(m.getCoeff().get("PredJ+1_constante").toString());
-		assert(m.getCoeff().get("PredJ+1_constante").toString().startsWith("2.185"));
+		assert(m.getCoeff().get("PredJ+1_constante").toString().startsWith("2.18"));
 	}
 
 	
