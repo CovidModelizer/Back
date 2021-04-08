@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class VaccinLineaireCalculatorTest {
 		VaccinLineaireCalculator c = new VaccinLineaireCalculator();
 		ModelisationDTO m = c.calculate(situationsReelsDTO);
 		assertEquals(m.getDateCalcul(), LocalDate.now());
-		assertEquals(m.getValues().get(LocalDate.now().plusDays(2)), "9496213");
+		assertEquals(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9)), "9496213");
 		assert(m.getCoeff().get("PredJ+1_constante").toString().startsWith("92807.776"));
 	}
 	

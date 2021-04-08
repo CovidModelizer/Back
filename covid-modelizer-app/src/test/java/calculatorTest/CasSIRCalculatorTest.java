@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class CasSIRCalculatorTest {
 		CasSIRCalculator c = new CasSIRCalculator();
 		ModelisationDTO m = c.calculate(situationsReelsDTO);
 		assertEquals(m.getDateCalcul(), LocalDate.now());
-		assertEquals(m.getValues().get(LocalDate.now().plusDays(2)), "342213");
+		assertEquals(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9)), "342213");
 		assertEquals(m.getCoeff().get("beta").toString(), "0.118");
 	}
 
