@@ -20,17 +20,12 @@ public class ModelisationCasEndpoint {
 	@Autowired(required = true)
 	IndicateurRepository repository;
 
-	@Autowired
-	calculsQuotidiensBatch cqb;
+//	@Autowired
+//	calculsQuotidiensBatch cqb;
 
 	@GetMapping
 	public Iterable<IndicateurDTO> findAllByModel(@RequestParam(name = "model") String typeModel) {
 		return repository.findAllByModel("CAS", typeModel);
-	}
-
-	@GetMapping("/test-calcul")
-	public void calculation() {
-		cqb.calculerData();
 	}
 
 	@GetMapping("/date")
@@ -39,6 +34,11 @@ public class ModelisationCasEndpoint {
 		return repository.findByDate(LocalDate.parse(date), "CAS", typeModel);
 	}
 
+//	@GetMapping("/test-calul")
+//	public void test() {
+//		cqb.calculerData();
+//	}
+//	
 	@GetMapping("/between")
 	public Iterable<IndicateurDTO> findBetween(@RequestParam(name = "start") String start,
 			@RequestParam(name = "end") String end, @RequestParam(name = "model") String typeModel) {

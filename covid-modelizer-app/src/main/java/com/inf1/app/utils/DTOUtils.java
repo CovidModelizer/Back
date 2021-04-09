@@ -6,10 +6,8 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 
 import com.inf1.app.dto.CollectSituationReelleDTO;
-import com.inf1.app.dto.EvenementDTO;
 import com.inf1.app.dto.IndicateurDTO;
 import com.inf1.app.dto.SituationReelleDTO;
-import com.inf1.app.jpa.entities.Evenement;
 import com.inf1.app.jpa.entities.Indicateur;
 import com.inf1.app.jpa.entities.SituationReelle;
 
@@ -57,14 +55,6 @@ public class DTOUtils {
 			iDTO.add(MODEL_MAPPER.map(i, IndicateurDTO.class));
 		}
 		return iDTO;
-	}
-
-	public static List<EvenementDTO> evenementsDTOsMapper(List<Evenement> es) {
-		List<EvenementDTO> eDTO = new ArrayList<EvenementDTO>();
-		for (Evenement e : es) {
-			eDTO.add(MODEL_MAPPER.map(e, EvenementDTO.class));
-		}
-		return eDTO;
 	}
 
 	public static SituationReelleDTO[] collectToSituationsReellesDTOsMapper(CollectSituationReelleDTO[] csr) {
