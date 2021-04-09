@@ -19,7 +19,11 @@
 * [docker-hub](https://hub.docker.com/r/covidmodelizer/back)
 
 ## Launch
-* Setup une base de donnée dans [le fichier propriété](covid-modelizer-app/src/main/resources/application.properties)
+* Setup les variables d'environnement suivante :
+    * DB_USERNAME
+    * DB_PASSWORD
+    * DB_IP
+    * DB_PORT
 * Télécharger le certificat SSL de [opendata.gouv](https://www.data.gouv.fr/fr/)
 * Importer le certificat dans votre JRE : 
 ```
