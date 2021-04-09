@@ -6,8 +6,8 @@
 * Application : http://covid-modelizer.fr
 
 ## Fonctionnalités
-* Batch de récupération quotidient des [données gouvernementales](https://www.data.gouv.fr/fr/datasets/r/d2671c6c-c0eb-4e12-b69a-8e8f87fc224c)
-* Batch de calcul quotidient des modélisations
+* Batch de récupération quotidien des [données gouvernementales](https://www.data.gouv.fr/fr/datasets/r/d2671c6c-c0eb-4e12-b69a-8e8f87fc224c)
+* Batch de calcul quotidien des modélisations
 * API d'accès aux données reels et modélisées
 
 ## Technologies
