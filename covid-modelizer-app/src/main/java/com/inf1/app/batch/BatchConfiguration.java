@@ -8,7 +8,6 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
@@ -21,7 +20,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.inf1.app.batch.data.collect.SituationReelleProcessor;
 import com.inf1.app.batch.data.collect.SituationReelleReader;
 import com.inf1.app.dto.SituationReelleDTO;
 
@@ -43,11 +41,6 @@ public class BatchConfiguration implements WebMvcConfigurer {
 	@Bean
 	ItemReader<SituationReelleDTO> reader() {
 		return new SituationReelleReader();
-	}
-
-	@Bean
-	ItemProcessor<SituationReelleDTO, SituationReelleDTO> processor() {
-		return new SituationReelleProcessor();
 	}
 
 	@Bean
@@ -79,18 +72,17 @@ public class BatchConfiguration implements WebMvcConfigurer {
 	}
 
 	@Bean
-	Step situationsReellesStep(ItemReader<SituationReelleDTO> reader,
-			ItemProcessor<SituationReelleDTO, SituationReelleDTO> processor,
-			JdbcBatchItemWriter<SituationReelleDTO> writer, StepBuilderFactory stepBuilderFactory) {
-		return stepBuilderFactory.get("situationsReellesStep").<SituationReelleDTO, SituationReelleDTO>chunk(10000)
-				.reader(reader).processor(processor).writer(writer).build();
+	Step situationReelleStep(ItemReader<SituationReelleDTO> reader, JdbcBatchItemWriter<SituationReelleDTO> writer,
+			StepBuilderFactory stepBuilderFactory) {
+		return stepBuilderFactory.get("situationReelleStep").<SituationReelleDTO, SituationReelleDTO>chunk(10000)
+				.reader(reader).writer(writer).build();
 	}
 
 	@Bean
 	Job recupDonneesQuotidiennesJob(JobBuilderFactory jobBuilderFactory,
-			@Qualifier("situationsReellesStep") Step situationsReellesStep) {
+			@Qualifier("situationReelleStep") Step situationReelleStep) {
 		return jobBuilderFactory.get("recupDonneesQuotidiennesJob").incrementer(new RunIdIncrementer())
-				.flow(situationsReellesStep).end().build();
+				.flow(situationReelleStep).end().build();
 	}
 
 }

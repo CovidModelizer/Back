@@ -13,8 +13,8 @@ import com.inf1.app.dto.SituationReelleDTO;
 import com.inf1.app.jpa.repository.SituationReelleRepository;
 
 @RestController
-@RequestMapping("/reel/complet")
-public class ReelCompletEndpoint {
+@RequestMapping("/data/all")
+public class SituationRelleEndpoint {
 
 	@Autowired(required = true)
 	SituationReelleRepository repository;
@@ -35,7 +35,7 @@ public class ReelCompletEndpoint {
 		return repository.findBetweenDate(LocalDate.parse(start), LocalDate.parse(end));
 	}
 
-	@GetMapping("/Before")
+	@GetMapping("/before")
 	public Iterable<SituationReelleDTO> findBefore(@RequestParam(name = "date") String date) {
 		return repository.findBeforeDate(LocalDate.parse(date));
 	}
@@ -45,13 +45,13 @@ public class ReelCompletEndpoint {
 		return repository.findAfterDate(LocalDate.parse(date));
 	}
 
-	@GetMapping("/lasWeek")
+	@GetMapping("/lastWeek")
 	public Iterable<SituationReelleDTO> LastWeek() {
 		return repository.findLastDate(7);
 	}
 
 	@GetMapping("/lastDays")
-	public Iterable<SituationReelleDTO> LastDays(@RequestParam(name = "nb") int nb) {
-		return repository.findLastDate(nb);
+	public Iterable<SituationReelleDTO> LastDays(@RequestParam(name = "total") int total) {
+		return repository.findLastDate(total);
 	}
 }

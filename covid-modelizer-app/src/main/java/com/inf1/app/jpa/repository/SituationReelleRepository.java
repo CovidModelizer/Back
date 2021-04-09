@@ -20,13 +20,13 @@ public class SituationReelleRepository {
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public List<SituationReelleDTO> findBetweenDate(LocalDate date1, LocalDate date2) {
+	public List<SituationReelleDTO> findBetweenDate(LocalDate start, LocalDate end) {
 		Query q = entityManager.createQuery(
-				"select s from SituationReelle s WHERE (s.date BETWEEN :date1 AND :date2) order by s.date",
+				"select s from SituationReelle s WHERE (s.date BETWEEN :start AND :end) order by s.date",
 				SituationReelle.class);
-		q.setParameter("date1", date1);
-		q.setParameter("date2", date2);
-		return DTOUtils.situationsReellesDTOsMapper(q.getResultList());
+		q.setParameter("start", start);
+		q.setParameter("end", end);
+		return DTOUtils.listSituationReelleDTOMapper(q.getResultList());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -34,7 +34,7 @@ public class SituationReelleRepository {
 		Query q = entityManager.createQuery("select s from SituationReelle s WHERE (s.date <= :date) order by s.date",
 				SituationReelle.class);
 		q.setParameter("date", date);
-		return DTOUtils.situationsReellesDTOsMapper(q.getResultList());
+		return DTOUtils.listSituationReelleDTOMapper(q.getResultList());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -42,11 +42,11 @@ public class SituationReelleRepository {
 		Query q = entityManager.createQuery("select s from SituationReelle s WHERE (s.date >= :date) order by s.date",
 				SituationReelle.class);
 		q.setParameter("date", date);
-		return DTOUtils.situationsReellesDTOsMapper(q.getResultList());
+		return DTOUtils.listSituationReelleDTOMapper(q.getResultList());
 	}
 
-	public List<SituationReelleDTO> findLastDate(int nbDays) {
-		return findBetweenDate(LocalDate.now().minusDays(nbDays), LocalDate.now());
+	public List<SituationReelleDTO> findLastDate(int total) {
+		return findBetweenDate(LocalDate.now().minusDays(total), LocalDate.now());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -54,12 +54,12 @@ public class SituationReelleRepository {
 		Query q = entityManager.createQuery("select s from SituationReelle s WHERE s.date = :date order by s.date",
 				SituationReelle.class);
 		q.setParameter("date", date);
-		return DTOUtils.situationsReellesDTOsMapper(q.getResultList());
+		return DTOUtils.listSituationReelleDTOMapper(q.getResultList());
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<SituationReelleDTO> findallDTO() {
 		Query q = entityManager.createQuery("select s from SituationReelle s order by s.date", SituationReelle.class);
-		return DTOUtils.situationsReellesDTOsMapper(q.getResultList());
+		return DTOUtils.listSituationReelleDTOMapper(q.getResultList());
 	}
 }

@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.inf1.app.batch.modelisations.calculators.CasMachineLearningCalculator;
+import com.inf1.app.batch.modelisations.calculators.InfectionMachineLearningCalculator;
 import com.inf1.app.dto.ModelisationDTO;
 import com.inf1.app.dto.SituationReelleDTO;
 
@@ -36,7 +36,7 @@ public class CasMachineLearningCalculatorTest {
 
 	@Test
 	public void test() {
-		CasMachineLearningCalculator c = new CasMachineLearningCalculator();
+		InfectionMachineLearningCalculator c = new InfectionMachineLearningCalculator();
 		ModelisationDTO m = c.calculate(situationsReelsDTO);
 		assertEquals(m.getDateCalcul(), LocalDate.now());
 		assert(Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) >= 53748 && Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) <= 53750);

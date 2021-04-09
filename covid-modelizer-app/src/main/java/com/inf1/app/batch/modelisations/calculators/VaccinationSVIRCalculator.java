@@ -5,7 +5,7 @@ import java.util.List;
 import com.inf1.app.dto.ModelisationDTO;
 import com.inf1.app.dto.SituationReelleDTO;
 
-public class VaccinSVIRCalculator implements ModelisationCalculator {
+public class VaccinationSVIRCalculator implements ModelisationCalculator {
 
 	@Override
 	public ModelisationDTO calculate(List<SituationReelleDTO> situationsReellesDTO) {

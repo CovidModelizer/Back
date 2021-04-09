@@ -4,14 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.inf1.app.batch.data.collect.SituationReelleProcessor;
-
 import lombok.Getter;
 import lombok.Setter;
 
 public class DatabaseUtils {
 
-	private static final Logger LOG = LoggerFactory.getLogger(SituationReelleProcessor.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DatabaseUtils.class);
 
 	@Getter
 	@Setter

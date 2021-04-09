@@ -17,7 +17,7 @@ import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
-public class VaccinMachineLearningCalculator implements ModelisationCalculator {
+public class VaccinationMachineLearningCalculator implements ModelisationCalculator {
 
 	@Override
 	public ModelisationDTO calculate(List<SituationReelleDTO> situationsReellesDTO) {

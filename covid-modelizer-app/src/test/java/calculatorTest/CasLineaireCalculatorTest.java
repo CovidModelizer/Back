@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.inf1.app.batch.modelisations.calculators.CasLineaireCalculator;
+import com.inf1.app.batch.modelisations.calculators.InfectionLinearCalculator;
 import com.inf1.app.dto.ModelisationDTO;
 import com.inf1.app.dto.SituationReelleDTO;
 
@@ -36,7 +36,7 @@ public class CasLineaireCalculatorTest {
 
 	@Test
 	public void test() {
-		CasLineaireCalculator c = new CasLineaireCalculator();
+		InfectionLinearCalculator c = new InfectionLinearCalculator();
 		ModelisationDTO m = c.calculate(situationsReelsDTO);
 		assertEquals(m.getDateCalcul(), LocalDate.now());
 		assertEquals(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9)), "4875614");

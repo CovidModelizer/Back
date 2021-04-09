@@ -17,7 +17,7 @@ import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
-public class CasLineaireCalculator implements ModelisationCalculator {
+public class VaccinationLinearCalculator implements ModelisationCalculator {
 
 	@Override
 	public ModelisationDTO calculate(List<SituationReelleDTO> situationsReellesDTO) {
@@ -86,27 +86,27 @@ public class CasLineaireCalculator implements ModelisationCalculator {
 	private Instances initDataSet(List<SituationReelleDTO> srDTO) throws ParseException {
 		ArrayList<Attribute> atts = new ArrayList<Attribute>();
 		atts.add(new Attribute("date", "yyyy-MM-dd"));
-		atts.add(new Attribute("cumul_casConfirmes"));
-		atts.add(new Attribute("cumul cas J+1"));
+		atts.add(new Attribute("cumul_premieresInjections"));
+		atts.add(new Attribute("cumul vaccines J+1"));
 
-		Instances dataSet = new Instances("CasLineaireCalculator dataSet", atts, 0);
+		Instances dataSet = new Instances("VaccinLineaireCalculator dataSet", atts, 0);
 		dataSet.setClassIndex(atts.size() - 1);
 
 		double[] firstInstanceValue = new double[dataSet.numAttributes()];
-		firstInstanceValue[0] = dataSet.attribute("date").parseDate("2020-03-01");
+		firstInstanceValue[0] = dataSet.attribute("date").parseDate("2020-12-26");
 		firstInstanceValue[1] = Double.NaN;
 		firstInstanceValue[2] = Double.NaN;
 		dataSet.add(new DenseInstance(1.0, firstInstanceValue));
 
-		for (int i = 0; i < srDTO.size(); i++) {
+		for (int i = 300; i < srDTO.size(); i++) {
 			double[] instanceValue = new double[dataSet.numAttributes()];
 			instanceValue[0] = dataSet.attribute("date")
 					.parseDate(srDTO.get(i).getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-			instanceValue[1] = srDTO.get(i).getCumulCasConfirmes() == null ? Double.NaN
-					: Double.parseDouble(srDTO.get(i).getCumulCasConfirmes());
+			instanceValue[1] = srDTO.get(i).getCumulPremieresInjections() == null ? Double.NaN
+					: Double.parseDouble(srDTO.get(i).getCumulPremieresInjections());
 			instanceValue[2] = (i + 1 >= srDTO.size()) ? Double.NaN
-					: srDTO.get(i + 1).getCumulCasConfirmes() == null ? Double.NaN
-							: Double.parseDouble(srDTO.get(i + 1).getCumulCasConfirmes());
+					: srDTO.get(i + 1).getCumulPremieresInjections() == null ? Double.NaN
+							: Double.parseDouble(srDTO.get(i + 1).getCumulPremieresInjections());
 			for (int j = 1; j < instanceValue.length; j++) {
 				instanceValue[j] = Double.isNaN(instanceValue[j]) ? instanceValue[j]
 						: instanceValue[j] < 0.0 ? Double.NaN : instanceValue[j];
@@ -115,4 +115,5 @@ public class CasLineaireCalculator implements ModelisationCalculator {
 		}
 		return dataSet;
 	}
+
 }
