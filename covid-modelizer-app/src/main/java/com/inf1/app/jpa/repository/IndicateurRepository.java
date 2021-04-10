@@ -20,8 +20,9 @@ public class IndicateurRepository {
 
 	@SuppressWarnings("unchecked")
 	public List<IndicateurDTO> findBetweenDate(LocalDate start, LocalDate end, String type, String model) {
-		Query q = entityManager.createQuery("select com.inf1.app.dto.IndicateurDTO(i.date, i." + type + ", i." + model
-				+ ", i.value) from Indicateur i WHERE (i.date BETWEEN :start AND :end) AND i.type = :type AND i.model = :model order by i.date",
+		Query q = entityManager.createQuery(
+				"select new com.inf1.app.dto.IndicateurDTO(i.date, i.type, i.model, i.value)"
+						+ "from Indicateur i WHERE (i.date BETWEEN :start AND :end) AND i.type = :type AND i.model = :model order by i.date",
 				IndicateurDTO.class);
 		q.setParameter("start", start);
 		q.setParameter("end", end);
@@ -32,8 +33,9 @@ public class IndicateurRepository {
 
 	@SuppressWarnings("unchecked")
 	public List<IndicateurDTO> findBeforeDate(LocalDate date, String type, String model) {
-		Query q = entityManager.createQuery("select com.inf1.app.dto.IndicateurDTO(i.date, i." + type + ", i." + model
-				+ ", i.value) from Indicateur i WHERE (i.date <= :date) AND i.type = :type AND i.model = :model order by i.date",
+		Query q = entityManager.createQuery(
+				"select new com.inf1.app.dto.IndicateurDTO(i.date, i.type, i.model, i.value) "
+						+ "from Indicateur i WHERE (i.date <= :date) AND i.type = :type AND i.model = :model order by i.date",
 				IndicateurDTO.class);
 		q.setParameter("date", date);
 		q.setParameter("type", type);
@@ -43,8 +45,9 @@ public class IndicateurRepository {
 
 	@SuppressWarnings("unchecked")
 	public List<IndicateurDTO> findAfterDate(LocalDate date, String type, String model) {
-		Query q = entityManager.createQuery("select com.inf1.app.dto.IndicateurDTO(i.date, i." + type + ", i." + model
-				+ ", i.value) from Indicateur i WHERE (i.date >= :date) AND i.type = :type AND i.model = :model order by i.date",
+		Query q = entityManager.createQuery(
+				"select new com.inf1.app.dto.IndicateurDTO(i.date, i.type, i.model, i.value) "
+						+ "from Indicateur i WHERE (i.date >= :date) AND i.type = :type AND i.model = :model order by i.date",
 				Indicateur.class);
 		q.setParameter("date", date);
 		q.setParameter("type", type);
@@ -58,9 +61,9 @@ public class IndicateurRepository {
 
 	@SuppressWarnings("unchecked")
 	public List<IndicateurDTO> findByDate(LocalDate date, String type, String model) {
-		Query q = entityManager.createQuery("select new com.inf1.app.dto.IndicateurDTO(i.date, i." + type + ", i."
-				+ model
-				+ ", i.value) from Indicateur i WHERE i.date = :date AND i.type = :type AND i.model = :model order by i.date",
+		Query q = entityManager.createQuery(
+				"select new com.inf1.app.dto.IndicateurDTO(i.date, i.type, i.model, i.value) "
+						+ "from Indicateur i WHERE i.date = :date AND i.type = :type AND i.model = :model order by i.date",
 				IndicateurDTO.class);
 		q.setParameter("date", date);
 		q.setParameter("type", type);
@@ -71,8 +74,8 @@ public class IndicateurRepository {
 	@SuppressWarnings("unchecked")
 	public List<IndicateurDTO> findAllByModel(String type, String model) {
 		Query q = entityManager.createQuery(
-				"select new com.inf1.app.dto.IndicateurDTO(i.date, i." + type + ", i." + model
-						+ ", i.value) from Indicateur i WHERE i.type = :type AND i.model = :model order by i.date",
+				"select new com.inf1.app.dto.IndicateurDTO(i.date, i.type, i.model, i.value) "
+						+ "from Indicateur i WHERE i.type = :type AND i.model = :model order by i.date",
 				IndicateurDTO.class);
 		q.setParameter("type", type);
 		q.setParameter("model", model);

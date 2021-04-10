@@ -37,20 +37,22 @@ public class PredictionCalculation implements InitializingBean {
 	ModelisationRepository modelisationRepository;
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-
-	private JobLauncher jobLauncher;
-	private Job recupDonneesQuotidiennesJob;
+	@Autowired
+	JobLauncher jobLauncher;
+	@Autowired
+	Job recupDonneesQuotidiennesJob;
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
+		LOG.info(">>> afterPropertiesSet from PredictionCalculation <<<");
 		jobLauncher.run(recupDonneesQuotidiennesJob,
 				new JobParametersBuilder().addLong("uniqueness", System.nanoTime()).toJobParameters());
 		calculatePrediction();
 	}
 
-	@Scheduled(cron = "0 28 18 * * *")
+	@Scheduled(cron = "0 30 23 * * *", zone = "Europe/Paris")
 	public void calculatePrediction() {
-		LOG.info(">>> CALCUL DES PREDICTIONS <<<");
+		LOG.info(">>> calculatePrediction <<<");
 
 		LocalTime start = null;
 

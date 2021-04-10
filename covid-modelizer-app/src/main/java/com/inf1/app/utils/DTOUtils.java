@@ -36,63 +36,66 @@ public class DTOUtils {
 			} else {
 				srDTO[i].setNouveauxCasConfirmes(
 						csr[i].getCumulCasConfirmes() == null || csr[i - 1].getCumulCasConfirmes() == null ? null
-								: String.valueOf(Integer.parseInt(csr[i].getCumulCasConfirmes())
-										- Integer.parseInt(csr[i - 1].getCumulCasConfirmes()) < 0 ? 0
-												: Integer.parseInt(csr[i].getCumulCasConfirmes())
+								: Integer.parseInt(csr[i].getCumulCasConfirmes())
+										- Integer.parseInt(csr[i - 1].getCumulCasConfirmes()) < 0 ? null
+												: String.valueOf(Integer.parseInt(csr[i].getCumulCasConfirmes())
 														- Integer.parseInt(csr[i - 1].getCumulCasConfirmes())));
 				srDTO[i].setNouveauxCasConfirmesEhpad(
 						csr[i].getCumulCasConfirmesEhpad() == null || csr[i - 1].getCumulCasConfirmesEhpad() == null
 								? null
-								: String.valueOf(Integer.parseInt(csr[i].getCumulCasConfirmesEhpad())
-										- Integer.parseInt(csr[i - 1].getCumulCasConfirmesEhpad()) < 0 ? 0
-												: Integer.parseInt(csr[i].getCumulCasConfirmesEhpad())
+								: Integer.parseInt(csr[i].getCumulCasConfirmesEhpad())
+										- Integer.parseInt(csr[i - 1].getCumulCasConfirmesEhpad()) < 0 ? null
+												: String.valueOf(Integer.parseInt(csr[i].getCumulCasConfirmesEhpad())
 														- Integer.parseInt(csr[i - 1].getCumulCasConfirmesEhpad())));
 				srDTO[i].setNouveauxGueris(csr[i].getCumulGueris() == null || csr[i - 1].getCumulGueris() == null ? null
-						: String.valueOf(Integer.parseInt(csr[i].getCumulGueris())
-								- Integer.parseInt(csr[i - 1].getCumulGueris()) < 0 ? 0
-										: Integer.parseInt(csr[i].getCumulGueris())
-												- Integer.parseInt(csr[i - 1].getCumulGueris())));
+						: Integer.parseInt(csr[i].getCumulGueris()) - Integer.parseInt(csr[i - 1].getCumulGueris()) < 0
+								? null
+								: String.valueOf(Integer.parseInt(csr[i].getCumulGueris())
+										- Integer.parseInt(csr[i - 1].getCumulGueris())));
 				srDTO[i].setNouveauxDeces(csr[i].getCumulDeces() == null || csr[i - 1].getCumulDeces() == null ? null
-						: String.valueOf(Integer.parseInt(csr[i].getCumulDeces())
-								- Integer.parseInt(csr[i - 1].getCumulDeces()) < 0 ? 0
-										: Integer.parseInt(csr[i].getCumulDeces())
-												- Integer.parseInt(csr[i - 1].getCumulDeces())));
+						: Integer.parseInt(csr[i].getCumulDeces()) - Integer.parseInt(csr[i - 1].getCumulDeces()) < 0
+								? null
+								: String.valueOf(Integer.parseInt(csr[i].getCumulDeces())
+										- Integer.parseInt(csr[i - 1].getCumulDeces())));
 				srDTO[i].setNouveauxDecesEhpad(
 						csr[i].getCumulDecesEhpad() == null || csr[i - 1].getCumulDecesEhpad() == null ? null
-								: String.valueOf(Integer.parseInt(csr[i].getCumulDecesEhpad())
-										- Integer.parseInt(csr[i - 1].getCumulDecesEhpad()) < 0 ? 0
-												: Integer.parseInt(csr[i].getCumulDecesEhpad())
+								: Integer.parseInt(csr[i].getCumulDecesEhpad())
+										- Integer.parseInt(csr[i - 1].getCumulDecesEhpad()) < 0 ? null
+												: String.valueOf(Integer.parseInt(csr[i].getCumulDecesEhpad())
 														- Integer.parseInt(csr[i - 1].getCumulDecesEhpad())));
 				if (i > 7) {
 					srDTO[i].setNouvellesLivraisonsNombreTotalDoses(csr[i].getCumulLivraisonsNombreTotalDoses() == null
 							|| csr[i - 7].getCumulLivraisonsNombreTotalDoses() == null
 									? null
-									: String.valueOf(Integer.parseInt(csr[i].getCumulLivraisonsNombreTotalDoses())
+									: Integer.parseInt(csr[i].getCumulLivraisonsNombreTotalDoses())
 											- Integer.parseInt(csr[i - 7].getCumulLivraisonsNombreTotalDoses()) < 0
-													? 0
-													: Integer.parseInt(csr[i].getCumulLivraisonsNombreTotalDoses())
+													? null
+													: String.valueOf(Integer
+															.parseInt(csr[i].getCumulLivraisonsNombreTotalDoses())
 															- Integer.parseInt(
 																	csr[i - 7].getCumulLivraisonsNombreTotalDoses())));
 					srDTO[i].setNouvellesLivraisonsNombreDosesPfizer(csr[i]
 							.getCumulLivraisonsNombreDosesPfizer() == null
 							|| csr[i - 7].getCumulLivraisonsNombreDosesPfizer() == null
 									? null
-									: String.valueOf(Integer.parseInt(csr[i].getCumulLivraisonsNombreDosesPfizer())
+									: Integer.parseInt(csr[i].getCumulLivraisonsNombreDosesPfizer())
 											- Integer.parseInt(csr[i - 7].getCumulLivraisonsNombreDosesPfizer()) < 0
-													? 0
-													: Integer.parseInt(csr[i].getCumulLivraisonsNombreDosesPfizer())
+													? null
+													: String.valueOf(Integer
+															.parseInt(csr[i].getCumulLivraisonsNombreDosesPfizer())
 															- Integer.parseInt(
 																	csr[i - 7].getCumulLivraisonsNombreDosesPfizer())));
-					srDTO[i].setNouvellesLivraisonsNombreDosesModerna(csr[i]
-							.getCumulLivraisonsNombreDosesModerna() == null
-							|| csr[i - 7].getCumulLivraisonsNombreDosesModerna() == null
-									? null
-									: String.valueOf(Integer.parseInt(csr[i].getCumulLivraisonsNombreDosesModerna())
-											- Integer.parseInt(csr[i - 7].getCumulLivraisonsNombreDosesModerna()) < 0
-													? 0
-													: Integer.parseInt(csr[i].getCumulLivraisonsNombreDosesModerna())
-															- Integer.parseInt(csr[i - 7]
-																	.getCumulLivraisonsNombreDosesModerna())));
+					srDTO[i].setNouvellesLivraisonsNombreDosesModerna(
+							csr[i].getCumulLivraisonsNombreDosesModerna() == null
+									|| csr[i - 7].getCumulLivraisonsNombreDosesModerna() == null
+											? null
+											: Integer.parseInt(csr[i].getCumulLivraisonsNombreDosesModerna()) - Integer
+													.parseInt(csr[i - 7].getCumulLivraisonsNombreDosesModerna()) < 0
+															? null
+															: String.valueOf(Integer.parseInt(
+																	csr[i].getCumulLivraisonsNombreDosesModerna())
+																	- Integer.parseInt(csr[i - 7]
+																			.getCumulLivraisonsNombreDosesModerna())));
 				}
 				if (i > 90) {
 					srDTO[i].setSirR(csr[i - daysToRecover].getCumulCasConfirmes());

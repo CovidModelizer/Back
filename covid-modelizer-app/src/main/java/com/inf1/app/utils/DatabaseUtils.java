@@ -31,8 +31,6 @@ public class DatabaseUtils {
 		jdbcTemplate.execute("ALTER TABLE indicateur auto_increment = 1");
 		jdbcTemplate.execute("DELETE FROM coefficient");
 		jdbcTemplate.execute("ALTER TABLE coefficient auto_increment = 1");
-		jdbcTemplate.execute("DELETE FROM evenement");
-		jdbcTemplate.execute("ALTER TABLE evenement auto_increment = 1");
 	}
 
 }

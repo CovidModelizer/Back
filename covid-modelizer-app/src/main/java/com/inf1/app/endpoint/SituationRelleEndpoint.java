@@ -13,7 +13,7 @@ import com.inf1.app.dto.SituationReelleDTO;
 import com.inf1.app.jpa.repository.SituationReelleRepository;
 
 @RestController
-@RequestMapping("/data/all")
+@RequestMapping("/data/full")
 public class SituationRelleEndpoint {
 
 	@Autowired(required = true)

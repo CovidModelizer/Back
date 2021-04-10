@@ -2,6 +2,8 @@ package calculatorTest;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -12,16 +14,12 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.inf1.app.batch.modelisations.calculators.VaccinationSVIRCalculator;
+import com.inf1.app.batch.modelisations.calculators.InfectionMachineLearningCalculator;
 import com.inf1.app.dto.ModelisationDTO;
 import com.inf1.app.dto.SituationReelleDTO;
 
-import java.io.File;
-import java.io.IOException;
-
-
-public class VaccinSVIRCalculatorTest {
-
+public class InfectionMachineLearningCalculatorTest {
+	
 	static List<SituationReelleDTO> situationsReelsDTO;
 
 	@BeforeAll
@@ -38,11 +36,13 @@ public class VaccinSVIRCalculatorTest {
 
 	@Test
 	public void test() {
-		VaccinationSVIRCalculator c = new VaccinationSVIRCalculator();
+		InfectionMachineLearningCalculator c = new InfectionMachineLearningCalculator();
 		ModelisationDTO m = c.calculate(situationsReelsDTO);
 		assertEquals(m.getDateCalcul(), LocalDate.now());
-		assertEquals(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9)), "9527583");
-		assertEquals(m.getCoeff().get("beta").toString(), "0.118");
+		assert(Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) >= 53748 && Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) <= 53750);
+		assert(m.getCoeff().get("PredJ+1_constante").toString().startsWith("-5766.63"));
 	}
+
+	
 
 }
