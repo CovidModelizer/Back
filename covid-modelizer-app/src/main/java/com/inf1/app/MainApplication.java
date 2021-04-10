@@ -11,4 +11,5 @@ public class MainApplication {
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(MainApplication.class, args);
 	}
+
 }
