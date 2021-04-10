@@ -12,8 +12,8 @@ import com.inf1.app.dto.IndicateurDTO;
 import com.inf1.app.jpa.repository.IndicateurRepository;
 
 @RestController
-@RequestMapping("/modelisation/vaccin")
-public class ModelisationVaccinsEndpoint {
+@RequestMapping("/modelisation/vaccination")
+public class ModelisationVaccinationEndpoint {
 
 	@Autowired(required=true)
 	IndicateurRepository repository;
@@ -49,7 +49,7 @@ public class ModelisationVaccinsEndpoint {
 	}
 	
 	@GetMapping("/nextDays")
-	public Iterable<IndicateurDTO> NextDays(@RequestParam(name = "nb") int nb,  @RequestParam(name = "model") String typeModel) {
-		return repository.findNextDays(nb, "VAC", typeModel);
+	public Iterable<IndicateurDTO> NextDays(@RequestParam(name = "total") int total,  @RequestParam(name = "model") String typeModel) {
+		return repository.findNextDays(total, "VAC", typeModel);
 	}
 }

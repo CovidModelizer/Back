@@ -17,7 +17,7 @@ import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
-public class CasMachineLearningCalculator implements ModelisationCalculator {
+public class InfectionMachineLearningCalculator implements ModelisationCalculator {
 
 	@Override
 	public ModelisationDTO calculate(List<SituationReelleDTO> situationsReellesDTO) {
@@ -81,7 +81,7 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 						.put(LocalDate.parse(predictiveData.stringValue(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 								.plusDays(i + 1),
 								lrClassifier[i].classifyInstance(predictiveData) < 0 ? "0"
-										: String.valueOf((int) lrClassifier[i].classifyInstance(predictiveData)));
+										: String.valueOf((int) Math.ceil(lrClassifier[i].classifyInstance(predictiveData))));
 			}
 			for (int i = 0; i < allDataSet.length; i++) {
 				predictiveData = allDataSet[i].get(allDataSet[i].size() - 1 - expanse);
@@ -89,7 +89,7 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 						.put(LocalDate.parse(predictiveData.stringValue(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 								.plusDays(i + 1),
 								lrClassifier[i].classifyInstance(predictiveData) < 0 ? "0"
-										: String.valueOf((int) lrClassifier[i].classifyInstance(predictiveData)));
+										: String.valueOf((int) Math.ceil(lrClassifier[i].classifyInstance(predictiveData))));
 			}
 			for (int i = 0; i < expanse; i++) {
 				predictiveData = allDataSet[i].lastInstance();
@@ -97,7 +97,7 @@ public class CasMachineLearningCalculator implements ModelisationCalculator {
 						.put(LocalDate.parse(predictiveData.stringValue(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 								.plusDays(i + 1),
 								lrClassifier[i].classifyInstance(predictiveData) < 0 ? "0"
-										: String.valueOf((int) lrClassifier[i].classifyInstance(predictiveData)));
+										: String.valueOf((int) Math.ceil(lrClassifier[i].classifyInstance(predictiveData))));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

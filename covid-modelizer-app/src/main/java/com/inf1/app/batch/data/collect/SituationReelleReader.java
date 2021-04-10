@@ -99,7 +99,7 @@ public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
 		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 		String data = response.getBody();
 		CollectSituationReelleDTO[] collect = objectMapper.readValue(data, CollectSituationReelleDTO[].class);
-		SituationReelleDTO[] lines = DTOUtils.collectToSituationsReellesDTOsMapper(collect);
+		SituationReelleDTO[] lines = DTOUtils.collectToArrayOfSituationReelleDTOMapper(collect);
 		return lines;
 	}
 
@@ -125,5 +125,5 @@ public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
 			DatabaseUtils.cleanSituationReelle();
 		}
 	}
-	
+
 }

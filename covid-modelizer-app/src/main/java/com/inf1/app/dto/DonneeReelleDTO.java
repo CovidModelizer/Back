@@ -11,9 +11,9 @@ public class DonneeReelleDTO {
 
 	@Getter
 	@Setter
-	String value;
+	LocalDate date;
 	@Getter
 	@Setter
-	LocalDate date;
+	String value;
 	
 }

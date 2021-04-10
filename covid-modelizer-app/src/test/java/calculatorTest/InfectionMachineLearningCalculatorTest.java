@@ -14,14 +14,14 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.inf1.app.batch.modelisations.calculators.VaccinMachineLearningCalculator;
+import com.inf1.app.batch.modelisations.calculators.InfectionMachineLearningCalculator;
 import com.inf1.app.dto.ModelisationDTO;
 import com.inf1.app.dto.SituationReelleDTO;
 
-public class VaccinMachineLearningCalculatorTest {
+public class InfectionMachineLearningCalculatorTest {
 	
 	static List<SituationReelleDTO> situationsReelsDTO;
-	
+
 	@BeforeAll
 	public static void init() throws IOException {
 		situationsReelsDTO = new ArrayList<SituationReelleDTO>();
@@ -36,14 +36,13 @@ public class VaccinMachineLearningCalculatorTest {
 
 	@Test
 	public void test() {
-		VaccinMachineLearningCalculator c = new VaccinMachineLearningCalculator();
+		InfectionMachineLearningCalculator c = new InfectionMachineLearningCalculator();
 		ModelisationDTO m = c.calculate(situationsReelsDTO);
 		assertEquals(m.getDateCalcul(), LocalDate.now());
-		assert(Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) >= 138300 && Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) <= 138310);
-		assert(m.getCoeff().get("PredJ+1_constante").toString().startsWith("2.18"));
+		assert(Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) >= 53748 && Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) <= 53750);
+		assert(m.getCoeff().get("PredJ+1_constante").toString().startsWith("-5766.63"));
 	}
 
-	
 	
 
 }

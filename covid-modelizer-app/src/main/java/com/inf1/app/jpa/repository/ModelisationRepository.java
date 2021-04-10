@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +19,9 @@ import com.inf1.app.jpa.entities.Modelisation;
 
 @Repository
 public class ModelisationRepository {
+
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	@Autowired
 	ModelisationDAO modelisationDAO;
