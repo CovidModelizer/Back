@@ -39,10 +39,9 @@ public class InfectionMachineLearningCalculatorTest {
 		InfectionMachineLearningCalculator c = new InfectionMachineLearningCalculator();
 		ModelisationDTO m = c.calculate(situationsReelsDTO);
 		assertEquals(m.getDateCalcul(), LocalDate.now());
-		assert(Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) >= 53748 && Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) <= 53750);
+		System.out.println(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9)));
+		assert(Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) >= 53749 && Integer.parseInt(m.getValues().get(LocalDate.of(2021, Month.APRIL, 9))) <= 53751);
 		assert(m.getCoeff().get("PredJ+1_constante").toString().startsWith("-5766.63"));
 	}
-
-	
 
 }
