@@ -53,7 +53,7 @@ public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
 		SituationReelleDTO nextSituationReelleDto = null;
 		if (situationReelleDataIsNotInitialized()) {
 			situationReelleData = fetchSituationReelleDataFromAPI(API_URL_INFOS);
-			cleanDb();
+			deletePreviousData();
 		}
 		if (nextSituationReelleIndex < situationReelleData.length)
 
@@ -119,11 +119,11 @@ public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
 		return r0s;
 	}
 
-	private void cleanDb() {
+	private void deletePreviousData() {
 		if (DatabaseUtils.getJdbcTemplate() == null) {
 			DatabaseUtils.setJdbcTemplate(jdbcTemplate);
-			DatabaseUtils.cleanSituationReelle();
 		}
+		DatabaseUtils.cleanSituationReelle();
 	}
 
 }
