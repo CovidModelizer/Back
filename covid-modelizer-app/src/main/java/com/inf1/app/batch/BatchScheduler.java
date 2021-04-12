@@ -16,11 +16,12 @@ import lombok.AllArgsConstructor;
 public class BatchScheduler {
 
 	private JobLauncher jobLauncher;
-    private Job recupDonneesQuotidiennesJob;
-    
-    // Launch batch each day at ? AM/PM
-    @Scheduled(cron = "${batch.cron}")
-    public void schedule() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
-    	jobLauncher.run(recupDonneesQuotidiennesJob, new JobParametersBuilder().addLong("uniqueness", System.nanoTime()).toJobParameters());
-    }
+	private Job recupDonneesQuotidiennesJob;
+
+	@Scheduled(cron = "${batch-data.cron}", zone = "${batch.zone}")
+	public void schedule() throws JobExecutionAlreadyRunningException, JobRestartException,
+			JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+		jobLauncher.run(recupDonneesQuotidiennesJob,
+				new JobParametersBuilder().addLong("uniqueness", System.nanoTime()).toJobParameters());
+	}
 }
