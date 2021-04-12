@@ -6,9 +6,9 @@
 * Application : http://covid-modelizer.fr
 
 ## Fonctionnalités
-* Batch de récupération quotidien des [données gouvernementales](https://www.data.gouv.fr/fr/datasets/r/d2671c6c-c0eb-4e12-b69a-8e8f87fc224c)
+* Batch quotidien de récupération des [données gouvernementales](https://www.data.gouv.fr/fr/datasets/r/d2671c6c-c0eb-4e12-b69a-8e8f87fc224c)
 * Batch de calcul quotidien des modélisations
-* API d'accès aux données reels et modélisées
+* API d'accès aux données réelles et modélisées
 
 ## Technologies
 * Spring Boot
@@ -19,7 +19,7 @@
 * [docker-hub](https://hub.docker.com/r/covidmodelizer/back)
 
 ## Launch
-* Setup les variables d'environnement suivante :
+* Configurer les variables d'environnement suivantes :
     * DB_USERNAME
     * DB_PASSWORD
     * DB_IP
@@ -27,9 +27,11 @@
 * Télécharger le certificat SSL de [opendata.gouv](https://www.data.gouv.fr/fr/)
 * Importer le certificat dans votre JRE : 
 ```
-keytool -import -file <certifiact> -alias <nom que vous souhaitez> -keystore <path vers le fichier cacerts>
+keytool -import -file <certificat> -alias <donner un nom au certificat> -keystore <path vers le fichier cacerts>
 ```
-* Lancer le projet:
+* Lancer le projet :
+    * Dans [covid-modelizer-app](https://github.com/CovidModelizer/Back/tree/main/covid-modelizer-app)
 ```
 ./mvn spring-boot:run
 ```
+* Accès à [localhost:8080](localhost:8080)
