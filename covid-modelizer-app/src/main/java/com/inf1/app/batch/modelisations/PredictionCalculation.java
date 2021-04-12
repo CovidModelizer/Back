@@ -50,7 +50,7 @@ public class PredictionCalculation implements InitializingBean {
 		calculatePrediction();
 	}
 
-	@Scheduled(cron = "0 30 23 * * *", zone = "Europe/Paris")
+	@Scheduled(cron = "0 30 23 * * *")
 	public void calculatePrediction() {
 		LOG.info(">>> calculatePrediction <<<");
 
