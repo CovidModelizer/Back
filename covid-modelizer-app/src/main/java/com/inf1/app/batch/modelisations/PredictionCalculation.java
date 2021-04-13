@@ -50,7 +50,7 @@ public class PredictionCalculation implements InitializingBean {
 		calculatePrediction();
 	}
 
-	@Scheduled(cron = "0 30 23 * * *")
+	@Scheduled(cron = "${batch-calculation.cron}", zone = "${batch.zone}")
 	public void calculatePrediction() {
 		LOG.info(">>> calculatePrediction <<<");
 
