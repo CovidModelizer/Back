@@ -1,2 +1,0 @@
-INDEX VERSION 1.131+C:\Users\mathi\Desktop\Perso\Autre\Importants\Ecole\M1\Sorbonne\Cours\INF1\Projet\covid-modelizer-app\.metadata\.plugins\org.eclipse.jdt.core
-62445875.index

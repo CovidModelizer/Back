@@ -1,41 +1,34 @@
 package com.inf1.app.jpa.entities;
 
-import java.time.LocalDate;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+
 @Entity
+@Table(name = "indicateur")
+@Getter
 public class Indicateur {
 
-	@Id
-	@Column
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter
-	private int id;
-	@Column
-	@Getter
-	@Setter
-	private LocalDate date;
-	@NonNull
-	@Column
-	@Getter
-	@Setter
-	private String type;
-	@NonNull
-	@Column
-	@Getter
-	@Setter
-	private String model;
-	@Column
-	@Getter
-	@Setter
-	private String value;
-
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @NonNull
+    @Column(nullable = false)
+    @Setter
+    private LocalDate date;
+    @NonNull
+    @Column(nullable = false)
+    @Setter
+    private String type;
+    @NonNull
+    @Column(nullable = false)
+    @Setter
+    private String model;
+    @Column
+    @Setter
+    private String value;
 }
