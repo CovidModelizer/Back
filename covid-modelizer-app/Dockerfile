@@ -1,13 +1,7 @@
-# davidekchajzer/covid_modelizer
-
 FROM openjdk:8-jre-alpine
 
-ENV APP_ROOT /app
+WORKDIR /app
 
-RUN mkdir ${APP_ROOT}
+COPY target/*.jar run.jar
 
-WORKDIR ${APP_ROOT}
-
-COPY target/*.jar ${APP_ROOT}/run.jar
-
-ENTRYPOINT ["java", "-jar", "run.jar"]
+ENTRYPOINT ["java", "-jar", "run.jar", "--server.port=443"]
