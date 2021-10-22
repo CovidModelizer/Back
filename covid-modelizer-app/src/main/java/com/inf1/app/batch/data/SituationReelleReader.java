@@ -60,7 +60,7 @@ public class SituationReelleReader implements ItemReader<SituationReelleDTO> {
                 r0data = fetchR0DataFromAPI();
             }
             String r0Value = null;
-            if (r0data != null) {
+            if (r0data != null && nextR0Index < r0data.size()) {
                 if (!r0data.get(nextR0Index).get(1).equals("NA")) {
                     r0Value = r0data.get(nextR0Index).get(1);
                 }
